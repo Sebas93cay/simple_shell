@@ -41,4 +41,6 @@ void free_list(list_t *head);
 /*Misc1.c*/
 int _strncmp(char *s1, char *s2, unsigned int n);
 char *_getenv(const char *var);
+void _printenv(void);
+int _setenv(char *name, char *value, int overwrite);
 #endif
