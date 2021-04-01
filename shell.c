@@ -26,7 +26,8 @@ int main(__attribute__ ((unused)) int argc,
 	{
 		if (isatty(0))
 			_printf("#cisfun$ ");
-		if (getline(&args[0], &buffSize, stdin) == EOF)
+		if (getline(&args[0], &buffSize, stdin) == EOF
+		    || _strcmp(args[0], "exit") == 0)
 		{
 			free(args[0]);
 			write(1, "\n", 1);

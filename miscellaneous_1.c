@@ -35,6 +35,24 @@ char *_strncpy(char *dest, char *src, int n)
 }
 
 
+/**
+ * _strcmp - compare first n bytes in two strings
+ * @s1: string 1
+ * @s2: string 2
+ * Return: Returns 0 if strings are equal, otherwise
+ * returns the difference
+ */
+int _strcmp(char *s1, char *s2)
+{
+	int diff = 0;
+	unsigned int i = 0;
+
+	do {
+		diff = *(s1 + i) - *(s2 + i);
+		i++;
+	} while (diff == 0 && *(s1 + i) != 0 && *(s2 + i) != 0);
+	return (diff);
+}
 
 
 /**

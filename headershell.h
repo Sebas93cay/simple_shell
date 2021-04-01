@@ -35,6 +35,7 @@ void create_child(pid_t *child_pid);
 /*miscellaneous_1.c string function*/
 int _strlen(char *);
 char *_strncpy(char *dest, char *src, int n);
+int _strcmp(char *s1, char *s2);
 int _strncmp(char *s1, char *s2, unsigned int n);
 
 /*miscellaneous_2.c*/
