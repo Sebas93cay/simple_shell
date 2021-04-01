@@ -33,6 +33,8 @@ int main(__attribute__ ((unused)) int argc,
 			return (0);
 		}
 		args[0][_strlen(args[0]) - 1] = '\0'; /*Remove new line*/
+		if (**args == '\0')
+			continue;
 		create_child(&child_pid);
 		_printf("(%u)ya creamos nuestro primer hijo\n", getpid());
 		if (child_pid == 0)
