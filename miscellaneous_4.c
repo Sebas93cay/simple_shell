@@ -9,7 +9,8 @@ char *_getenv(const char *var)
 	while (*env)
 	{
 		/* _printf("*env = %s\n", *env); */
-		if (_strncmp(*env, (char *)var, len) == 0)
+		if (_strncmp(*env, (char *)var, len) == 0 &&
+			env[0][len] == '=')
 		{
 			return (*env + len + 1);
 		}

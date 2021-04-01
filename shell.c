@@ -18,7 +18,7 @@ int main(__attribute__ ((unused)) int argc,
 		if (*buff == '\0')
 			continue;
 		/* _printf("Vamos a liberarar args\n"); */
-		free_args(args);
+		free_words(args);
 		/* _printf("Liberamos  args!!\n"); */
 		args = splitwords(buff, ' ');
 		/* _printf("Se creo args\n"); */
@@ -26,8 +26,7 @@ int main(__attribute__ ((unused)) int argc,
 		/* _printf("(%u)ya creamos nuestro primer hijo\n", getpid()); */
 		if (child_pid == 0)
 		{
-			if (execve(args[0], args, NULL) == -1)
-				execve_not_working(args, argv, buff);
+			exec_command(args, argv, buff);
 			break;
 		}
 		else
@@ -39,10 +38,24 @@ int main(__attribute__ ((unused)) int argc,
 	return (0);
 }
 
+void exec_command(char **args, char **argv, char *buff)
+{
+	char *path = _getenv("PATH");
+	char **dirs = NULL;
+
+	dirs = splitwords(path, ':');
+
+	if (execve(args[0], args, NULL) == -1)
+	{
+		execve_not_working(args, argv, buff);
+	}
+	free_words(dirs);
+}
+
 void execve_not_working(char **args, char **argv, char *buff)
 {
 	/* _printf("(%u) liberaremos args[0]\n", getpid()); */
-	free_args(args);
+	free_words(args);
 	free(buff);
 
 	perror(argv[0]);
@@ -58,7 +71,7 @@ void check_inputs(char **buff, size_t *buffSize, char **args)
 		if (isatty(0) && _strcmp(*buff, "exit") != 0)
 			write(1, "\n", 1); /*print only in terminal*/
 		free(*buff);
-		free_args(args);
+		free_words(args);
 		exit(0);
 	}
 	buff[0][_strlen(buff[0]) - 1] = '\0'; /*Remove new line*/

@@ -108,7 +108,5 @@ char **splitwords(char *buff, char token)
 		i++;
 	}
 	words[i] = NULL;
-	_printf("Nuestras plabras son: \n");
-	print_words(words);
 	return (words);
 }

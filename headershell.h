@@ -29,6 +29,10 @@ typedef struct list_s
 } list_t;
 
 /*shell*/
+int main(__attribute__ ((unused)) int argc,
+	 __attribute__ ((unused)) char **argv,
+	 __attribute__ ((unused)) char **env);
+void exec_command(char **args, char **argv, char *buff);
 void execve_not_working(char **args, char **argv, char *buff);
 void create_child(pid_t *child_pid);
 void check_inputs(char **buff, size_t *buffSize, char **args);
@@ -46,7 +50,7 @@ char **splitwords(char *buff, char token);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 
 /*miscellaneous_3.c*/
-void free_args(char **args);
+void free_words(char **args);
 void print_words(char **words);
 
 /*miscellaneous_4.c enviroment functions*/

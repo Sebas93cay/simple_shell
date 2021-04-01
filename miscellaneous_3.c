@@ -1,6 +1,6 @@
 #include "headershell.h"
 
-void free_args(char **args)
+void free_words(char **args)
 {
 	int i = 0;
 
