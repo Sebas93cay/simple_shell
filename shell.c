@@ -17,14 +17,17 @@ int main(__attribute__ ((unused)) int argc,
 	args[0] = malloc(sizeof(*args[0]) * buffSize);
 	args[1] = NULL;
 	if (!args[0])
-		printf("Error, buff were not able to initialize");
+		perror(argv[0]);
 
 	while (1)
 	{
 		if (isatty(0))
 			_printf("#cisfun$ ");
 		if (getline(&args[0], &buffSize, stdin) == EOF)
+		{
+			write(1, "\n", 1);
 			return (0);
+		}
 		args[0][_strlen(args[0]) - 1] = '\0'; /*Remove new line*/
 		child_pid = fork();
 		if (child_pid == -1)
@@ -32,7 +35,8 @@ int main(__attribute__ ((unused)) int argc,
 		if (child_pid == 0)
 		{
 			if (execve(args[0], args, NULL) == -1)
-				perror(args[0]);
+				perror(argv[0]);
+			break;
 		}
 		else
 		{
