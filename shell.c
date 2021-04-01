@@ -7,19 +7,17 @@ int main(__attribute__ ((unused)) int argc,
 	 __attribute__ ((unused)) char **env)
 {
 	size_t buffSize = 1;
+	char *buff = NULL;
 	char *args[2];
 	pid_t child_pid;
 	int status;
 
-	args[0] = malloc(sizeof(*args[0]) * buffSize);
 	args[1] = NULL;
-	if (!args[0])
-		perror(argv[0]);
-
 	/* _printf("(%u)I'm the father jojojo\n", getpid()); */
 	while (1)
 	{
-		check_exits(args, &buffSize);
+		check_exits(&buff, &buffSize);
+		args[0] = buff;
 		if (**args == '\0')
 			continue;
 		create_child(&child_pid);
