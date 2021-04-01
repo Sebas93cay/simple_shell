@@ -7,7 +7,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-#include "printf/headerprintf.h"
+#include "headerprintf.h"
 
 /*Enviroment variables*/
 extern char **environ;
@@ -38,9 +38,25 @@ list_t *add_node_n_end(list_t **head, const char *str, size_t n);
 void free_list(list_t *head);
 
 /*Miscelaneous functions*/
-/*Misc1.c*/
+
+
+/* miscellaneous functions */
+/*miscellaneous_1.c string function*/
+int _strlen(char *);
+char *_strncpy(char *dest, char *src, int n);
 int _strncmp(char *s1, char *s2, unsigned int n);
+
+/*miscellaneous_2.c*/
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
+
+
+/*miscellaneous_3.c*/
+
+
+/*miscellaneous_4.c enviroment functions*/
 char *_getenv(const char *var);
 void _printenv(void);
 int _setenv(char *name, char *value, int overwrite);
+
+
 #endif
