@@ -27,11 +27,7 @@ int main(__attribute__ ((unused)) int argc,
 		if (child_pid == 0)
 		{
 			if (execve(args[0], args, NULL) == -1)
-			{
-				/* _printf("(%u) liberaremos args[0]\n", getpid()); */
-				free(args[0]);
-				perror(argv[0]);
-			}
+				execve_not_working(args, argv);
 			break;
 		}
 		else
@@ -43,6 +39,13 @@ int main(__attribute__ ((unused)) int argc,
 	return (0);
 }
 
+void execve_not_working(char **args, char **argv)
+{
+	/* _printf("(%u) liberaremos args[0]\n", getpid()); */
+	free(args[0]);
+	perror(argv[0]);
+}
+
 void check_exits(char **args, size_t *buffSize)
 {
 	if (isatty(0))
@@ -50,9 +53,9 @@ void check_exits(char **args, size_t *buffSize)
 	if (getline(args, buffSize, stdin) == EOF
 	    || _strcmp(args[0], "exit") == 0)
 	{
-		free(args[0]);
-		if (isatty(0))
+		if (isatty(0) && _strcmp(args[0], "exit") != 0)
 			write(1, "\n", 1); /*print only in terminal*/
+		free(args[0]);
 		exit(0);
 	}
 	/* _printf("(%u) recibimos linea\n", getpid()); */

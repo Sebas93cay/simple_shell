@@ -29,6 +29,7 @@ typedef struct list_s
 } list_t;
 
 /*shell*/
+void execve_not_working(char **args, char **argv);
 void create_child(pid_t *child_pid);
 void check_exits(char **args, size_t *buffSize);
 void childError(pid_t *child);
