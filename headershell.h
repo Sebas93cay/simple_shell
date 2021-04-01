@@ -30,6 +30,8 @@ typedef struct list_s
 
 /*shell*/
 void create_child(pid_t *child_pid);
+void check_exits(char **args, size_t *buffSize);
+void childError(pid_t *child);
 
 /* miscellaneous functions */
 /*miscellaneous_1.c string function*/
