@@ -140,7 +140,7 @@ char *getAddress_p(void *p, char *buf, int size_b)
 
 	buf[0] = '0';
 	buf[1] = 'x';
-	printf("sizeof(x) = %lu\n", sizeof(x));
+	/* printf("sizeof(x) = %lu\n", sizeof(x)); */
 	for (i = 0, j = 0; i < sizeof(x) * 2 && j + 2 < size_b; i++)
 	{
 
@@ -151,7 +151,7 @@ char *getAddress_p(void *p, char *buf, int size_b)
 			buf[j + 2] = e;
 			j++;
 		}
-		printf("i = %i e = %c buf = %s\n", i, e, buf);
+		/* printf("i = %i e = %c buf = %s\n", i, e, buf); */
 	}
 	buf[j + 2] = 0;
 	return (buf);

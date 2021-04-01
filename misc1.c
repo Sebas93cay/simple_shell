@@ -10,7 +10,8 @@
  */
 int _strncmp(char *s1, char *s2, unsigned int n)
 {
-	int i = 0, diff = 0;
+	int diff = 0;
+	unsigned int i = 0;
 
 	do {
 		diff = *(s1 + i) - *(s2 + i);
@@ -48,6 +49,11 @@ void _printenv(void)
 	}
 }
 
+
+/*
+ * _setenv does not work because environ is not an allocated variable
+ * So it can be "reallocated"
+*/
 int _setenv(char *name, char *value, int overwrite)
 {
 	int len = _strlen((char *) name), size = 0;
@@ -55,17 +61,21 @@ int _setenv(char *name, char *value, int overwrite)
 	int val_len = _strlen(value);
 	char *tmpstr = NULL;
 
-	_printf("_setenv---- &env = %p\n", &env);
-	_printf("_setenv &environ = %p\n", &environ);
-	_printf("Vamos a poner %s=%s\n", name, value);
+	/* _printf("_setenv---- &env = %p\n", &env); */
+	/* _printf("_setenv &environ = %p\n", &environ); */
+	/* _printf("Vamos a poner %s=%s\n", name, value); */
 	for (size = 0; env[size]; size++)
 	{
-		if (_strncmp(*env, name, len) == 0 && (*env)[len] == '=')
+		_printf("env = %s\n", env[size]);
+		if (_strncmp(env[size], name, len) == 0 && (*env)[len] == '=')
 			break;
 	}
-	if (*env == NULL)
+	/* _printf("env = %s\n", env[size]); */
+	if (env[size] == NULL)
 	{
+		/* _printf("_setenv &environ = %p\n", &environ); */
 		environ = _realloc(environ, size + 1, size + 2);
+		/* _printf("_setenv &environ = %p\n", &environ); */
 		environ[size + 2] = NULL;
 		environ[size + 1] = malloc(sizeof(**environ) *
 					   (len + val_len + 2));
