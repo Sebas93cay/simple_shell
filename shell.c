@@ -8,56 +8,63 @@ int main(__attribute__ ((unused)) int argc,
 {
 	size_t buffSize = 1;
 	char *buff = NULL;
-	char *args[2];
+	char **args = NULL;
 	pid_t child_pid;
 	int status;
 
-	args[1] = NULL;
-	/* _printf("(%u)I'm the father jojojo\n", getpid()); */
+	args = malloc(sizeof(*args));
+	_printf("(%u)I'm the father jojojo\n", getpid());
 	while (1)
 	{
-		check_exits(&buff, &buffSize);
-		args[0] = buff;
-		if (**args == '\0')
+		check_inputs(&buff, &buffSize, args);
+		if (*buff == '\0')
 			continue;
+		/* _printf("Vamos a liberarar args\n"); */
+		free_args(args);
+		/* _printf("Liberamos  args!!\n"); */
+		args = splitwords(buff, ' ');
+		/* _printf("Se creo args\n"); */
 		create_child(&child_pid);
 		/* _printf("(%u)ya creamos nuestro primer hijo\n", getpid()); */
 		if (child_pid == 0)
 		{
 			if (execve(args[0], args, NULL) == -1)
-				execve_not_working(args, argv);
+				execve_not_working(args, argv, buff);
 			break;
 		}
 		else
 		{
 			wait(&status);
 		}
-		/* _printf("(%u) salimos de if\n", getpid()); */
+		_printf("(%u) salimos de if\n", getpid());
 	}
 	return (0);
 }
 
-void execve_not_working(char **args, char **argv)
+void execve_not_working(char **args, char **argv, char *buff)
 {
 	/* _printf("(%u) liberaremos args[0]\n", getpid()); */
-	free(args[0]);
+	free_args(args);
+	free(buff);
+
 	perror(argv[0]);
 }
 
-void check_exits(char **args, size_t *buffSize)
+void check_inputs(char **buff, size_t *buffSize, char **args)
 {
 	if (isatty(0))
 		_printf("#cisfun$ "); /*print only in terminal*/
-	if (getline(args, buffSize, stdin) == EOF
-	    || _strcmp(args[0], "exit") == 0)
+	if (getline(buff, buffSize, stdin) == EOF
+	    || _strcmp(*buff, "exit") == 0)
 	{
-		if (isatty(0) && _strcmp(args[0], "exit") != 0)
+		if (isatty(0) && _strcmp(*buff, "exit") != 0)
 			write(1, "\n", 1); /*print only in terminal*/
-		free(args[0]);
+		free(*buff);
+		free_args(args);
 		exit(0);
 	}
-	/* _printf("(%u) recibimos linea\n", getpid()); */
-	args[0][_strlen(args[0]) - 1] = '\0'; /*Remove new line*/
+	buff[0][_strlen(buff[0]) - 1] = '\0'; /*Remove new line*/
+	_printf("(%u) recibimos linea:\n%s\n", getpid(), *buff);
 }
 
 void create_child(pid_t *child_pid)

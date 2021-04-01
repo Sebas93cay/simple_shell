@@ -29,9 +29,9 @@ typedef struct list_s
 } list_t;
 
 /*shell*/
-void execve_not_working(char **args, char **argv);
+void execve_not_working(char **args, char **argv, char *buff);
 void create_child(pid_t *child_pid);
-void check_exits(char **args, size_t *buffSize);
+void check_inputs(char **buff, size_t *buffSize, char **args);
 void childError(pid_t *child);
 
 /* miscellaneous functions */
@@ -40,11 +40,13 @@ int _strlen(char *);
 char *_strncpy(char *dest, char *src, int n);
 int _strcmp(char *s1, char *s2);
 int _strncmp(char *s1, char *s2, unsigned int n);
+char **splitwords(char *buff, char token);
 
 /*miscellaneous_2.c*/
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 
 /*miscellaneous_3.c*/
+void free_args(char **args);
 
 /*miscellaneous_4.c enviroment functions*/
 char *_getenv(const char *var);
