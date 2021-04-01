@@ -98,6 +98,7 @@ char **splitwords(char *buff, char token)
 	{
 		while (*buff == token)
 			buff++;
+		letters = 0;
 		while (buff[letters] != 0 && buff[letters] != token)
 			letters++;
 		words[i] = malloc(sizeof(char) * (letters + 1));
@@ -107,5 +108,7 @@ char **splitwords(char *buff, char token)
 		i++;
 	}
 	words[i] = NULL;
+	_printf("Nuestras plabras son: \n");
+	print_words(words);
 	return (words);
 }

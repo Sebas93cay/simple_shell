@@ -47,6 +47,7 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 
 /*miscellaneous_3.c*/
 void free_args(char **args);
+void print_words(char **words);
 
 /*miscellaneous_4.c enviroment functions*/
 char *_getenv(const char *var);

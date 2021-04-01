@@ -11,3 +11,15 @@ void free_args(char **args)
 		free(args[i]);
 	free(args);
 }
+
+
+
+
+void print_words(char **words)
+{
+	while (*words)
+	{
+		_printf("-> %s\n", *words);
+		words++;
+	}
+}
