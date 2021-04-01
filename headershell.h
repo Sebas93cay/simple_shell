@@ -6,6 +6,7 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <sys/stat.h>
 
 #include "headerprintf.h"
 
@@ -48,6 +49,7 @@ char **splitwords(char *buff, char token);
 
 /*miscellaneous_2.c*/
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
+char *_strncat(int n, char *dest, ...);
 
 /*miscellaneous_3.c*/
 void free_words(char **args);

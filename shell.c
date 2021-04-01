@@ -42,14 +42,40 @@ void exec_command(char **args, char **argv, char *buff)
 {
 	char *path = _getenv("PATH");
 	char **dirs = NULL;
+	char *cwd = NULL, *path_dir = NULL, *tmp_ptr = NULL;
+	int i, cwd_size = 100;
+	struct stat st;
 
+	cwd = malloc(sizeof(char) * cwd_size);
+	if (cwd == NULL)
+		exit(0);
+	while (getcwd(cwd, cwd_size) == NULL)
+	{
+		_printf("cwd_size too small, geting twice it size and trying again");
+		cwd_size = 2 * cwd_size;
+	}
+	_printf("cwd = %s\n", cwd);
 	dirs = splitwords(path, ':');
-
+	for (i = 0; dirs[i]; i++)
+	{
+		chdir(dirs[i]);
+		if (stat(*args, &st) == 0)
+		{
+			path_dir = dirs[i];
+			chdir(cwd);
+			break;
+		}
+	}
+	tmp_ptr = path_dir;
+	path_dir = args[0];
+	args[0] = tmp_ptr;
+	args[0] = _strncat(2, args[0], "/", path_dir);
 	if (execve(args[0], args, NULL) == -1)
 	{
 		execve_not_working(args, argv, buff);
 	}
 	free_words(dirs);
+	free(cwd);
 }
 
 void execve_not_working(char **args, char **argv, char *buff)

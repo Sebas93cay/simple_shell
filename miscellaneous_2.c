@@ -48,3 +48,33 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 	return ((void *)nptr);
 }
 
+
+
+
+/**
+ * _strcat - concatenate two strings
+ * @dest: string destiny
+ * @src: string source
+ * Return: Returns a pointer to the destiny string
+ */
+char *_strncat(int n, char *dest, ...)
+{
+	va_list list;
+	int  destlen, addlen;
+	char *add = NULL;
+
+	if (dest == NULL)
+		return (NULL);
+	va_start(list, dest);
+	while (n--)
+	{
+		add = va_arg(list, char*);
+		destlen = _strlen(dest);
+		addlen = _strlen(add);
+		dest = _realloc(dest, destlen, destlen + addlen + 1);
+		_strncpy(dest + destlen, add, addlen);
+		dest[destlen + addlen] = '\0';
+	}
+	va_end(list);
+	return (dest);
+}
