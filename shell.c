@@ -13,10 +13,9 @@ int main(__attribute__ ((unused)) int argc,
 {
 	size_t buffSize = 1;
 	char *args[2];
-	pid_t child_pid, executer_pid;
+	pid_t child_pid;
 	int status;
 
-	globalhijos = 0;
 	args[0] = malloc(sizeof(*args[0]) * buffSize);
 	args[1] = NULL;
 	if (!args[0])
@@ -38,24 +37,17 @@ int main(__attribute__ ((unused)) int argc,
 		_printf("(%u)ya creamos nuestro primer hijo\n", getpid());
 		if (child_pid == 0)
 		{
-			create_child(&executer_pid);
-			if (executer_pid == 0)
+			if (execve(args[0], args, NULL) == -1)
 			{
-				if (execve(args[0], args, NULL) == -1)
-					perror(argv[0]);
-				break;
-			}
-			else
-			{
-				wait(&status);
+				_printf("(%u) liberaremos args[0]\n", getpid());
 				free(args[0]);
-				_printf("(%u) liberamos args[0]\n", getpid());
-				break;
+				perror(argv[0]);
 			}
-			_printf("(%u) salimos de if\n", getpid());
+			break;
 		}
 		else
 			wait(&status);
+
 		_printf("(%u) salimos de if\n", getpid());
 	}
 	return (0);
