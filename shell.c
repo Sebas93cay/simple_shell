@@ -43,7 +43,7 @@ void exec_command(char **args, char **argv, char *buff)
 {
 	char *path = _getenv("PATH");
 	char **dirs = NULL;
-	char *cwd = NULL, *path_dir = NULL;
+	char *cwd = NULL, *tmp_ptr = NULL;
 	int i, cwd_size = 100;
 	struct stat st;
 
@@ -66,14 +66,12 @@ void exec_command(char **args, char **argv, char *buff)
 			/* _printf("looking for *args=%s\n", *args); */
 			if (stat(*args, &st) == 0)
 			{
-				path_dir = dirs[i];
-				_printf("Found in %s \n", path_dir);
+				_printf("Found in %s \n", dirs[i]);
 				chdir(cwd);
 				break;
 			}
 		}
-		_printf("After for\n path_dir = %s\n", path_dir);
-		if (path_dir == NULL)
+		if (dirs[i] == NULL)
 		{
 			_printf("No se pudo encontrar paila\n");
 			free_words(args);
@@ -82,7 +80,12 @@ void exec_command(char **args, char **argv, char *buff)
 		else
 		{
 			_printf("args[0] = %s\n", args[0]);
-			args[0] = putPath(args[0], path_dir);
+
+			tmp_ptr = dirs[i];
+			dirs[i] = args[0];
+			args[0] = tmp_ptr;
+			args[0] = _strncat(2, args[0], "/", dirs[i]);
+
 			_printf("luego args[0] = %s\n", args[0]);
 		}
 	}
