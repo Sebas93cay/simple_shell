@@ -11,6 +11,7 @@ int main(__attribute__ ((unused)) int argc,
 	int status;
 
 	args = malloc(sizeof(*args));
+	*args = NULL;
 	/* _printf("(%u)I'm the father jojojo\n", getpid()); */
 	while (1)
 	{
