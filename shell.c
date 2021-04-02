@@ -47,6 +47,8 @@ void exec_command(char **args, char **argv, char *buff)
 	int i, cwd_size = 100;
 	struct stat st;
 
+	printf("args[0][0] = %c\n", **args);
+
 	if (args[0][0] != '/')
 	{
 		cwd = malloc(sizeof(char) * cwd_size);
@@ -57,7 +59,7 @@ void exec_command(char **args, char **argv, char *buff)
 			_printf("cwd_size too small, geting twice it size and trying again");
 			cwd_size = 2 * cwd_size;
 		}
-		/* _printf("cwd = %s\n", cwd); */
+		_printf("cwd = %s\n", cwd);
 		dirs = splitwords(path, ':');
 		for (i = 0; dirs[i]; i++)
 		{
@@ -71,13 +73,8 @@ void exec_command(char **args, char **argv, char *buff)
 				break;
 			}
 		}
-		if (dirs[i] == NULL)
-		{
-			_printf("No se pudo encontrar paila\n");
-			free_words(args);
-			free(buff);
-		}
-		else
+		_printf("dirs[i] == %s\n", dirs[i]);
+		if (dirs[i] != NULL)
 		{
 			_printf("args[0] = %s\n", args[0]);
 
@@ -89,11 +86,16 @@ void exec_command(char **args, char **argv, char *buff)
 			_printf("luego args[0] = %s\n", args[0]);
 		}
 	}
-	
-	if (args[0][0] == '/' && execve(args[0], args, NULL) == -1)
-	{
+
+	if (**args == '/' && execve(args[0], args, NULL) == -1)
 		execve_not_working(args, argv, buff);
+	else
+	{
+			_printf("No se pudo encontrar paila\n");
+			free_words(args);
+			free(buff);		
 	}
+
 	_printf("vamos a liberar dirs\n");
 	print_words(dirs);
 	free_words(dirs);
