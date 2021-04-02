@@ -11,7 +11,7 @@ int main(__attribute__ ((unused)) int argc,
 	int status;
 
 	args = malloc(sizeof(*args));
-	_printf("(%u)I'm the father jojojo\n", getpid());
+	/* _printf("(%u)I'm the father jojojo\n", getpid()); */
 	while (1)
 	{
 		check_inputs(&buff, &buffSize, args);
@@ -33,7 +33,7 @@ int main(__attribute__ ((unused)) int argc,
 		{
 			wait(&status);
 		}
-		_printf("(%u) salimos de if\n", getpid());
+		/* _printf("(%u) salimos de if\n", getpid()); */
 	}
 	return (0);
 }
@@ -54,11 +54,12 @@ void exec_command(char **args, char **argv, char *buff)
 		_printf("cwd_size too small, geting twice it size and trying again");
 		cwd_size = 2 * cwd_size;
 	}
-	_printf("cwd = %s\n", cwd);
+	/* _printf("cwd = %s\n", cwd); */
 	dirs = splitwords(path, ':');
 	for (i = 0; dirs[i]; i++)
 	{
 		chdir(dirs[i]);
+		/* _printf("Nuevo directorio = %s\n", dirs[i]); */
 		if (stat(*args, &st) == 0)
 		{
 			path_dir = dirs[i];
@@ -101,7 +102,7 @@ void check_inputs(char **buff, size_t *buffSize, char **args)
 		exit(0);
 	}
 	buff[0][_strlen(buff[0]) - 1] = '\0'; /*Remove new line*/
-	_printf("(%u) recibimos linea:\n%s\n", getpid(), *buff);
+	/* _printf("(%u) recibimos linea:\n%s\n", getpid(), *buff); */
 }
 
 void create_child(pid_t *child_pid)
