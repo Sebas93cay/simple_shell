@@ -33,11 +33,15 @@ typedef struct list_s
 int main(__attribute__ ((unused)) int argc,
 	 __attribute__ ((unused)) char **argv,
 	 __attribute__ ((unused)) char **env);
+void check_full_path(char **args);
 void exec_command(char **args, char **argv, char *buff);
+
+/*shell_fuctions_1.c*/
 void execve_not_working(char **args, char **argv, char *buff);
 void create_child(pid_t *child_pid);
 void check_inputs(char **buff, size_t *buffSize, char **args);
 void childError(pid_t *child);
+
 
 /* miscellaneous functions */
 /*miscellaneous_1.c string function*/
@@ -50,7 +54,7 @@ char **splitwords(char *buff, char token);
 /*miscellaneous_2.c*/
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 char *_strncat(int n, char *dest, ...);
-char *putPath(char* command, char *path);
+char *putPath(char *command, char *path);
 
 /*miscellaneous_3.c*/
 void free_words(char **args);

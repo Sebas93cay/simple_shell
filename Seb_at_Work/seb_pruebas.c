@@ -12,6 +12,7 @@ int main(int argc, char **argv, char **env)
 	printf("buff = %s\n", buff);
 
 	free(buff);
-	
+	df
+
 	return (0);
 }
