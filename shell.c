@@ -76,6 +76,8 @@ void exec_command(char **args, char **argv, char *buff)
 		if (path_dir == NULL)
 		{
 			_printf("No se pudo encontrar paila\n");
+			free_words(args);
+			free(buff);
 		}
 		else
 		{
