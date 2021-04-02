@@ -50,6 +50,7 @@ char **splitwords(char *buff, char token);
 /*miscellaneous_2.c*/
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 char *_strncat(int n, char *dest, ...);
+char *putPath(char* command, char *path);
 
 /*miscellaneous_3.c*/
 void free_words(char **args);

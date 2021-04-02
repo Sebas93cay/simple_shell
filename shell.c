@@ -21,7 +21,8 @@ int main(__attribute__ ((unused)) int argc,
 		free_words(args);
 		/* _printf("Liberamos  args!!\n"); */
 		args = splitwords(buff, ' ');
-		/* _printf("Se creo args\n"); */
+		_printf("Args:\n");
+		print_words(args);
 		create_child(&child_pid);
 		/* _printf("(%u)ya creamos nuestro primer hijo\n", getpid()); */
 		if (child_pid == 0)
@@ -42,50 +43,69 @@ void exec_command(char **args, char **argv, char *buff)
 {
 	char *path = _getenv("PATH");
 	char **dirs = NULL;
-	char *cwd = NULL, *path_dir = NULL, *tmp_ptr = NULL;
+	char *cwd = NULL, *path_dir = NULL;
 	int i, cwd_size = 100;
 	struct stat st;
 
-	cwd = malloc(sizeof(char) * cwd_size);
-	if (cwd == NULL)
-		exit(0);
-	while (getcwd(cwd, cwd_size) == NULL)
+	if (args[0][0] != '/')
 	{
-		_printf("cwd_size too small, geting twice it size and trying again");
-		cwd_size = 2 * cwd_size;
-	}
-	/* _printf("cwd = %s\n", cwd); */
-	dirs = splitwords(path, ':');
-	for (i = 0; dirs[i]; i++)
-	{
-		chdir(dirs[i]);
-		/* _printf("Nuevo directorio = %s\n", dirs[i]); */
-		if (stat(*args, &st) == 0)
+		cwd = malloc(sizeof(char) * cwd_size);
+		if (cwd == NULL)
+			exit(0);
+		while (getcwd(cwd, cwd_size) == NULL)
 		{
-			path_dir = dirs[i];
-			chdir(cwd);
-			break;
+			_printf("cwd_size too small, geting twice it size and trying again");
+			cwd_size = 2 * cwd_size;
+		}
+		/* _printf("cwd = %s\n", cwd); */
+		dirs = splitwords(path, ':');
+		for (i = 0; dirs[i]; i++)
+		{
+			chdir(dirs[i]);
+			/* _printf("Nuevo directorio = %s\n", dirs[i]); */
+			/* _printf("looking for *args=%s\n", *args); */
+			if (stat(*args, &st) == 0)
+			{
+				path_dir = dirs[i];
+				_printf("Found in %s \n", path_dir);
+				chdir(cwd);
+				break;
+			}
+		}
+		_printf("After for\n path_dir = %s\n", path_dir);
+		if (path_dir == NULL)
+		{
+			_printf("No se pudo encontrar paila\n");
+		}
+		else
+		{
+			_printf("args[0] = %s\n", args[0]);
+			args[0] = putPath(args[0], path_dir);
+			_printf("luego args[0] = %s\n", args[0]);
 		}
 	}
-	tmp_ptr = path_dir;
-	path_dir = args[0];
-	args[0] = tmp_ptr;
-	args[0] = _strncat(2, args[0], "/", path_dir);
-	if (execve(args[0], args, NULL) == -1)
+	
+	if (args[0][0] == '/' && execve(args[0], args, NULL) == -1)
 	{
 		execve_not_working(args, argv, buff);
 	}
+	_printf("vamos a liberar dirs\n");
+	print_words(dirs);
 	free_words(dirs);
+	_printf("ahora cwd\n");
 	free(cwd);
 }
 
 void execve_not_working(char **args, char **argv, char *buff)
 {
 	/* _printf("(%u) liberaremos args[0]\n", getpid()); */
+
 	free_words(args);
+
 	free(buff);
 
 	perror(argv[0]);
+
 }
 
 void check_inputs(char **buff, size_t *buffSize, char **args)
