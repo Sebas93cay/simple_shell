@@ -35,11 +35,13 @@ int main(__attribute__ ((unused)) int argc,
 	 __attribute__ ((unused)) char **env);
 void check_full_path(char **args);
 void exec_command(char **args, char **argv, char *buff);
+int check_built_in(char **args, char *buff, char **argv);
 
-/*shell_fuctions_1.c*/
+/*fuctions_shell_1.c*/
 void execve_not_working(char **args, char **argv, char *buff);
 void create_child(pid_t *child_pid);
 void check_inputs(char **buff, size_t *buffSize, char **args);
+void TheExit(int status, char *buff, char **args);
 void childError(pid_t *child);
 
 
@@ -55,6 +57,8 @@ char **splitwords(char *buff, char token);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 char *_strncat(int n, char *dest, ...);
 char *putPath(char *command, char *path);
+int _atoi(char *s);
+int check_if_num(char *num);
 
 /*miscellaneous_3.c*/
 void free_words(char **args);

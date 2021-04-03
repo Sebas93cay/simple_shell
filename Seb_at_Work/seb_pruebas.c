@@ -7,12 +7,17 @@ int main(int argc, char **argv, char **env)
 	size_t buffsize = 0;
 	char **args = NULL;
 
-	getline(&buff, &buffsize, stdin);
+	FILE *stream;
 
-	printf("buff = %s\n", buff);
+	stream = stdin;
+
+	printf("el puntero : %p\n", stream->_IO_read_ptr);
+	printf("el puntero : %p\n", stdin->_IO_read_ptr);
+
+
 
 	free(buff);
-	df
+
 
 	return (0);
 }

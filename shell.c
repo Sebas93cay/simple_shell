@@ -24,6 +24,8 @@ int main(__attribute__ ((unused)) int argc,
 		args = splitwords(buff, ' ');
 		_printf("Args:\n");
 		print_words(args);
+		if (check_built_in(args, buff, argv))
+			continue;
 		create_child(&child_pid);
 		/* _printf("(%u)ya creamos nuestro primer hijo\n", getpid()); */
 		if (child_pid == 0)
@@ -40,6 +42,34 @@ int main(__attribute__ ((unused)) int argc,
 	return (0);
 }
 
+
+int check_built_in(char **args, char *buff, char **argv)
+{
+	int exit_status;
+
+	if (_strcmp(args[0], "exit") == 0)
+	{
+		if (args[1] != NULL)
+		{
+			if (check_if_num(args[1]) == 0)
+			{
+				exit_status = _atoi(args[1]);
+				_printf("exit status = %d\n", exit_status);
+				TheExit(exit_status, buff, args);
+			}
+			else
+			{	_printf("%s: 1: exit: Illegal number: %s\n",
+					*argv, args[1]);
+				return (1);
+			}
+		}
+		else
+		{
+			TheExit(0, buff, args);
+		}
+	}
+	return (0);
+}
 
 void check_full_path(char **args)
 {
@@ -88,7 +118,6 @@ void exec_command(char **args, char **argv, char *buff)
 {
 
 	check_full_path(args);
-
 	if (**args == '/' && execve(args[0], args, NULL) == -1)
 		execve_not_working(args, argv, buff);
 	else
@@ -97,6 +126,5 @@ void exec_command(char **args, char **argv, char *buff)
 			free_words(args);
 			free(buff);
 	}
-
 }
 
