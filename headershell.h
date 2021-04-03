@@ -71,9 +71,10 @@ void free_words(char **args);
 void print_words(char **words);
 
 /*miscellaneous_4.c enviroment functions*/
-char *_getenv(const char *var);
+char *_getenv(const char *);
 void _printenv(void);
 int _setenv(char *name, char *value, int overwrite);
+int _unsetenv(char *name);
 char **words_cpy(char **words);
 
 /*String linked list functions*/
