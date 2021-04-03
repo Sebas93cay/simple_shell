@@ -144,13 +144,20 @@ int _atoi(char *s)
 }
 
 
-int check_if_num(char *num)
+char *_strdup(char *s)
 {
-	while (*num)
-	{
-		if (*num < '0' || *num > '9')
-			return (-1);
-		num++;
-	}
-	return (0);
+	int len;
+	char *ret = NULL;
+
+	len = _strlen(s);
+
+	ret = malloc(sizeof(char) * (len + 1));
+	if (ret  == NULL)
+		return (NULL);
+
+	ret = _strcpy(ret, s);
+
+	ret[len] = 0;
+
+	return (ret);
 }

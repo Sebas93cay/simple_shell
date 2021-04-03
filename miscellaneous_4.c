@@ -35,7 +35,7 @@ int _setenv(char *name, char *value, int overwrite)
 {
 	int len = _strlen((char *) name), size = 0;
 	char **env = environ;
-	int val_len = _strlen(value);
+	int val_len = _strlen((char *)value);
 	char *tmpstr = NULL;
 
 	for (size = 0; env[size]; size++)

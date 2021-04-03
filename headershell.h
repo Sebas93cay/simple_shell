@@ -7,6 +7,8 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
+#include <dirent.h>
+#include <errno.h>
 
 #include "headerprintf.h"
 
@@ -50,7 +52,9 @@ void childError(pid_t *child);
 
 /*built_ins.c*/
 int built_exit(char **args, char *buff, char **argv);
-int built_cd(char **args, char *buff, char **argv);
+int built_cd(char **args, char **argv);
+void change_WD(char *newpwd, char *pwd);
+int built_env(char **args);
 
 /* miscellaneous functions */
 /*miscellaneous_1.c string function*/
@@ -66,12 +70,13 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 char *_strncat(int n, char *dest, ...);
 char *putPath(char *command, char *path);
 int _atoi(char *s);
-int check_if_num(char *num);
+char *_strdup(char *s);
 
 /*miscellaneous_3.c*/
 char **splitwords(char *buff, char token);
 void free_words(char **args);
 void print_words(char **words);
+int check_if_num(char *num);
 
 /*miscellaneous_4.c enviroment functions*/
 char *_getenv(const char *);

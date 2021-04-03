@@ -59,3 +59,14 @@ void print_words(char **words)
 		words++;
 	}
 }
+
+int check_if_num(char *num)
+{
+	while (*num)
+	{
+		if (*num < '0' || *num > '9')
+			return (-1);
+		num++;
+	}
+	return (0);
+}

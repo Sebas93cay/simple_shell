@@ -49,7 +49,9 @@ int check_built_in(char **args, char *buff, char **argv)
 	if (_strcmp(args[0], "exit") == 0)
 		return (built_exit(args, buff, argv));
 	if (_strcmp(args[0], "cd") == 0)
-		return (built_cd(args, buff, argv));
+		return (built_cd(args, argv));
+	if (_strcmp(args[0], "env") == 0)
+		return (built_env(args));
 	return (0);
 }
 
