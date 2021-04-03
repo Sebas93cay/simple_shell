@@ -48,6 +48,8 @@ int check_built_in(char **args, char *buff, char **argv)
 {
 	if (_strcmp(args[0], "exit") == 0)
 		return (built_exit(args, buff, argv));
+	if (_strcmp(args[0], "cd") == 0)
+		return (built_cd(args, buff, argv));
 	return (0);
 }
 
@@ -56,19 +58,12 @@ void check_full_path(char **args)
 	char *path = _getenv("PATH");
 	char **dirs = NULL;
 	char *cwd = NULL, *tmp_ptr = NULL;
-	int i, cwd_size = 100;
+	int i;
 	struct stat st;
 
 	if (args[0][0] != '/')
 	{
-		cwd = malloc(sizeof(char) * cwd_size);
-		if (cwd == NULL)
-			exit(0);
-		while (getcwd(cwd, cwd_size) == NULL)
-		{
-			_printf("cwd_size too small, geting twice it size and trying again");
-			cwd_size = 2 * cwd_size;
-		}
+		cwd = _getenv("PWD");
 		/* _printf("cwd = %s\n", cwd); */
 		dirs = splitwords(path, ':');
 		for (i = 0; dirs[i]; i++)
@@ -91,7 +86,6 @@ void check_full_path(char **args)
 		}
 	}
 	free_words(dirs);
-	free(cwd);
 }
 
 void exec_command(char **args, char **argv, char *buff)

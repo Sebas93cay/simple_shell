@@ -48,6 +48,7 @@ void childError(pid_t *child);
 
 /*built_ins.c*/
 int built_exit(char **args, char *buff, char **argv);
+int built_cd(char **args, char *buff, char **argv);
 
 /* miscellaneous functions */
 /*miscellaneous_1.c string function*/

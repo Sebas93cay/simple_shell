@@ -27,6 +27,7 @@ int built_exit(char **args, char *buff, char **argv)
 
 int built_cd(char **args, char *buff, char **argv)
 {
+	/* char *cwd, oldpwd; */
 	_printf("%p%p%p", args, buff, argv);
 	return (0);
 }
