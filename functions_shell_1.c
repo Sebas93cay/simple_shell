@@ -28,7 +28,6 @@ void TheExit(int status, char *buff, char **args)
 		write(1, "\n", 1); /*print only in terminal*/
 	free(buff);
 	free_words(args);
-	_printf("salimos con = %d\n", status);
 	exit(status);
 }
 
@@ -37,14 +36,6 @@ void create_child(pid_t *child_pid)
 	*child_pid = fork();
 	if (*child_pid == -1)
 		childError(child_pid);
-	/* if (*child_pid != 0) */
-	/* { */
-	/* 	_printf("(%u) My son is alive, his name is %u\n", getpid(), *child_pid); */
-	/* } */
-	/* else */
-	/* { */
-	/* 	_printf("(%u) Yes! I'm alive! my father is %u\n", getpid(), getppid()); */
-	/* } */
 }
 
 void childError(pid_t *child)

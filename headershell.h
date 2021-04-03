@@ -46,14 +46,17 @@ void check_inputs(char **buff, size_t *buffSize, char **args);
 void TheExit(int status, char *buff, char **args);
 void childError(pid_t *child);
 
+/*built_ins.c*/
+int built_exit(char **args, char *buff, char **argv);
 
 /* miscellaneous functions */
 /*miscellaneous_1.c string function*/
 int _strlen(char *);
 char *_strncpy(char *dest, char *src, int n);
+char *_strcpy(char *dest, char *src);
 int _strcmp(char *s1, char *s2);
 int _strncmp(char *s1, char *s2, unsigned int n);
-char **splitwords(char *buff, char token);
+
 
 /*miscellaneous_2.c*/
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
@@ -63,6 +66,7 @@ int _atoi(char *s);
 int check_if_num(char *num);
 
 /*miscellaneous_3.c*/
+char **splitwords(char *buff, char token);
 void free_words(char **args);
 void print_words(char **words);
 
@@ -70,6 +74,7 @@ void print_words(char **words);
 char *_getenv(const char *var);
 void _printenv(void);
 int _setenv(char *name, char *value, int overwrite);
+char **words_cpy(char **words);
 
 /*String linked list functions*/
 size_t print_list(const list_t *h);

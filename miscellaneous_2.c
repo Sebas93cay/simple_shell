@@ -148,14 +148,9 @@ int check_if_num(char *num)
 {
 	while (*num)
 	{
-		_printf("*num = %c\n", *num);
 		if (*num < '0' || *num > '9')
-		{
-			_printf("La cagaste\n");
 			return (-1);
-		}
 		num++;
 	}
-	_printf("Good job\n");
 	return (0);
 }
