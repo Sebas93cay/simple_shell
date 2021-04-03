@@ -18,7 +18,7 @@ char **splitwords(char *buff, char token)
 	if (words == NULL)
 		return (NULL);
 	i = 0;
-	for (; *buff && i < wordcount; buff++)
+	for (; *buff && i < wordcount;)
 	{
 		while (*buff == token)
 			buff++;

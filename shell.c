@@ -64,8 +64,9 @@ void check_full_path(char **args)
 	if (args[0][0] != '/')
 	{
 		cwd = _getenv("PWD");
-		/* _printf("cwd = %s\n", cwd); */
+
 		dirs = splitwords(path, ':');
+
 		for (i = 0; dirs[i]; i++)
 		{
 			chdir(dirs[i]);
@@ -99,6 +100,7 @@ void exec_command(char **args, char **argv, char *buff)
 			_printf("No se pudo encontrar paila\n");
 			free_words(args);
 			free(buff);
+			free_words(environ);
 	}
 }
 

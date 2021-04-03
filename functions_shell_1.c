@@ -6,6 +6,7 @@ void execve_not_working(char **args, char **argv, char *buff)
 
 	free_words(args);
 	free(buff);
+	free_words(environ);
 	perror(argv[0]);
 
 }
@@ -28,6 +29,7 @@ void TheExit(int status, char *buff, char **args)
 		write(1, "\n", 1); /*print only in terminal*/
 	free(buff);
 	free_words(args);
+	free_words(environ);
 	exit(status);
 }
 
