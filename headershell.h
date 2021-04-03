@@ -46,6 +46,8 @@ void check_inputs(char **buff, size_t *buffSize, char **args);
 void TheExit(int status, char *buff, char **args);
 void childError(pid_t *child);
 
+/*functions_shell_2.c*/
+
 /*built_ins.c*/
 int built_exit(char **args, char *buff, char **argv);
 int built_cd(char **args, char *buff, char **argv);

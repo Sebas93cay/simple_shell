@@ -27,7 +27,21 @@ int built_exit(char **args, char *buff, char **argv)
 
 int built_cd(char **args, char *buff, char **argv)
 {
-	/* char *cwd, oldpwd; */
-	_printf("%p%p%p", args, buff, argv);
-	return (0);
+	char *pwd, *oldpwd, *home;
+
+	pwd = _getenv("PWD");
+	oldpwd = _getenv("OLDPWD");
+
+	if (args[1])
+	{
+		
+	}
+	else
+	{
+		home = _getenv("HOME");
+		chdir(home);
+		_setenv("PWD", home, 1);
+		_setenv("OLDPWD", pwd, 1);
+	}
+	return (1);
 }
