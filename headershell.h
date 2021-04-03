@@ -13,6 +13,7 @@
 /*Enviroment variables*/
 extern char **environ;
 
+
 /**
  * struct list_s - singly linked list
  * @str: string - (malloc'ed string)
@@ -36,6 +37,7 @@ int main(__attribute__ ((unused)) int argc,
 void check_full_path(char **args);
 void exec_command(char **args, char **argv, char *buff);
 int check_built_in(char **args, char *buff, char **argv);
+void ignore_signal(int sig);
 
 /*fuctions_shell_1.c*/
 void execve_not_working(char **args, char **argv, char *buff);

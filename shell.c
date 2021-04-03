@@ -1,5 +1,7 @@
 #include "headershell.h"
 
+
+
 int main(__attribute__ ((unused)) int argc,
 	 __attribute__ ((unused)) char **argv,
 	 __attribute__ ((unused)) char **env)
@@ -15,6 +17,7 @@ int main(__attribute__ ((unused)) int argc,
 	/* _printf("(%u)I'm the father jojojo\n", getpid()); */
 	while (1)
 	{
+		signal(SIGINT, ignore_signal);
 		check_inputs(&buff, &buffSize, args);
 		if (*buff == '\0')
 			continue;
@@ -128,3 +131,11 @@ void exec_command(char **args, char **argv, char *buff)
 	}
 }
 
+void ignore_signal(int sig)
+{
+	write(1, "\n", 1);
+	if (isatty(0))
+		_printf("#cisfun$ "); /*print only in terminal*/
+	signal(sig, SIG_IGN);
+	signal(sig, ignore_signal);
+}
