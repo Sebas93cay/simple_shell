@@ -14,7 +14,7 @@
 
 /*Enviroment variables*/
 extern char **environ;
-
+#define BUFFSIZE 2
 
 /**
  * struct list_s - singly linked list

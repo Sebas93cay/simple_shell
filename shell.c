@@ -1,10 +1,12 @@
 #include "headershell.h"
 
+
+
 int main(__attribute__ ((unused)) int argc,
 	 __attribute__ ((unused)) char **argv,
 	 __attribute__ ((unused)) char **env)
 {
-	size_t buffSize = 2;
+	size_t buffSize = BUFFSIZE;
 	char *buff = NULL;
 	char **args = NULL;
 	pid_t child_pid;
@@ -16,7 +18,7 @@ int main(__attribute__ ((unused)) int argc,
 	/* _printf("(%u)I'm the father jojojo\n", getpid()); */
 	while (1)
 	{
-		signal(SIGINT, ignore_signal);
+		/* signal(SIGINT, ignore_signal); */
 
 		if (check_inputs(&buff, &buffSize, args))
 			continue;
@@ -115,8 +117,14 @@ void check_full_path(char **args)
 
 void exec_command(char **args, char **argv, char *buff)
 {
-
+	/* _printf("Inside exec_command\n"); */
+	/* _printf("Buff = %s\n", buff); */
+	/* _printf("Arg[0] = %s\n", args[0]); */
 	check_full_path(args);
+	/* _printf("Despues de buscar path\n"); */
+	/* _printf("Buff = %s\n", buff); */
+	/* _printf("Arg[0] = %s\n", args[0]); */
+	
 	if (**args == '/' && execve(args[0], args, NULL) == -1)
 		execve_not_working(args, argv, buff);
 	else

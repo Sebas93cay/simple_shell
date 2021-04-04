@@ -1,30 +1,47 @@
+ls
 /bin/ls
-/bin/ls
+ls -la /bin
 
+^C
+^C
 
 hola
 
-+
-
-
-ls
-
-
-ls -l
-
-ls -la
-
+1
+12
+123
+1234
+12345
 
 pwd
+cd /
+pwd
+cd -
+pwd
+cd -
+pwd
+cd
+pwd
+  hola
+    pwd
 
+ls      -a     /home
 
-ls -la .
+   env
 
+unsetenv hola
 
-ls -ÑÑÑÑ
+pwd
+setenv PWD /
+pwd
+setenv mivar elvalordemivar
+env
+setenv mivar2 elvalordemivar2
+env
+unsetenv mivar
 
+exit hola
 
-     +dsflk .
+exit 4t5
 
-/tmp/.ICE-unix
-
+exit 45
