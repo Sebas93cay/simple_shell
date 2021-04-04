@@ -26,12 +26,14 @@ int built_exit(char **args, char *buff, char **argv)
 }
 int built_cd(char **args, char **argv)
 {
-	char *pwd, *oldpwd, *home;
+	char *pwd = NULL, *oldpwd = NULL, *home;
 	DIR *dir = NULL;
 	int dirlen = 0;
 
 	pwd = _strdup(_getenv("PWD"));
-	oldpwd = _strdup(_getenv("OLDPWD"));
+	oldpwd = _getenv("OLDPWD");
+	if (oldpwd)
+		oldpwd = _strdup(oldpwd);
 	if (args[1])
 	{
 		if (_strcmp(args[1], "-") == 0)
@@ -43,7 +45,7 @@ int built_cd(char **args, char **argv)
 			if (dir)
 			{
 				dirlen = _strlen(args[1]);
-				if (args[1][dirlen - 1] == '/')
+				if (args[1][dirlen - 1] == '/' && dirlen > 1)
 					args[1][dirlen - 1] = 0;
 				change_WD(args[1], pwd);
 				closedir(dir);

@@ -4,7 +4,7 @@ int main(__attribute__ ((unused)) int argc,
 	 __attribute__ ((unused)) char **argv,
 	 __attribute__ ((unused)) char **env)
 {
-	size_t buffSize = 1;
+	size_t buffSize = 100;
 	char *buff = NULL;
 	char **args = NULL;
 	pid_t child_pid;
@@ -19,9 +19,9 @@ int main(__attribute__ ((unused)) int argc,
 		check_inputs(&buff, &buffSize, args);
 		if (*buff == '\0')
 			continue;
-		/* _printf("Vamos a liberarar args\n"); */
+
 		free_words(args);
-		/* _printf("Liberamos  args!!\n"); */
+
 		args = splitwords(buff, ' ');
 		/* _printf("Args:\n"); */
 		/* print_words(args); */
@@ -41,6 +41,19 @@ int main(__attribute__ ((unused)) int argc,
 		/* _printf("(%u) salimos de if\n", getpid()); */
 	}
 	return (0);
+}
+
+
+void check_inputs(char **buff, size_t *buffSize, char **args)
+{
+	if (isatty(0))
+		_printf("#cisfun$ "); /*print only in terminal*/
+
+	if (_getline(buff, buffSize) == EOF)
+		TheExit(0, *buff, args);
+
+	buff[0][_strlen(buff[0]) - 1] = '\0'; /*Remove new line*/
+	/* _printf("(%u) recibimos linea:\n%s\n", getpid(), *buff); */
 }
 
 
@@ -106,11 +119,3 @@ void exec_command(char **args, char **argv, char *buff)
 	}
 }
 
-void ignore_signal(int sig)
-{
-	write(1, "\n", 1);
-	if (isatty(0))
-		_printf("#cisfun$ "); /*print only in terminal*/
-	signal(sig, SIG_IGN);
-	signal(sig, ignore_signal);
-}

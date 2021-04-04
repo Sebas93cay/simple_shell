@@ -11,18 +11,6 @@ void execve_not_working(char **args, char **argv, char *buff)
 
 }
 
-void check_inputs(char **buff, size_t *buffSize, char **args)
-{
-	if (isatty(0))
-		_printf("#cisfun$ "); /*print only in terminal*/
-
-	if (getline(buff, buffSize, stdin) == EOF)
-		TheExit(0, *buff, args);
-
-	buff[0][_strlen(buff[0]) - 1] = '\0'; /*Remove new line*/
-	/* _printf("(%u) recibimos linea:\n%s\n", getpid(), *buff); */
-}
-
 void TheExit(int status, char *buff, char **args)
 {
 	if (isatty(0) && _strcmp(buff, "exit") != 0)

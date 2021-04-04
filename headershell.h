@@ -36,19 +36,20 @@ typedef struct list_s
 int main(__attribute__ ((unused)) int argc,
 	 __attribute__ ((unused)) char **argv,
 	 __attribute__ ((unused)) char **env);
+void check_inputs(char **buff, size_t *buffSize, char **args);
+int check_built_in(char **args, char *buff, char **argv);
 void check_full_path(char **args);
 void exec_command(char **args, char **argv, char *buff);
-int check_built_in(char **args, char *buff, char **argv);
-void ignore_signal(int sig);
 
 /*fuctions_shell_1.c*/
 void execve_not_working(char **args, char **argv, char *buff);
 void create_child(pid_t *child_pid);
-void check_inputs(char **buff, size_t *buffSize, char **args);
 void TheExit(int status, char *buff, char **args);
 void childError(pid_t *child);
 
 /*functions_shell_2.c*/
+void __attribute__ ((constructor)) premain();
+void ignore_signal(int sig);
 
 /*built_ins.c*/
 int built_exit(char **args, char *buff, char **argv);
@@ -77,6 +78,8 @@ char **splitwords(char *buff, char token);
 void free_words(char **args);
 void print_words(char **words);
 int check_if_num(char *num);
+ssize_t _getline(char **buff, size_t *buffsize);
+
 
 /*miscellaneous_4.c enviroment functions*/
 char *_getenv(const char *);

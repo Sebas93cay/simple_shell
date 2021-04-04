@@ -5,6 +5,7 @@ char **splitwords(char *buff, char token)
 	int i, wordcount = 0, letters = 0;
 	char **words = NULL;
 
+
 	if (buff == NULL || *buff == 0)
 		return (NULL);
 	for (i = 0; buff[i]; i++)
@@ -32,9 +33,9 @@ char **splitwords(char *buff, char token)
 		i++;
 	}
 	words[i] = NULL;
+	/* _printf("Final de splitwords\n"); */
 	return (words);
 }
-
 
 void free_words(char **args)
 {
@@ -47,9 +48,6 @@ void free_words(char **args)
 		free(args[i]);
 	free(args);
 }
-
-
-
 
 void print_words(char **words)
 {
@@ -69,4 +67,36 @@ int check_if_num(char *num)
 		num++;
 	}
 	return (0);
+}
+
+
+
+ssize_t _getline(char **buff, size_t *buffsize)
+{
+	int bytes;
+	char *tmp;
+	ssize_t orig_size = *buffsize;
+
+	if (*buff == NULL)
+	{
+		*buff = malloc(sizeof(char) * *buffsize);
+	}
+
+	tmp = *buff;
+	do {
+		bytes = read(STDIN_FILENO, tmp, orig_size);
+
+		if (bytes == orig_size)
+		{
+			*buff = _realloc(*buff, *buffsize, *buffsize + orig_size);
+			*buffsize += orig_size;
+		}
+		tmp += bytes;
+	} while (bytes == orig_size);
+	*tmp = 0;
+	/* _printf("bytes leidos = %d\n", tmp - *buff); */
+	/* _printf("El buffer dice : %s\n", *buff); */
+	if (tmp != *buff)
+		return (tmp - *buff);
+	return (EOF);
 }

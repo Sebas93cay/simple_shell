@@ -3,9 +3,6 @@
 
 int main(int argc, char **argv, char **env)
 {
-	char *buff;
-	size_t buffsize = 0;
-	char **args = NULL;
 
 	FILE *stream;
 
@@ -16,7 +13,7 @@ int main(int argc, char **argv, char **env)
 
 
 
-	free(buff);
+	
 
 
 	return (0);
