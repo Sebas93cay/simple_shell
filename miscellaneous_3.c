@@ -103,5 +103,8 @@ ssize_t _getline(char **buff, size_t *buffsize)
 			return (i);
 		return (EOF);
 	}
-	return (1);
+	free(*buff);
+	i = lines->len;
+	*buff = pop_list(&lines);
+	return (i);
 }

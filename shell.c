@@ -52,10 +52,8 @@ void check_inputs(char **buff, size_t *buffSize, char **args)
 
 	if (_getline(buff, buffSize) == EOF)
 		TheExit(0, *buff, args);
-
-
-	_printf("recibimos linea: -> %s\n", *buff);
-	_printf("buffsize = %d\n", *buffSize);
+	/* _printf("recibimos linea: -> %s\n", *buff); */
+	/* _printf("buffsize = %d\n", *buffSize); */
 }
 
 
