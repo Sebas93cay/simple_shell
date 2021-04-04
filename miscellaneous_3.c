@@ -76,6 +76,7 @@ ssize_t _getline(char **buff, size_t *buffsize)
 	int bytes;
 	int i = 0;
 	ssize_t orig_size = *buffsize;
+	int len;
 
 	static list_t *lines;
 
@@ -95,7 +96,9 @@ ssize_t _getline(char **buff, size_t *buffsize)
 			i += bytes;
 		} while (bytes == orig_size);
 		buff[0][i] = 0;
-		buff[0][_strlen(buff[0]) - 1] = '\0'; /*Remove new line*/
+		len = _strlen(buff[0]);
+		if (buff[0][len - 1] == '\n')
+			buff[0][len - 1] = '\0'; /*Remove new line*/
 		singly_split_words(*buff, &lines, '\n');
 		free(*buff);
 		*buff = pop_list(&lines);
