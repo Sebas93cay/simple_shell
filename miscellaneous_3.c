@@ -79,26 +79,29 @@ ssize_t _getline(char **buff, size_t *buffsize)
 
 	static list_t *lines;
 
-	if (*buff == NULL)
+	*buff = _realloc(*buff, 0, *buffsize);
+
+	if (list_len(lines) == 0)
 	{
-		*buff = malloc(sizeof(char) * *buffsize);
+		i = 0;
+		do {
+			bytes = read(STDIN_FILENO, *buff + i, orig_size);
+
+			if (bytes == orig_size)
+			{
+				*buff = _realloc(*buff, *buffsize, *buffsize + orig_size);
+				*buffsize += orig_size;
+			}
+			i += bytes;
+		} while (bytes == orig_size);
+		buff[0][i] = 0;
+		buff[0][_strlen(buff[0]) - 1] = '\0'; /*Remove new line*/
+		singly_split_words(*buff, &lines, '\n');
+		free(*buff);
+		*buff = pop_list(&lines);
+		if (i > 0)
+			return (i);
+		return (EOF);
 	}
-
-	i = 0;
-	do {
-		bytes = read(STDIN_FILENO, *buff + i, orig_size);
-
-		if (bytes == orig_size)
-		{
-			*buff = _realloc(*buff, *buffsize, *buffsize + orig_size);
-			*buffsize += orig_size;
-		}
-		i += bytes;
-	} while (bytes == orig_size);
-	*((*buff) + i) = 0;
-	/* _printf("bytes leidos = %d\n", tmp - *buff); */
-	/* _printf("El buffer dice : %s\n", *buff); */
-	if (i > 0)
-		return (i);
-	return (EOF);
+	return (1);
 }

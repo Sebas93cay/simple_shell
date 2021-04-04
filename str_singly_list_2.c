@@ -1,5 +1,4 @@
-#include "../shell_header.h"
-
+#include "headershell.h"
 
 /**
  * add_node_end - adds a new node at the end of a list_t list.
@@ -40,8 +39,6 @@ list_t *add_node_end(list_t **head, const char *str)
 	return (new);
 }
 
-
-
 /**
  * add_node_n_end - adds a new node at the end of a list_t list.
  * @head: pointer to pointer to first element of the list
@@ -79,3 +76,39 @@ list_t *add_node_n_end(list_t **head, const char *str, size_t n)
 	}
 	return (new);
 }
+
+
+list_t *singly_split_words(char *str, list_t **head, char delimiter)
+{
+	int letters = 0;
+
+	while (*str)
+	{
+		while (*str == delimiter)
+			str++;
+		while (str[letters] != 0 && str[letters] != delimiter)
+			letters++;
+		add_node_n_end(head, str, letters);
+		str += letters;
+		letters = 0;
+	}
+	return (*head);
+}
+
+char *pop_list(list_t **head)
+{
+	list_t *tmp;
+	char *ret;
+
+	if (head == NULL || *head == NULL)
+		return (NULL);
+
+	ret = (*head)->str;
+
+	tmp = *head;
+	*head = tmp->next;
+	free(tmp);
+	return (ret);
+}
+
+

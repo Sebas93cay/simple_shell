@@ -65,7 +65,6 @@ char *_strcpy(char *dest, char *src);
 int _strcmp(char *s1, char *s2);
 int _strncmp(char *s1, char *s2, unsigned int n);
 
-
 /*miscellaneous_2.c*/
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 char *_strncat(int n, char *dest, ...);
@@ -80,7 +79,6 @@ void print_words(char **words);
 int check_if_num(char *num);
 ssize_t _getline(char **buff, size_t *buffsize);
 
-
 /*miscellaneous_4.c enviroment functions*/
 char *_getenv(const char *);
 void _printenv(void);
@@ -88,14 +86,17 @@ int _setenv(char *name, char *value, int overwrite);
 int _unsetenv(char *name);
 char **words_cpy(char **words);
 
-/*String linked list functions*/
+/*str_singly_list_1.c*/
 size_t print_list(const list_t *h);
 size_t list_len(const list_t *h);
 list_t *add_node(list_t **head, const char *str);
 list_t *add_node_n(list_t **head, const char *str, size_t n);
-list_t *add_node_end(list_t **head, const char *str);
-list_t *add_node_n_end(list_t **head, const char *str, size_t n);
 void free_list(list_t *head);
 
+/*str_singly_list_2.c*/
+list_t *add_node_end(list_t **head, const char *str);
+list_t *add_node_n_end(list_t **head, const char *str, size_t n);
+list_t *singly_split_words(char *str, list_t **head, char delimiter);
+char *pop_list(list_t **head);
 
 #endif

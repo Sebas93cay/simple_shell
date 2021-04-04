@@ -12,6 +12,7 @@ int main(__attribute__ ((unused)) int argc,
 
 	args = malloc(sizeof(*args));
 	*args = NULL;
+	buff = malloc(sizeof(char));
 	/* _printf("(%u)I'm the father jojojo\n", getpid()); */
 	while (1)
 	{
@@ -52,7 +53,7 @@ void check_inputs(char **buff, size_t *buffSize, char **args)
 	if (_getline(buff, buffSize) == EOF)
 		TheExit(0, *buff, args);
 
-	buff[0][_strlen(buff[0]) - 1] = '\0'; /*Remove new line*/
+
 	_printf("recibimos linea: -> %s\n", *buff);
 	_printf("buffsize = %d\n", *buffSize);
 }
