@@ -77,7 +77,7 @@ char **splitwords(char *buff, char token);
 void free_words(char **args);
 void print_words(char **words);
 int check_if_num(char *num);
-ssize_t _getline(char **buff, size_t *buffsize);
+
 
 /*miscellaneous_4.c enviroment functions*/
 char *_getenv(const char *);
@@ -85,6 +85,12 @@ void _printenv(void);
 int _setenv(char *name, char *value, int overwrite);
 int _unsetenv(char *name);
 char **words_cpy(char **words);
+
+/*miscellaneous_5.c*/
+ssize_t _getline(char **buff, size_t *buffsize);
+int check_newline(char *buff, int n);
+
+
 
 /*str_singly_list_1.c*/
 size_t print_list(const list_t *h);
