@@ -36,7 +36,7 @@ typedef struct list_s
 int main(__attribute__ ((unused)) int argc,
 	 __attribute__ ((unused)) char **argv,
 	 __attribute__ ((unused)) char **env);
-void check_inputs(char **buff, size_t *buffSize, char **args);
+int check_inputs(char **buff, size_t *buffSize, char **args);
 int check_built_in(char **args, char *buff, char **argv);
 void check_full_path(char **args);
 void exec_command(char **args, char **argv, char *buff);
@@ -55,7 +55,7 @@ void ignore_signal(int sig);
 int built_exit(char **args, char *buff, char **argv);
 int built_cd(char **args, char **argv);
 void change_WD(char *newpwd, char *pwd);
-int built_env(char **args);
+int built_env(char **args, __attribute__ ((unused)) char **argv, int mode);
 
 /* miscellaneous functions */
 /*miscellaneous_1.c string function*/

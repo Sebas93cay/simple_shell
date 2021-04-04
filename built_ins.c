@@ -75,9 +75,20 @@ void change_WD(char *newpwd, char *pwd)
 }
 
 
-int built_env(__attribute__ ((unused)) char **args)
+int built_env(char **args, __attribute__ ((unused)) char **argv, int mode)
 {
-	_printenv();
+	switch (mode)
+	{
+	case 0:
+		_printenv();
+		break;
+	case 1:
+		_setenv(args[1], args[2], 1);
+		break;
+	case 2:
+		_unsetenv(args[1]);
+		break;
+	}
 	return (1);
 }
 

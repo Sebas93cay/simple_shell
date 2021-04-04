@@ -17,8 +17,8 @@ int main(__attribute__ ((unused)) int argc,
 	while (1)
 	{
 		signal(SIGINT, ignore_signal);
-		check_inputs(&buff, &buffSize, args);
-		if (*buff == '\0')
+
+		if (check_inputs(&buff, &buffSize, args))
 			continue;
 
 		free_words(args);
@@ -45,13 +45,18 @@ int main(__attribute__ ((unused)) int argc,
 }
 
 
-void check_inputs(char **buff, size_t *buffSize, char **args)
+int check_inputs(char **buff, size_t *buffSize, char **args)
 {
 	if (isatty(0))
 		_printf("#cisfun$ "); /*print only in terminal*/
 
 	if (_getline(buff, buffSize) == EOF)
 		TheExit(0, *buff, args);
+
+	if (*buff == 0)
+		return (1);
+
+	return (0);
 	/* _printf("recibimos linea: -> %s\n", *buff); */
 	/* _printf("buffsize = %d\n", *buffSize); */
 }
@@ -64,7 +69,11 @@ int check_built_in(char **args, char *buff, char **argv)
 	if (_strcmp(args[0], "cd") == 0)
 		return (built_cd(args, argv));
 	if (_strcmp(args[0], "env") == 0)
-		return (built_env(args));
+		return (built_env(args, argv, 0));
+	if (_strcmp(args[0], "setenv") == 0)
+		return (built_env(args, argv, 1));
+	if (_strcmp(args[0], "unsetenv") == 0)
+		return (built_env(args, argv, 2));
 	return (0);
 }
 
