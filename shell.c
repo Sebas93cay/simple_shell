@@ -4,7 +4,7 @@ int main(__attribute__ ((unused)) int argc,
 	 __attribute__ ((unused)) char **argv,
 	 __attribute__ ((unused)) char **env)
 {
-	size_t buffSize = 100;
+	size_t buffSize = 1024;
 	char *buff = NULL;
 	char **args = NULL;
 	pid_t child_pid;
@@ -53,7 +53,8 @@ void check_inputs(char **buff, size_t *buffSize, char **args)
 		TheExit(0, *buff, args);
 
 	buff[0][_strlen(buff[0]) - 1] = '\0'; /*Remove new line*/
-	/* _printf("(%u) recibimos linea:\n%s\n", getpid(), *buff); */
+	_printf("recibimos linea: -> %s\n", *buff);
+	_printf("buffsize = %d\n", *buffSize);
 }
 
 

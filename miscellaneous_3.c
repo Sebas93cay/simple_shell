@@ -74,29 +74,31 @@ int check_if_num(char *num)
 ssize_t _getline(char **buff, size_t *buffsize)
 {
 	int bytes;
-	char *tmp;
+	int i = 0;
 	ssize_t orig_size = *buffsize;
+
+	static list_t *lines;
 
 	if (*buff == NULL)
 	{
 		*buff = malloc(sizeof(char) * *buffsize);
 	}
 
-	tmp = *buff;
+	i = 0;
 	do {
-		bytes = read(STDIN_FILENO, tmp, orig_size);
+		bytes = read(STDIN_FILENO, *buff + i, orig_size);
 
 		if (bytes == orig_size)
 		{
 			*buff = _realloc(*buff, *buffsize, *buffsize + orig_size);
 			*buffsize += orig_size;
 		}
-		tmp += bytes;
+		i += bytes;
 	} while (bytes == orig_size);
-	*tmp = 0;
+	*((*buff) + i) = 0;
 	/* _printf("bytes leidos = %d\n", tmp - *buff); */
 	/* _printf("El buffer dice : %s\n", *buff); */
-	if (tmp != *buff)
-		return (tmp - *buff);
+	if (i > 0)
+		return (i);
 	return (EOF);
 }
