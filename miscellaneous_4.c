@@ -91,11 +91,14 @@ int _unsetenv(char *name)
 		}
 		env++;
 	}
-	env++;
-	while (*env)
+	if (*env != NULL)
 	{
-		env[0] = env[1];
 		env++;
+		while (*env)
+		{
+			env[0] = env[1];
+			env++;
+		}
 	}
 	return (0);
 }
