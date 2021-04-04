@@ -4,7 +4,7 @@ int main(__attribute__ ((unused)) int argc,
 	 __attribute__ ((unused)) char **argv,
 	 __attribute__ ((unused)) char **env)
 {
-	size_t buffSize = 1024;
+	size_t buffSize = 2;
 	char *buff = NULL;
 	char **args = NULL;
 	pid_t child_pid;

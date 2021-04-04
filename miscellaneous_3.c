@@ -75,8 +75,8 @@ ssize_t _getline(char **buff, size_t *buffsize)
 {
 	int bytes;
 	int i = 0;
-	ssize_t orig_size = *buffsize;
-	int len;
+	ssize_t read_size = *buffsize - 1; /*Save 1 byte for null character*/
+	int len, keepreading = 0, terminal = isatty(0);
 
 	static list_t *lines;
 
@@ -86,19 +86,23 @@ ssize_t _getline(char **buff, size_t *buffsize)
 	{
 		i = 0;
 		do {
-			bytes = read(STDIN_FILENO, *buff + i, orig_size);
+			bytes = read(STDIN_FILENO, *buff + i, read_size);
 
-			if (bytes == orig_size)
+			keepreading = 0;
+			if (bytes == read_size && *((*buff + i) + bytes - 1) != '\n' &&
+				terminal)
 			{
-				*buff = _realloc(*buff, *buffsize, *buffsize + orig_size);
-				*buffsize += orig_size;
+				*buff = _realloc(*buff, *buffsize, *buffsize + read_size);
+				*buffsize += read_size;
+				keepreading = 1;
 			}
 			i += bytes;
-		} while (bytes == orig_size);
+		} while (keepreading);
 		buff[0][i] = 0;
 		len = _strlen(buff[0]);
 		if (buff[0][len - 1] == '\n')
 			buff[0][len - 1] = '\0'; /*Remove new line*/
+		_printf("buff = %s\n", *buff);
 		singly_split_words(*buff, &lines, '\n');
 		free(*buff);
 		*buff = pop_list(&lines);
