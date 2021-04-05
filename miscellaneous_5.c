@@ -1,6 +1,6 @@
 #include "headershell.h"
 
-ssize_t _getline(char **buff, size_t *buffsize)
+ssize_t _getline(free_chars_t *FC, size_t *buffsize)
 {
 	int bytes;
 	int i = 0;
@@ -8,42 +8,42 @@ ssize_t _getline(char **buff, size_t *buffsize)
 	ssize_t extra_read = BUFFSIZE -1;
 	int  keepreading = 0;
 
-	static list_t *lines;
 
-	*buff = _realloc(*buff, 0, *buffsize);
+	FC->buff = _realloc(FC->buff, 0, *buffsize);
 
-	_printf("numero de lineas guardadas = %d\n", list_len(lines));
-	if (list_len(lines) != 0)
+	/* _printf("numero de lineas guardadas = %d\n", list_len(lines)); */
+	if (list_len(FC->lines) != 0)
 	{
-		free(*buff);
-		i = lines->len;
-		*buff = pop_list(&lines);
-		if (buff[0][i - 1] == '\n')
+		free(FC->buff);
+		i = FC->lines->len;
+		FC->buff = pop_list(&FC->lines);
+		if (FC->buff[i - 1] == '\n')
 		{
-			remove_newline(*buff);
-			_printf("buuf antes de salir = %s\n", *buff);
+			remove_newline(FC->buff);
+			_printf("buuf antes de salir = %s\n", FC->buff);
 			return (i);
 		}
 		i = i - 1; /*We were counting the null character when split words*/
-	}
-	i = 0;
-	do {
-		if (i != 0 && (*buffsize - 1 - i) > 0)
-			read_size = *buffsize - 1 - i;
-		else if (i != 0 && (*buffsize - 1 - i) <= 0)
-			read_size = extra_read;
+		FC->buff = _realloc(FC->buff, i, i + extra_read + 1);
+		*buffsize = i + extra_read + 1;
 
-		bytes = read(STDIN_FILENO, *buff + i, read_size);
+	}
+
+	do {
+		if (i != 0)
+			read_size = *buffsize - 1 - i;
+
+		bytes = read(STDIN_FILENO, FC->buff + i, read_size);
 		/* _printf("bytes readed = %d\n", bytes); */
 		/* _printf("buff despues de leer ="); */
 		/* write(1, *buff, i + bytes); */
 		/* write(1, "\n", 1); */
 		keepreading = 0;
-		if (bytes == read_size && check_newline(*buff + i, bytes) == 0
-		    && *(*buff + i + bytes - 1) != '\n')				
+		if (bytes == read_size && check_newline(FC->buff + i, bytes) == 0
+		    && *(FC->buff + i + bytes - 1) != '\n')				
 		{
 			/* _printf("Segimos leyendo\n"); */
-			*buff = _realloc(*buff, *buffsize, *buffsize + extra_read);
+			FC->buff = _realloc(FC->buff, *buffsize, *buffsize + extra_read);
 			*buffsize += extra_read;
 			keepreading = 1;
 		}
@@ -53,13 +53,13 @@ ssize_t _getline(char **buff, size_t *buffsize)
 	} while (keepreading);
 	/* _printf("Terminamos de leer, en total fueron %d bytes\n", i); */
 	/* _printf("Tamaño del buffer = %d\n", *buffsize); */
-	buff[0][i] = 0;
+	FC->buff[i] = 0;
 	/* _printf("buff = %s\n", *buff); */
-	singly_split_words(*buff, &lines, '\n');
-	free(*buff);
-	*buff = NULL;
-	*buff = pop_list(&lines);
-	remove_newline(*buff);
+	singly_split_words(FC->buff, &FC->lines, '\n');
+	free(FC->buff);
+	FC->buff = NULL;
+	FC->buff = pop_list(&FC->lines);
+	remove_newline(FC->buff);
 	if (i > 0)
 		return (i);
 	return (EOF);

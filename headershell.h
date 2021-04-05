@@ -32,19 +32,27 @@ typedef struct list_s
 	struct list_s *next;
 } list_t;
 
+typedef struct free_chars_t
+{
+	char **args;
+	char ** argv;
+	char *buff;
+	list_t *lines;
+} free_chars_t;
+
 /*shell*/
 int main(__attribute__ ((unused)) int argc,
 	 __attribute__ ((unused)) char **argv,
 	 __attribute__ ((unused)) char **env);
-int check_inputs(char **buff, size_t *buffSize, char **args);
-int check_built_in(char **args, char *buff, char **argv);
+int check_inputs(free_chars_t *FC, size_t *buffSize);
+int check_built_in(free_chars_t *FC);
 void check_full_path(char **args);
-void exec_command(char **args, char **argv, char *buff);
+void exec_command(free_chars_t *FC);
 
 /*fuctions_shell_1.c*/
-void execve_not_working(char **args, char **argv, char *buff);
+void execve_not_working(free_chars_t *FC);
 void create_child(pid_t *child_pid);
-void TheExit(int status, char *buff, char **args);
+void TheExit(int status, free_chars_t *FC);
 void childError(pid_t *child);
 
 /*functions_shell_2.c*/
@@ -52,10 +60,10 @@ void __attribute__ ((constructor)) premain();
 void ignore_signal(int sig);
 
 /*built_ins.c*/
-int built_exit(char **args, char *buff, char **argv);
-int built_cd(char **args, char **argv);
+int built_exit(free_chars_t *FC);
+int built_cd(free_chars_t *FC);
 void change_WD(char *newpwd, char *pwd);
-int built_env(char **args, __attribute__ ((unused)) char **argv, int mode);
+int built_env(free_chars_t *FC, int mode);
 
 /* miscellaneous functions */
 /*miscellaneous_1.c string function*/
@@ -87,7 +95,7 @@ int _unsetenv(char *name);
 char **words_cpy(char **words);
 
 /*miscellaneous_5.c*/
-ssize_t _getline(char **buff, size_t *buffsize);
+ssize_t _getline(free_chars_t *FC, size_t *buffsize);
 int check_newline(char *buff, int n);
 void remove_newline(char *buff);
 

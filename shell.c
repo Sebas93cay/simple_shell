@@ -7,34 +7,37 @@ int main(__attribute__ ((unused)) int argc,
 	 __attribute__ ((unused)) char **env)
 {
 	size_t buffSize = BUFFSIZE;
-	char *buff = NULL;
-	char **args = NULL;
 	pid_t child_pid;
 	int status;
+	free_chars_t FC;
 
-	args = malloc(sizeof(*args));
-	*args = NULL;
-	buff = malloc(sizeof(char));
+	FC.args = NULL;
+	FC.argv = argv;
+	FC.buff = NULL;
+	FC.lines = NULL;
+	FC.args = malloc(sizeof(char*));
+	*(FC.args) = NULL;
+	FC.buff = malloc(sizeof(char));
 	/* _printf("(%u)I'm the father jojojo\n", getpid()); */
 	while (1)
 	{
 		/* signal(SIGINT, ignore_signal); */
 
-		if (check_inputs(&buff, &buffSize, args))
+		if (check_inputs(&FC, &buffSize))
 			continue;
 
-		free_words(args);
+		free_words(FC.args);
 
-		args = splitwords(buff, ' ');
+		FC.args = splitwords(FC.buff, ' ');
 		/* _printf("Args:\n"); */
 		/* print_words(args); */
-		if (check_built_in(args, buff, argv))
+		if (check_built_in(&FC))
 			continue;
 		create_child(&child_pid);
 		/* _printf("(%u)ya creamos nuestro primer hijo\n", getpid()); */
 		if (child_pid == 0)
 		{
-			exec_command(args, argv, buff);
+			exec_command(&FC);
 			break;
 		}
 		else
@@ -47,35 +50,35 @@ int main(__attribute__ ((unused)) int argc,
 }
 
 
-int check_inputs(char **buff, size_t *buffSize, char **args)
+int check_inputs(free_chars_t *FC, size_t *buffSize)
 {
 	if (isatty(0))
 		_printf("#cisfun$ "); /*print only in terminal*/
 
-	if (_getline(buff, buffSize) == EOF)
-		TheExit(0, *buff, args);
+	if (_getline(FC, buffSize) == EOF)
+		TheExit(0, FC);
 
-	if (*buff == 0)
+	if (*(FC->buff) == 0)
 		return (1);
-
+	_printf("recibimos linea: -> %s\n", FC->buff);
 	return (0);
-	/* _printf("recibimos linea: -> %s\n", *buff); */
-	/* _printf("buffsize = %d\n", *buffSize); */
+
+
 }
 
 
-int check_built_in(char **args, char *buff, char **argv)
+int check_built_in(free_chars_t *FC)
 {
-	if (_strcmp(args[0], "exit") == 0)
-		return (built_exit(args, buff, argv));
-	if (_strcmp(args[0], "cd") == 0)
-		return (built_cd(args, argv));
-	if (_strcmp(args[0], "env") == 0)
-		return (built_env(args, argv, 0));
-	if (_strcmp(args[0], "setenv") == 0)
-		return (built_env(args, argv, 1));
-	if (_strcmp(args[0], "unsetenv") == 0)
-		return (built_env(args, argv, 2));
+	if (_strcmp(FC->args[0], "exit") == 0)
+		return (built_exit(FC));
+	if (_strcmp(FC->args[0], "cd") == 0)
+		return (built_cd(FC));
+	if (_strcmp(FC->args[0], "env") == 0)
+		return (built_env(FC, 0));
+	if (_strcmp(FC->args[0], "setenv") == 0)
+		return (built_env(FC, 1));
+	if (_strcmp(FC->args[0], "unsetenv") == 0)
+		return (built_env(FC, 2));
 	return (0);
 }
 
@@ -115,23 +118,23 @@ void check_full_path(char **args)
 	free_words(dirs);
 }
 
-void exec_command(char **args, char **argv, char *buff)
+void exec_command(free_chars_t *FC)
 {
 	/* _printf("Inside exec_command\n"); */
 	/* _printf("Buff = %s\n", buff); */
 	/* _printf("Arg[0] = %s\n", args[0]); */
-	check_full_path(args);
+	check_full_path(FC->args);
 	/* _printf("Despues de buscar path\n"); */
 	/* _printf("Buff = %s\n", buff); */
 	/* _printf("Arg[0] = %s\n", args[0]); */
 	
-	if (**args == '/' && execve(args[0], args, NULL) == -1)
-		execve_not_working(args, argv, buff);
+	if (**(FC->args) == '/' && execve(FC->args[0], FC->args, NULL) == -1)
+		execve_not_working(FC);
 	else
 	{
 			_printf("No se pudo encontrar paila\n");
-			free_words(args);
-			free(buff);
+			free_words(FC->args);
+			free(FC->buff);
 			free_words(environ);
 	}
 }
