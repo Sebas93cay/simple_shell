@@ -58,7 +58,7 @@ int check_inputs(free_chars_t *FC, size_t *buffSize)
 	if (_getline(FC, buffSize) == EOF)
 		TheExit(0, FC);
 
-	if (*(FC->buff) == 0)
+	if (FC->buff == NULL || *(FC->buff) == 0)
 		return (1);
 	_printf("recibimos linea: -> %s\n", FC->buff);
 	return (0);
