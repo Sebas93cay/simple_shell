@@ -2,9 +2,6 @@ ls
 /bin/ls
 ls -la /bin
 
-^C
-^C
-
 hola
 
 1

@@ -11,6 +11,8 @@ list_t *add_node_end(list_t **head, const char *str)
 	list_t *new, *l_point;
 	int strlen = 0;
 
+	if (str == NULL || *str == 0)
+		return (NULL);
 	new = malloc(sizeof(list_t));
 	if (new == NULL)
 		return (NULL);
@@ -51,6 +53,9 @@ list_t *add_node_n_end(list_t **head, const char *str, size_t n)
 	list_t *new, *l_point;
 	int strlen = n;
 
+	if (str == NULL || *str == 0)
+		return (NULL);
+
 	new = malloc(sizeof(list_t));
 	if (new == NULL)
 		return (NULL);
@@ -82,14 +87,17 @@ list_t *singly_split_words(char *str, list_t **head, char delimiter)
 {
 	int letters = 0;
 
+
 	while (*str)
 	{
 		while (*str == delimiter)
 			str++;
 		while (str[letters] != 0 && str[letters] != delimiter)
 			letters++;
-		add_node_n_end(head, str, letters);
-		str += letters;
+		add_node_n_end(head, str, letters + 1);
+		if (*(str + letters) == 0)
+			return (*head);			
+		str += letters + 1;
 		letters = 0;
 	}
 	return (*head);

@@ -14,7 +14,7 @@
 
 /*Enviroment variables*/
 extern char **environ;
-#define BUFFSIZE 2
+#define BUFFSIZE 10
 
 /**
  * struct list_s - singly linked list
@@ -89,7 +89,7 @@ char **words_cpy(char **words);
 /*miscellaneous_5.c*/
 ssize_t _getline(char **buff, size_t *buffsize);
 int check_newline(char *buff, int n);
-
+void remove_newline(char *buff);
 
 
 /*str_singly_list_1.c*/
