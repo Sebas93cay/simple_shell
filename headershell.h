@@ -14,7 +14,7 @@
 
 /*Enviroment variables*/
 extern char **environ;
-#define BUFFSIZE 1024
+#define BUFFSIZE 10
 
 /**
  * struct list_s - singly linked list
@@ -35,9 +35,10 @@ typedef struct list_s
 typedef struct free_chars_t
 {
 	char **args;
-	char ** argv;
+	char **argv;
 	char *buff;
 	list_t *lines;
+	list_t *commands;
 } free_chars_t;
 
 /*shell*/
@@ -58,6 +59,7 @@ void childError(pid_t *child);
 /*functions_shell_2.c*/
 void __attribute__ ((constructor)) premain();
 void ignore_signal(int sig);
+void check_semicolumns(free_chars_t *FC);
 
 /*built_ins.c*/
 int built_exit(free_chars_t *FC);
@@ -97,7 +99,7 @@ char **words_cpy(char **words);
 /*miscellaneous_5.c*/
 ssize_t _getline(free_chars_t *FC, size_t *buffsize);
 int check_newline(char *buff, int n);
-void remove_newline(char *buff);
+void remove_character(char *buff, char c);
 
 
 /*str_singly_list_1.c*/

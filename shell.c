@@ -15,40 +15,38 @@ int main(__attribute__ ((unused)) int argc,
 	FC.argv = argv;
 	FC.buff = NULL;
 	FC.lines = NULL;
-	FC.args = malloc(sizeof(char*));
+	FC.commands = NULL;
+	FC.args = malloc(sizeof(char *));
 	*(FC.args) = NULL;
 	FC.buff = malloc(sizeof(char));
-	/* _printf("(%u)I'm the father jojojo\n", getpid()); */
 	while (1)
 	{
-		/* signal(SIGINT, ignore_signal); */
+		if (list_len(FC.commands) == 0)
+			if (check_inputs(&FC, &buffSize))
+			{
+				/* _printf(" ********** EL buf que check inputs dio: %s\n", FC.buff); */
+				continue;
+			}
 
-		if (check_inputs(&FC, &buffSize))
-			continue;
-
+		check_semicolumns(&FC);
 		free_words(FC.args);
-
 		FC.args = splitwords(FC.buff, ' ');
 		/* _printf("Args:\n"); */
 		/* print_words(args); */
 		if (check_built_in(&FC))
 			continue;
 		create_child(&child_pid);
-		/* _printf("(%u)ya creamos nuestro primer hijo\n", getpid()); */
 		if (child_pid == 0)
 		{
 			exec_command(&FC);
 			break;
 		}
 		else
-		{
 			wait(&status);
-		}
-		/* _printf("(%u) salimos de if\n", getpid()); */
+
 	}
 	return (0);
 }
-
 
 int check_inputs(free_chars_t *FC, size_t *buffSize)
 {
@@ -127,6 +125,9 @@ void exec_command(free_chars_t *FC)
 	/* _printf("Despues de buscar path\n"); */
 	/* _printf("Buff = %s\n", buff); */
 	/* _printf("Arg[0] = %s\n", args[0]); */
+
+	/* _printf("Args: = \n"); */
+	/* print_words(FC->args); */
 	
 	if (**(FC->args) == '/' && execve(FC->args[0], FC->args, NULL) == -1)
 		execve_not_working(FC);
