@@ -1,5 +1,9 @@
 #include "headershell.h"
 
+
+/**
+ * execve_not_working - frees all strings in FC and shows error message
+ */
 void execve_not_working(free_chars_t *FC)
 {
 	/* _printf("(%u) liberaremos args[0]\n", getpid()); */
@@ -10,6 +14,10 @@ void execve_not_working(free_chars_t *FC)
 	perror(FC->argv[0]);
 
 }
+
+/**
+ * TheExit - free all strings in FC and exit program with status value
+ */
 
 void TheExit(int status, free_chars_t *FC)
 {
@@ -22,15 +30,16 @@ void TheExit(int status, free_chars_t *FC)
 	exit(status);
 }
 
+
+/**
+ * create_child - create a child
+ */
 void create_child(pid_t *child_pid)
 {
 	*child_pid = fork();
 	if (*child_pid == -1)
-		childError(child_pid);
-}
-
-void childError(pid_t *child)
-{
-	_printf("Child %u not created\n", *child);
-	exit(1);
+	{
+		_printf("Child not created\n");
+		exit(1);
+	}
 }

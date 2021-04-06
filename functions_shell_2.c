@@ -7,6 +7,9 @@ void __attribute__ ((constructor)) premain()
 }
 
 
+/**
+ * ignore_signal - singal handler, ignore the signal
+ */
 void ignore_signal(int sig)
 {
 	write(1, "\n", 1);
@@ -17,6 +20,10 @@ void ignore_signal(int sig)
 }
 
 
+/**
+ * check_semicolumns - check if there is ';' in the line to execute
+ *  and separate those commands
+ */
 void check_semicolumns(free_chars_t *FC)
 {
 	if (list_len(FC->commands) == 0)

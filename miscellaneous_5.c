@@ -16,7 +16,6 @@ ssize_t _getline(free_chars_t *FC, size_t *buffsize)
 			remove_character(FC->buff, '\n');
 			return (i);
 		}
-		i = i - 1; /*We were counting the null character when split words*/
 		FC->buff = _realloc(FC->buff, i, i + extra_read + 1);
 		*buffsize = i + extra_read + 1;
 	}

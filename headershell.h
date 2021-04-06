@@ -47,8 +47,8 @@ int main(__attribute__ ((unused)) int argc,
 	 __attribute__ ((unused)) char **env);
 int check_inputs(free_chars_t *FC, size_t *buffSize);
 int check_built_in(free_chars_t *FC);
-void check_full_path(char **args);
 void exec_command(free_chars_t *FC);
+void check_full_path(char **args);
 
 /*fuctions_shell_1.c*/
 void execve_not_working(free_chars_t *FC);

@@ -48,6 +48,9 @@ int main(__attribute__ ((unused)) int argc,
 	return (0);
 }
 
+/**
+ *check_inputs - Receive inputs from stdin
+ */
 int check_inputs(free_chars_t *FC, size_t *buffSize)
 {
 	if (isatty(0))
@@ -65,6 +68,9 @@ int check_inputs(free_chars_t *FC, size_t *buffSize)
 }
 
 
+/**
+ *check_built_in - check if input is any of the builtins
+ */
 int check_built_in(free_chars_t *FC)
 {
 	if (_strcmp(FC->args[0], "exit") == 0)
@@ -80,6 +86,41 @@ int check_built_in(free_chars_t *FC)
 	return (0);
 }
 
+
+/**
+ * exec_commands - executes comands in args.
+ */
+void exec_command(free_chars_t *FC)
+{
+	/* _printf("Inside exec_command\n"); */
+	/* _printf("Buff = %s\n", buff); */
+	/* _printf("Arg[0] = %s\n", args[0]); */
+	check_full_path(FC->args);
+	/* _printf("Despues de buscar path\n"); */
+	/* _printf("Buff = %s\n", buff); */
+	/* _printf("Arg[0] = %s\n", args[0]); */
+
+	/* _printf("Args: = \n"); */
+	/* print_words(FC->args); */
+
+	if (**(FC->args) == '/' && execve(FC->args[0], FC->args, NULL) == -1)
+		execve_not_working(FC);
+	else
+	{
+			_printf("No se pudo encontrar paila\n");
+			free_words(FC->args);
+			free(FC->buff);
+			free_list(FC->lines);
+			free_words(environ);
+	}
+}
+
+
+/**
+ * check_full_path - check if command has the full path, if not looks
+ * for the directory in the PATH where commands is and add the full path
+ * to args[0]
+ */
 void check_full_path(char **args)
 {
 	char *path = _getenv("PATH");
@@ -114,30 +155,5 @@ void check_full_path(char **args)
 		}
 	}
 	free_words(dirs);
-}
-
-void exec_command(free_chars_t *FC)
-{
-	/* _printf("Inside exec_command\n"); */
-	/* _printf("Buff = %s\n", buff); */
-	/* _printf("Arg[0] = %s\n", args[0]); */
-	check_full_path(FC->args);
-	/* _printf("Despues de buscar path\n"); */
-	/* _printf("Buff = %s\n", buff); */
-	/* _printf("Arg[0] = %s\n", args[0]); */
-
-	/* _printf("Args: = \n"); */
-	/* print_words(FC->args); */
-	
-	if (**(FC->args) == '/' && execve(FC->args[0], FC->args, NULL) == -1)
-		execve_not_working(FC);
-	else
-	{
-			_printf("No se pudo encontrar paila\n");
-			free_words(FC->args);
-			free(FC->buff);
-			free_list(FC->lines);
-			free_words(environ);
-	}
 }
 

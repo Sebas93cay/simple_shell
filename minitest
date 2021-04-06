@@ -4,3 +4,4 @@ pwd; cd /; pwd;cd -;pwd;cd -;pwd
 parece que todo esta funcionando; muy bien
 
 setenv lavariable elvalorsote; env
+
