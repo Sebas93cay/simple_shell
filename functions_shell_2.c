@@ -35,3 +35,21 @@ void check_semicolumns(free_chars_t *FC)
 	remove_character(FC->buff, ';');
 
 }
+
+int split_semicolumns(free_chars_t *FC)
+{
+	int hascommand = 0;
+	char *buff = FC->buff;
+	int i = 0;
+
+	while(*buff)
+	{
+		while(*buff != ';' )
+		{
+			i++;
+			if (*buff != ' ')
+				hascommand = 1;
+		}
+		
+	}
+}

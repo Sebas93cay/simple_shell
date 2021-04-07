@@ -61,6 +61,9 @@ int check_inputs(free_chars_t *FC, size_t *buffSize)
 
 	if (FC->buff == NULL || *(FC->buff) == 0)
 		return (1);
+
+	
+	
 	/* _printf("recibimos linea: -> %s\n", FC->buff); */
 	return (0);
 
