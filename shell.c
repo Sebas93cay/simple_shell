@@ -27,8 +27,11 @@ int main(__attribute__ ((unused)) int argc,
 				/* _printf(" ********** EL buf que check inputs dio: %s\n", FC.buff); */
 				continue;
 			}
-
 		check_semicolumns(&FC);
+		
+		if (checkANDOR(&FC) == 1)
+			continue;
+
 		free_words(FC.args);
 		FC.args = splitwords(FC.buff, ' ');
 		/* _printf("Args:\n"); */
@@ -42,8 +45,11 @@ int main(__attribute__ ((unused)) int argc,
 			break;
 		}
 		else
+		{
 			wait(&status);
-
+			_printf("WIFEXITED = %d\n", WIFEXITED(status));
+			_printf("WEXISTATUS = %d\n", WEXITSTATUS(status));
+		}
 	}
 	return (0);
 }
@@ -92,6 +98,8 @@ int check_built_in(free_chars_t *FC)
  */
 void exec_command(free_chars_t *FC)
 {
+	int result;
+	
 	/* _printf("Inside exec_command\n"); */
 	/* _printf("Buff = %s\n", buff); */
 	/* _printf("Arg[0] = %s\n", args[0]); */
@@ -103,8 +111,13 @@ void exec_command(free_chars_t *FC)
 	/* _printf("Args: = \n"); */
 	/* print_words(FC->args); */
 
-	if (**(FC->args) == '/' && execve(FC->args[0], FC->args, NULL) == -1)
-		execve_not_working(FC);
+	if (**(FC->args) == '/')
+	{
+		result = execve(FC->args[0], FC->args, NULL);
+		_printf("Resultado de la operación = %d\n", result);
+		if (result == -1)
+			execve_not_working(FC);
+	}
 	else
 	{
 			_printf("No se pudo encontrar paila\n");

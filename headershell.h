@@ -32,6 +32,13 @@ typedef struct list_s
 	struct list_s *next;
 } list_t;
 
+typedef struct ANDOR_t
+{
+	char *str;
+	int tipo;
+	struct ANDOR_t *next;
+} ANDOR_t;
+
 typedef struct free_chars_t
 {
 	char **args;
@@ -39,6 +46,7 @@ typedef struct free_chars_t
 	char *buff;
 	list_t *lines;
 	list_t *commands;
+	ANDOR_t *ANDORS;
 } free_chars_t;
 
 /*shell*/
@@ -54,12 +62,13 @@ void check_full_path(char **args);
 void execve_not_working(free_chars_t *FC);
 void create_child(pid_t *child_pid);
 void TheExit(int status, free_chars_t *FC);
-void childError(pid_t *child);
+int checkANDOR(free_chars_t *FC);
 
 /*functions_shell_2.c*/
 void __attribute__ ((constructor)) premain();
 void ignore_signal(int sig);
 void check_semicolumns(free_chars_t *FC);
+char *putPath(char *command, char *path);
 
 /*built_ins.c*/
 int built_exit(free_chars_t *FC);
@@ -78,16 +87,15 @@ int _strncmp(char *s1, char *s2, unsigned int n);
 /*miscellaneous_2.c*/
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 char *_strncat(int n, char *dest, ...);
-char *putPath(char *command, char *path);
 int _atoi(char *s);
 char *_strdup(char *s);
+char *_strndup(char *s, int n);
 
 /*miscellaneous_3.c*/
 char **splitwords(char *buff, char token);
 void free_words(char **args);
 void print_words(char **words);
 int check_if_num(char *num);
-
 
 /*miscellaneous_4.c enviroment functions*/
 char *_getenv(const char *);
@@ -98,8 +106,9 @@ char **words_cpy(char **words);
 
 /*miscellaneous_5.c*/
 ssize_t _getline(free_chars_t *FC, size_t *buffsize);
-int check_newline(char *buff, int n);
+int check_if_character(char *buff, int n, char c);
 void remove_character(char *buff, char c);
+int check_if_only_spaces(char *buff);
 
 
 /*str_singly_list_1.c*/
@@ -114,5 +123,10 @@ list_t *add_node_end(list_t **head, const char *str);
 list_t *add_node_n_end(list_t **head, const char *str, size_t n);
 list_t *singly_split_words(char *str, list_t **head, char delimiter);
 char *pop_list(list_t **head);
+
+/*ANDOR_list_functions.c*/
+ANDOR_t *add_node_n_end_andor(ANDOR_t **head, char *str, int n, int tipo);
+size_t list_len_andor(const ANDOR_t *h);
+char *pop_andor(ANDOR_t **head);
 
 #endif

@@ -44,13 +44,13 @@ ssize_t _getline(free_chars_t *FC, size_t *buffsize)
 }
 
 
-int check_newline(char *buff, int n)
+int check_if_character(char *buff, int n, char c)
 {
 	int i = 0;
 
 	for (i = 0; i < n; i++)
 	{
-		if (buff[i] == '\n')
+		if (buff[i] == c)
 			return (1);
 	}
 	return (0);
@@ -68,4 +68,14 @@ void remove_character(char *buff, char c)
 	if (buff[len - 1] == c)
 		buff[len - 1] = '\0';
 
+}
+
+int check_if_only_spaces(char *buff)
+{
+	while (*buff)
+	{
+		if (*buff != ' ')
+			return (0);
+	}
+	return (1);
 }

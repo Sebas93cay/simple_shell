@@ -35,3 +35,27 @@ void check_semicolumns(free_chars_t *FC)
 	remove_character(FC->buff, ';');
 
 }
+
+char *putPath(char *command, char *path)
+{
+	int command_len = _strlen(command);
+	int path_len = _strlen(path);
+	char tmp_command[100];
+
+	_strncpy(tmp_command, command, command_len);
+	tmp_command[command_len] = '\0';
+
+	command = _realloc(command, command_len,
+			   command_len + path_len + 1);
+	if (command == NULL)
+	{
+		exit(1);
+	}
+
+	_strncpy(command, path, path_len);
+	_strncpy(command + path_len, "/", 1);
+	_strncpy(command + path_len + 1, tmp_command, command_len);
+	command[command_len + path_len + 1] = '\0';
+
+	return (command);
+}

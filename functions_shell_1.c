@@ -43,3 +43,63 @@ void create_child(pid_t *child_pid)
 		exit(1);
 	}
 }
+
+
+int checkANDOR(free_chars_t *FC)
+{
+	int i = 0, tipo = 0;
+	char *buff = NULL;
+	
+
+	buff = FC->buff;
+
+	if (list_len_andor(FC->ANDORS) == 0)
+	{
+		for (; buff[i]; i++)
+		{
+			if (buff[i] == ' ')
+				buff++;
+			if (buff[i] == '&' && buff[i + 1] == '&')
+			{
+				if (i == 0)
+				{
+					_printf("Unexpected token &&");
+					return (1);
+				}
+				else
+				{
+					add_node_n_end_andor(&FC->ANDORS, buff, i, tipo);
+					tipo = 2;
+					buff = buff + i + 2;
+					i = 0;
+				}
+			}
+			if (buff[i] == '|' && buff[i + 1] == '|')
+			{
+				if (i == 0)
+				{
+					_printf("Unexpected token &&");
+					return (1);
+				}
+				else
+				{
+					add_node_n_end_andor(&FC->ANDORS, buff, i, tipo);
+					tipo = 1;
+					buff = buff + i + 2;
+					i = 0;
+				}
+			}
+		}
+		if (i == 1)
+		{
+			_printf("Debemos seguir leyendo\n");
+		}
+		else
+		{
+			add_node_n_end_andor(&FC->ANDORS, buff, i, tipo);
+		}
+	}
+	free(FC->buff), FC->buff = NULL;
+	FC->buff = pop_andor(&FC->ANDORS);
+	
+}
