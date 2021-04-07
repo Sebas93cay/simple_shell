@@ -36,6 +36,7 @@ void check_semicolumns(free_chars_t *FC)
 
 }
 
+
 char *putPath(char *command, char *path)
 {
 	int command_len = _strlen(command);
@@ -58,4 +59,23 @@ char *putPath(char *command, char *path)
 	command[command_len + path_len + 1] = '\0';
 
 	return (command);
+}
+
+
+int split_semicolumns(free_chars_t *FC)
+{
+	int hascommand = 0;
+	char *buff = FC->buff;
+	int i = 0;
+
+	while(*buff)
+	{
+		while(*buff != ';' )
+		{
+			i++;
+			if (*buff != ' ')
+				hascommand = 1;
+		}
+		
+	}
 }
