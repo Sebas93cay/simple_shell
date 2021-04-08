@@ -39,6 +39,7 @@ void infinite_loop(free_chars_t *FC)
 		{
 			if (check_inputs(FC, &buffSize))
 				continue;
+			_printf("Linea = %s\n", FC->buff);
 		}
 		if (ndrlen == 0)
 		{

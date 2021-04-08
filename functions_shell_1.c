@@ -136,7 +136,7 @@ int checkANDOR(free_chars_t *FC)
 				}
 			}
 		}
-		if (i == 1)
+		if (*buff == 0)
 		{
 			_printf("Debemos seguir leyendo\n");
 		}
