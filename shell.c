@@ -8,7 +8,7 @@ int main(__attribute__ ((unused)) int argc,
 {
 	size_t buffSize = BUFFSIZE;
 	pid_t child_pid;
-	int status;
+	int status, semicolonCheck = 0;
 	free_chars_t FC;
 
 	FC.args = NULL;
@@ -21,16 +21,27 @@ int main(__attribute__ ((unused)) int argc,
 	FC.buff = malloc(sizeof(char));
 	while (1)
 	{
+		semicolonCheck = 0;
 		if (list_len(FC.commands) == 0)
+		{
 			if (check_inputs(&FC, &buffSize))
 			{
 				/* _printf(" ********** EL buf que check inputs dio: %s\n", FC.buff); */
 				continue;
 			}
-		check_semicolumns(&FC);
-		
-		if (checkANDOR(&FC) == 1)
+			if (check_if_character(FC.buff, 0, ';') == 1)
+				semicolonCheck = check_semicolons(&FC);
+		}
+		else
+		{
+			semicolonCheck = check_semicolons(&FC);
+		}
+
+		if (semicolonCheck)
 			continue;
+		
+		/* if (checkANDOR(&FC) == 1) */
+		/* 	continue; */
 
 		free_words(FC.args);
 		FC.args = splitwords(FC.buff, ' ');
@@ -46,6 +57,7 @@ int main(__attribute__ ((unused)) int argc,
 		}
 		else
 		{
+			
 			wait(&status);
 			_printf("WIFEXITED = %d\n", WIFEXITED(status));
 			_printf("WEXISTATUS = %d\n", WEXITSTATUS(status));
@@ -68,6 +80,8 @@ int check_inputs(free_chars_t *FC, size_t *buffSize)
 	if (FC->buff == NULL || *(FC->buff) == 0)
 		return (1);
 
+	if (check_if_only_spaces(FC->buff) == 1)
+		return (1);
 	
 	
 	/* _printf("recibimos linea: -> %s\n", FC->buff); */

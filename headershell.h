@@ -67,7 +67,8 @@ int checkANDOR(free_chars_t *FC);
 /*functions_shell_2.c*/
 void __attribute__ ((constructor)) premain();
 void ignore_signal(int sig);
-void check_semicolumns(free_chars_t *FC);
+int check_semicolons(free_chars_t *FC);
+int split_semicolons(free_chars_t *FC);
 char *putPath(char *command, char *path);
 
 /*built_ins.c*/
@@ -128,5 +129,6 @@ char *pop_list(list_t **head);
 ANDOR_t *add_node_n_end_andor(ANDOR_t **head, char *str, int n, int tipo);
 size_t list_len_andor(const ANDOR_t *h);
 char *pop_andor(ANDOR_t **head);
+void free_ANDOR(ANDOR_t *head);
 
 #endif

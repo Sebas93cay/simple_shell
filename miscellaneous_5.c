@@ -23,7 +23,7 @@ ssize_t _getline(free_chars_t *FC, size_t *buffsize)
 		read_size = (i != 0) ? (int) *buffsize - 1 - i : read_size;
 		bytes = read(STDIN_FILENO, FC->buff + i, read_size);
 		keepreading = 0;
-		if (bytes == read_size && check_newline(FC->buff + i, bytes) == 0
+		if (bytes == read_size && check_if_character(FC->buff + i, bytes, '\n') == 0
 		    && *(FC->buff + i + bytes - 1) != '\n')
 		{
 
@@ -43,15 +43,29 @@ ssize_t _getline(free_chars_t *FC, size_t *buffsize)
 	return (EOF);
 }
 
-
+/**
+ * check_if_character - check if buff has character c in the first n bytes
+ * if n is cero, checks the buffer until a null character is found
+ */
 int check_if_character(char *buff, int n, char c)
 {
 	int i = 0;
 
-	for (i = 0; i < n; i++)
+	if (n > 0)
 	{
-		if (buff[i] == c)
-			return (1);
+		for (i = 0; i < n; i++)
+		{
+			if (buff[i] == c)
+				return (1);
+		}
+	}
+	else
+	{
+		for (i = 0; buff[i]; i++)
+		{
+			if (buff[i] == c)
+				return (1);
+		}
 	}
 	return (0);
 }
@@ -76,6 +90,7 @@ int check_if_only_spaces(char *buff)
 	{
 		if (*buff != ' ')
 			return (0);
+		buff++;
 	}
 	return (1);
 }

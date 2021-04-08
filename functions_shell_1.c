@@ -101,5 +101,6 @@ int checkANDOR(free_chars_t *FC)
 	}
 	free(FC->buff), FC->buff = NULL;
 	FC->buff = pop_andor(&FC->ANDORS);
-	
+
+	return (0);
 }

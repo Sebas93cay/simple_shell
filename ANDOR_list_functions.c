@@ -55,7 +55,7 @@ size_t list_len_andor(const ANDOR_t *h)
 
 char *pop_andor(ANDOR_t **head)
 {
-	list_t *tmp;
+	ANDOR_t *tmp;
 	char *ret;
 
 	if (head == NULL || *head == NULL)
@@ -70,3 +70,17 @@ char *pop_andor(ANDOR_t **head)
 }
 
 
+/**
+ * free_ANDOR - frees a ANDOR_t list.
+ * @head: pointer to first element of the list
+ * Return: nothing
+ */
+void free_ANDOR(ANDOR_t *head)
+{
+	if (head == NULL)
+		return;
+	if (head->next != NULL)
+		free_ANDOR(head->next);
+	free(head->str);
+	free(head);
+}

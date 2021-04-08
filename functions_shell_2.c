@@ -3,7 +3,7 @@
 void __attribute__ ((constructor)) premain()
 {
 	environ = words_cpy(environ);
-	signal(SIGINT, ignore_signal);
+	/* signal(SIGINT, ignore_signal); */
 }
 
 
@@ -24,16 +24,54 @@ void ignore_signal(int sig)
  * check_semicolumns - check if there is ';' in the line to execute
  *  and separate those commands
  */
-void check_semicolumns(free_chars_t *FC)
+int check_semicolons(free_chars_t *FC)
 {
 	if (list_len(FC->commands) == 0)
 	{
-		FC->commands = singly_split_words(FC->buff, &FC->commands, ';');
+		if (split_semicolons(FC) == 1)
+		{
+			free_list(FC->commands), FC->commands = NULL;
+			free(FC->buff), FC->buff = NULL;
+			return (1);
+		}
 	}
 	free(FC->buff), FC->buff = NULL;
 	FC->buff = pop_list(&FC->commands);
 	remove_character(FC->buff, ';');
 
+	return (0);
+}
+
+
+int split_semicolons(free_chars_t *FC)
+{
+	int hascommand = 0;
+	char *buff = FC->buff;
+	int i = 0;
+
+	while(*buff)
+	{
+		hascommand = 0;
+		while(buff[i] != ';' && buff[i] != '\0')
+		{
+			if (buff[i] != ' ')
+				hascommand = 1;
+			i++;
+		}
+		if (hascommand || buff[i] == '\0')
+		{
+			add_node_n_end(&FC->commands, buff, i);
+			buff += i + 1;
+			i = 0;
+		}
+		else
+		{
+			_printf("Error ';' not expected\n");
+			return (1);
+		}
+				
+	}
+	return (0);
 }
 
 
@@ -61,21 +99,3 @@ char *putPath(char *command, char *path)
 	return (command);
 }
 
-
-int split_semicolumns(free_chars_t *FC)
-{
-	int hascommand = 0;
-	char *buff = FC->buff;
-	int i = 0;
-
-	while(*buff)
-	{
-		while(*buff != ';' )
-		{
-			i++;
-			if (*buff != ' ')
-				hascommand = 1;
-		}
-		
-	}
-}
