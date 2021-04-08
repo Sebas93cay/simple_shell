@@ -85,12 +85,17 @@ void create_child(pid_t *child_pid)
 	}
 }
 
-
+/**
+ *  checkANDOR - split buffer in commands separated for tokens
+ * && and ||. It assings a type tipo to each command being
+ * tipo = 0 for the first command
+ * tipo = 1 for commands after a || token
+ * tipo = 2 for commands after a && token
+ */
 int checkANDOR(free_chars_t *FC)
 {
 	int i = 0, tipo = 0;
 	char *buff = NULL;
-	
 
 	buff = FC->buff;
 
@@ -98,8 +103,23 @@ int checkANDOR(free_chars_t *FC)
 	{
 		for (; buff[i]; i++)
 		{
-			if (buff[i] == ' ')
+			if (buff[i] == ' ' && i == 0)
 				buff++;
+			if (buff[i] == '|' && buff[i + 1] == '|')
+			{
+				if (i == 0)
+				{
+					_printf("Unexpected token ||");
+					return (1);
+				}
+				else
+				{
+					add_node_n_end_andor(&FC->ANDORS, buff, i, tipo);
+					tipo = 1;
+					buff = buff + i + 2;
+					i = 0;
+				}
+			}
 			if (buff[i] == '&' && buff[i + 1] == '&')
 			{
 				if (i == 0)
@@ -111,21 +131,6 @@ int checkANDOR(free_chars_t *FC)
 				{
 					add_node_n_end_andor(&FC->ANDORS, buff, i, tipo);
 					tipo = 2;
-					buff = buff + i + 2;
-					i = 0;
-				}
-			}
-			if (buff[i] == '|' && buff[i + 1] == '|')
-			{
-				if (i == 0)
-				{
-					_printf("Unexpected token &&");
-					return (1);
-				}
-				else
-				{
-					add_node_n_end_andor(&FC->ANDORS, buff, i, tipo);
-					tipo = 1;
 					buff = buff + i + 2;
 					i = 0;
 				}

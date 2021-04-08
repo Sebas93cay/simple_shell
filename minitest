@@ -1,2 +1,2 @@
-pwd; cd; pwd
-ls ; ls
+pwd; ;cd; pwd
+ls ; pwd ; ls *.c

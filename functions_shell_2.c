@@ -28,12 +28,17 @@ int check_semicolons(free_chars_t *FC)
 {
 	if (list_len(FC->commands) == 0)
 	{
-		if (split_semicolons(FC) == 1)
+		if (check_if_character(FC->buff, 0, ';') == 1)
 		{
-			free_list(FC->commands), FC->commands = NULL;
-			free(FC->buff), FC->buff = NULL;
-			return (1);
+			if (split_semicolons(FC) == 1)
+			{
+				free_list(FC->commands), FC->commands = NULL;
+				free(FC->buff), FC->buff = NULL;
+				return (1);
+			}
 		}
+		else
+			return (0);
 	}
 	free(FC->buff), FC->buff = NULL;
 	FC->buff = pop_list(&FC->commands);

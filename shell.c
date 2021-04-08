@@ -16,6 +16,7 @@ int main(__attribute__ ((unused)) int argc,
 	FC.args = malloc(sizeof(char *));
 	*(FC.args) = NULL;
 	FC.buff = malloc(sizeof(char));
+	FC.ANDORS = NULL;
 
 	infinite_loop(&FC);
 
@@ -28,24 +29,38 @@ int main(__attribute__ ((unused)) int argc,
 void infinite_loop(free_chars_t *FC)
 {
 	pid_t child_pid;
-	int semicolonCheck, buffSize = BUFFSIZE, status;
+	int buffSize = BUFFSIZE, status, ndrlen, cmndlen;
 
 	while (1)
 	{
-		semicolonCheck = 0;
-		if (list_len(FC->commands) == 0)
+		ndrlen = list_len_andor(FC->ANDORS);
+		cmndlen = list_len(FC->commands);
+		if (ndrlen == 0 && cmndlen == 0)
 		{
 			if (check_inputs(FC, &buffSize))
 				continue;
-			if (check_if_character(FC->buff, 0, ';') == 1)
-				semicolonCheck = check_semicolons(FC);
 		}
-		else
-			semicolonCheck = check_semicolons(FC);
-		if (semicolonCheck)
+		if (ndrlen == 0)
+		{
+			if (check_semicolons(FC) == 1)
+				continue;		
+		}		
+		if (checkANDOR(FC) == 1)
 			continue;
-		/* if (checkANDOR(&FC) == 1) */
-		/* 	continue; */
+		
+			/* semicolonCheck = 0; */
+			/* if (list_len(FC->commands) == 0) */
+			/* { */
+			/* 	if (check_inputs(FC, &buffSize)) */
+			/* 		continue; */
+			/* 	if (check_if_character(FC->buff, 0, ';') == 1) */
+			/* 		semicolonCheck = check_semicolons(FC); */
+			/* } */
+			/* else */
+			/* 	semicolonCheck = check_semicolons(FC); */
+			/* if (semicolonCheck) */
+			/* 	continue;		 */
+
 		free_words(FC->args);
 		FC->args = splitwords(FC->buff, ' ');
 		if (check_built_in(FC))
