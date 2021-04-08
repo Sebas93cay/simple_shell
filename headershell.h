@@ -53,12 +53,14 @@ typedef struct free_chars_t
 int main(__attribute__ ((unused)) int argc,
 	 __attribute__ ((unused)) char **argv,
 	 __attribute__ ((unused)) char **env);
-int check_inputs(free_chars_t *FC, size_t *buffSize);
+void infinite_loop(free_chars_t *FC);
+int check_inputs(free_chars_t *FC, int *buffSize);
 int check_built_in(free_chars_t *FC);
 void exec_command(free_chars_t *FC);
-void check_full_path(char **args);
+
 
 /*fuctions_shell_1.c*/
+void check_full_path(char **args);
 void execve_not_working(free_chars_t *FC);
 void create_child(pid_t *child_pid);
 void TheExit(int status, free_chars_t *FC);
@@ -106,7 +108,7 @@ int _unsetenv(char *name);
 char **words_cpy(char **words);
 
 /*miscellaneous_5.c*/
-ssize_t _getline(free_chars_t *FC, size_t *buffsize);
+ssize_t _getline(free_chars_t *FC, int *buffsize);
 int check_if_character(char *buff, int n, char c);
 void remove_character(char *buff, char c);
 int check_if_only_spaces(char *buff);

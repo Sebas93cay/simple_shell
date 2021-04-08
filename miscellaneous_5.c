@@ -1,6 +1,6 @@
 #include "headershell.h"
 
-ssize_t _getline(free_chars_t *FC, size_t *buffsize)
+ssize_t _getline(free_chars_t *FC, int *buffsize)
 {
 	int bytes, i = 0, keepreading = 0;
 	ssize_t read_size = *buffsize - 1, extra_read = BUFFSIZE - 1;

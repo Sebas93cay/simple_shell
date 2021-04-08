@@ -1,5 +1,46 @@
 #include "headershell.h"
 
+/**
+ * check_full_path - check if command has the full path, if not looks
+ * for the directory in the PATH where commands is and add the full path
+ * to args[0]
+ */
+void check_full_path(char **args)
+{
+	char *path = _getenv("PATH");
+	char **dirs = NULL;
+	char *cwd = NULL, *tmp_ptr = NULL;
+	int i;
+	struct stat st;
+
+	if (args[0][0] != '/')
+	{
+		cwd = _getenv("PWD");
+
+		dirs = splitwords(path, ':');
+
+		for (i = 0; dirs[i]; i++)
+		{
+			chdir(dirs[i]);
+			if (stat(*args, &st) == 0)
+			{
+				/* _printf("Found in %s \n", dirs[i]); */
+				chdir(cwd);
+				break;
+			}
+		}
+		/* _printf("dirs[i] == %s\n", dirs[i]); */
+		if (dirs[i] != NULL)
+		{
+			tmp_ptr = dirs[i];
+			dirs[i] = args[0];
+			args[0] = tmp_ptr;
+			args[0] = _strncat(2, args[0], "/", dirs[i]);
+		}
+	}
+	free_words(dirs);
+}
+
 
 /**
  * execve_not_working - frees all strings in FC and shows error message
