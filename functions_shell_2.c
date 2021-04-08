@@ -61,7 +61,7 @@ int split_semicolons(free_chars_t *FC)
 		if (hascommand || buff[i] == '\0')
 		{
 			add_node_n_end(&FC->commands, buff, i);
-			buff += i + 1;
+			buff += (buff[i] == ';')? i + 1 : i;
 			i = 0;
 		}
 		else
