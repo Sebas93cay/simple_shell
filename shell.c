@@ -152,6 +152,7 @@ void exec_command(free_chars_t *FC)
 			free_words(FC->args);
 			free(FC->buff);
 			free_list(FC->lines);
+			free_list(FC->commands);
 			free_words(environ);
 	}
 }
