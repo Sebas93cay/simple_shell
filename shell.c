@@ -56,11 +56,10 @@ int main(__attribute__ ((unused)) int argc,
 			break;
 		}
 		else
-		{
-			
+		{			
 			wait(&status);
-			_printf("WIFEXITED = %d\n", WIFEXITED(status));
-			_printf("WEXISTATUS = %d\n", WEXITSTATUS(status));
+			/* _printf("WIFEXITED = %d\n", WIFEXITED(status)); */
+			/* _printf("WEXISTATUS = %d\n", WEXITSTATUS(status)); */
 		}
 	}
 	return (0);
@@ -75,7 +74,11 @@ int check_inputs(free_chars_t *FC, size_t *buffSize)
 		_printf("#cisfun$ "); /*print only in terminal*/
 
 	if (_getline(FC, buffSize) == EOF)
-		TheExit(0, FC);
+	{
+		free_words(FC->args);
+		free_words(environ);
+		exit(0);
+	}
 
 	if (FC->buff == NULL || *(FC->buff) == 0)
 		return (1);
@@ -117,21 +120,11 @@ void exec_command(free_chars_t *FC)
 {
 	int result;
 	
-	/* _printf("Inside exec_command\n"); */
-	/* _printf("Buff = %s\n", buff); */
-	/* _printf("Arg[0] = %s\n", args[0]); */
 	check_full_path(FC->args);
-	/* _printf("Despues de buscar path\n"); */
-	/* _printf("Buff = %s\n", buff); */
-	/* _printf("Arg[0] = %s\n", args[0]); */
-
-	/* _printf("Args: = \n"); */
-	/* print_words(FC->args); */
 
 	if (**(FC->args) == '/')
 	{
 		result = execve(FC->args[0], FC->args, NULL);
-		_printf("Resultado de la operación = %d\n", result);
 		if (result == -1)
 			execve_not_working(FC);
 	}

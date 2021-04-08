@@ -37,8 +37,10 @@ int built_cd(free_chars_t *FC)
 	if (FC->args[1])
 	{
 		if (_strcmp(FC->args[1], "-") == 0)
+		{
 			change_WD(oldpwd, pwd);
-
+			_printf("%s\n", oldpwd);
+		}
 		else if (FC->args[1][0] == '/')
 		{
 			dir = opendir(FC->args[1]);
