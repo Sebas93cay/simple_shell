@@ -76,12 +76,13 @@ char *pop_andor(ANDOR_t **head)
  * @head: pointer to first element of the list
  * Return: nothing
  */
-void free_ANDOR(ANDOR_t *head)
+void free_ANDOR(ANDOR_t **head)
 {
-	if (head == NULL)
+	if (*head == NULL || head == NULL)
 		return;
-	if (head->next != NULL)
-		free_ANDOR(head->next);
-	free(head->str);
-	free(head);
+	if ((*head)->next != NULL)
+		free_ANDOR(&(*head)->next);
+	free((*head)->str);
+	free(*head);
+	*head = NULL;
 }

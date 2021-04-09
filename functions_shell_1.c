@@ -120,6 +120,7 @@ int checkANDOR(free_chars_t *FC)
 					_printf("Unexpected token ||\n");
 					free_list(FC->commands), FC->commands = NULL;
 					free(FC->buff), FC->buff = NULL;
+					free_ANDOR(&FC->ANDORS);
 					if (isatty(0))
 					{
 						return (1);
@@ -145,6 +146,7 @@ int checkANDOR(free_chars_t *FC)
 				{
 					_printf("Unexpected token &&\n");
 					free_list(FC->commands), FC->commands = NULL;
+					free_ANDOR(&FC->ANDORS);
 					free(FC->buff), FC->buff = NULL;
 					if (isatty(0))
 					{
