@@ -44,8 +44,8 @@ void infinite_loop(free_chars_t *FC)
 		if (ndrlen == 0)
 		{
 			if (check_semicolons(FC) == 1)
-				continue;		
-		}		
+				continue;
+		}
 		if (checkANDOR(FC) == 1)
 			continue;
 
@@ -78,20 +78,21 @@ int check_inputs(free_chars_t *FC, int *buffSize)
 	if (isatty(0))
 		_printf("#cisfun$ "); /*print only in terminal*/
 
+
+
 	if (_getline(FC, buffSize) == EOF)
 	{
 		free_words(FC->args);
 		free_words(environ);
 		exit(0);
 	}
+	_printf("la linea es = %s\n", FC->buff);
 
 	if (FC->buff == NULL || *(FC->buff) == 0)
 		return (1);
 
 	if (check_if_only_spaces(FC->buff) == 1)
 		return (1);
-	
-	
 
 	/* _printf("recibimos linea: -> %s\n", FC->buff); */
 	return (0);
@@ -146,5 +147,3 @@ void exec_command(free_chars_t *FC)
 			free_words(environ);
 	}
 }
-
-

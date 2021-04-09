@@ -16,7 +16,7 @@ void check_full_path(char **args)
 	cwd = _getenv("PWD");
 	if (args[0][0] == '.' && args[0][1] == '/')
 	{
-		if(stat(*args + 2, &st) == 0)
+		if (stat(*args + 2, &st) == 0)
 		{
 			command = _strdup(*args + 2);
 			free(args[0]);
@@ -29,30 +29,22 @@ void check_full_path(char **args)
 	{
 		singly_split_words(path, &dirs, ':');
 		dir = dirs;
-
 		while (dir)
 		{
 			remove_last_character(dir->str, ':');
-
 			chdir(dir->str);
-
 			if (stat(*args, &st) == 0)
 			{
 				chdir(cwd);
 				break;
 			}
-
 			dir = dir->next;
 		}
-
 		if (dir != NULL)
 		{
-			tmp_ptr = dir->str;
-			dir->str = args[0];
-			args[0] = tmp_ptr;
+			tmp_ptr = dir->str, dir->str = args[0], args[0] = tmp_ptr;
 			args[0] = _strncat(2, args[0], "/", dir->str);
 		}
-
 	}
 	free_list(dirs);
 }
