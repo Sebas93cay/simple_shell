@@ -7,20 +7,31 @@
  */
 void check_full_path(char **args)
 {
-	char *path = _getenv("PATH");
+	char *path = _getenv("PATH"), *command = NULL;
 	/* char **dirs = NULL; */
 	list_t *dirs = NULL, *dir = NULL;
 	char *cwd = NULL, *tmp_ptr = NULL;
 	struct stat st;
 
-	if (args[0][0] != '/')
+	cwd = _getenv("PWD");
+	if (args[0][0] == '.' && args[0][1] == '/')
 	{
-		cwd = _getenv("PWD");
+		if(stat(*args + 2, &st) == 0)
+		{
+			command = _strdup(*args + 2);
+			free(args[0]);
+			args[0] = _strdup(cwd);
+			args[0] = _strncat(2, args[0], "/", command);
+			free(command);
+		}
+	}
+	else if (args[0][0] != '/')
+	{
 		singly_split_words(path, &dirs, ':');
-		dir = add_node(&dirs, cwd);
+		dir = dirs;
+
 		while (dir)
 		{
-
 			remove_last_character(dir->str, ':');
 
 			chdir(dir->str);
@@ -30,6 +41,7 @@ void check_full_path(char **args)
 				chdir(cwd);
 				break;
 			}
+
 			dir = dir->next;
 		}
 

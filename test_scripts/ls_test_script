@@ -1,0 +1,54 @@
+#!/bin/bash
+#
+# simple test with ls to check if the shell can find ls in the PATH
+
+function stop_shell()
+{
+    if [ `pidof $SHELL | wc -l` -ne 0 ]; then
+	   killall -9 $SHELL 2>&1 > /dev/null
+    fi
+#    rm -f $OUTPUTFILE $ERROROUTPUTFILE $LTRACEOUTPUTFILE
+}
+
+
+command="ls"
+R=$RANDOM
+tmp_file="checker_tmp_file_$R"
+#SHELL="../a.out"
+SHELL="/bin/sh"
+OUTPUTFILE="checker_output_$R"
+
+# clean up
+stop_shell
+rm -f $tmp_file
+
+# create a pseudo random file
+touch $tmp_file
+# send commands
+echo "$command" | $SHELL > $OUTPUTFILE 2> /dev/null &
+
+# wait a little bit
+$SLEEP $SLEEPSECONDS
+$SLEEP $SLEEPSECONDS
+$SLEEP $SLEEPSECONDS
+$SLEEP $SLEEPSECONDS
+
+# check the result
+echo "$tmp_file"
+#echo "cat $OUTPUTFILE | grep -c "$tmp_file""
+echo `cat loquesea`
+
+nmatch=`cat $OUTPUTFILE | grep -c "$tmp_file"`
+
+echo "imprimimos nmatch"
+echo "$nmatch"
+echo `cat $OUTPUTFILE`
+if [ "$nmatch" -eq 1 ]; then
+   	   echo ok
+else
+	   echo ko
+fi
+
+# clean up
+stop_shell
+#rm -f $tmp_file
