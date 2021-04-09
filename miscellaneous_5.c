@@ -13,7 +13,7 @@ ssize_t _getline(free_chars_t *FC, int *buffsize)
 		FC->buff = pop_list(&FC->lines);
 		if (FC->buff[i - 1] == '\n')
 		{
-			remove_character(FC->buff, '\n');
+			remove_last_character(FC->buff, '\n');
 			return (i);
 		}
 		FC->buff = _realloc(FC->buff, i, i + extra_read + 1);
@@ -37,7 +37,7 @@ ssize_t _getline(free_chars_t *FC, int *buffsize)
 	singly_split_words(FC->buff, &FC->lines, '\n');
 	free(FC->buff),	FC->buff = NULL;
 	FC->buff = pop_list(&FC->lines);
-	remove_character(FC->buff, '\n');
+	remove_last_character(FC->buff, '\n');
 	if (i > 0)
 		return (i);
 	return (EOF);
@@ -71,7 +71,7 @@ int check_if_character(char *buff, int n, char c)
 }
 
 
-void remove_character(char *buff, char c)
+void remove_last_character(char *buff, char c)
 {
 	int len;
 

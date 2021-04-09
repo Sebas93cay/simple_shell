@@ -34,7 +34,16 @@ int check_semicolons(free_chars_t *FC)
 			{
 				free_list(FC->commands), FC->commands = NULL;
 				free(FC->buff), FC->buff = NULL;
-				return (1);
+				free_list(FC->lines), FC->lines = NULL;
+				if (isatty(0))
+				{
+					return (1);
+				}
+				else
+				{
+					free_words(environ);
+					exit (2);
+				}
 			}
 		}
 		else
@@ -42,7 +51,7 @@ int check_semicolons(free_chars_t *FC)
 	}
 	free(FC->buff), FC->buff = NULL;
 	FC->buff = pop_list(&FC->commands);
-	remove_character(FC->buff, ';');
+	remove_last_character(FC->buff, ';');
 
 	return (0);
 }

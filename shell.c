@@ -39,7 +39,7 @@ void infinite_loop(free_chars_t *FC)
 		{
 			if (check_inputs(FC, &buffSize))
 				continue;
-			_printf("Linea = %s\n", FC->buff);
+			/* _printf("Linea = %s\n", FC->buff); */
 		}
 		if (ndrlen == 0)
 		{
@@ -48,19 +48,6 @@ void infinite_loop(free_chars_t *FC)
 		}		
 		if (checkANDOR(FC) == 1)
 			continue;
-		
-			/* semicolonCheck = 0; */
-			/* if (list_len(FC->commands) == 0) */
-			/* { */
-			/* 	if (check_inputs(FC, &buffSize)) */
-			/* 		continue; */
-			/* 	if (check_if_character(FC->buff, 0, ';') == 1) */
-			/* 		semicolonCheck = check_semicolons(FC); */
-			/* } */
-			/* else */
-			/* 	semicolonCheck = check_semicolons(FC); */
-			/* if (semicolonCheck) */
-			/* 	continue;		 */
 
 		free_words(FC->args);
 		FC->args = splitwords(FC->buff, ' ');
@@ -138,12 +125,14 @@ int check_built_in(free_chars_t *FC)
 void exec_command(free_chars_t *FC)
 {
 	int result;
-	
+
 	check_full_path(FC->args);
+
+
 
 	if (**(FC->args) == '/')
 	{
-		result = execve(FC->args[0], FC->args, NULL);
+		result = execve(FC->args[0], FC->args, environ);
 		if (result == -1)
 			execve_not_working(FC);
 	}

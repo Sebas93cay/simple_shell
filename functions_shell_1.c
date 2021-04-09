@@ -8,37 +8,41 @@
 void check_full_path(char **args)
 {
 	char *path = _getenv("PATH");
-	char **dirs = NULL;
+	/* char **dirs = NULL; */
+	list_t *dirs = NULL, *dir = NULL;
 	char *cwd = NULL, *tmp_ptr = NULL;
-	int i;
 	struct stat st;
 
 	if (args[0][0] != '/')
 	{
 		cwd = _getenv("PWD");
-
-		dirs = splitwords(path, ':');
-
-		for (i = 0; dirs[i]; i++)
+		singly_split_words(path, &dirs, ':');
+		dir = add_node(&dirs, cwd);
+		while (dir)
 		{
-			chdir(dirs[i]);
+
+			remove_last_character(dir->str, ':');
+
+			chdir(dir->str);
+
 			if (stat(*args, &st) == 0)
 			{
-				/* _printf("Found in %s \n", dirs[i]); */
 				chdir(cwd);
 				break;
 			}
+			dir = dir->next;
 		}
-		/* _printf("dirs[i] == %s\n", dirs[i]); */
-		if (dirs[i] != NULL)
+
+		if (dir != NULL)
 		{
-			tmp_ptr = dirs[i];
-			dirs[i] = args[0];
+			tmp_ptr = dir->str;
+			dir->str = args[0];
 			args[0] = tmp_ptr;
-			args[0] = _strncat(2, args[0], "/", dirs[i]);
+			args[0] = _strncat(2, args[0], "/", dir->str);
 		}
+
 	}
-	free_words(dirs);
+	free_list(dirs);
 }
 
 
@@ -101,16 +105,27 @@ int checkANDOR(free_chars_t *FC)
 
 	if (list_len_andor(FC->ANDORS) == 0)
 	{
-		for (; buff[i]; i++)
+		while (buff[i])
 		{
-			if (buff[i] == ' ' && i == 0)
+			if (buff[i] == ' ' && i <= 1)
 				buff++;
-			if (buff[i] == '|' && buff[i + 1] == '|')
+			else if (buff[i] == '|' && buff[i + 1] == '|')
 			{
 				if (i == 0)
 				{
-					_printf("Unexpected token ||");
-					return (1);
+					_printf("Unexpected token ||\n");
+					free_list(FC->commands), FC->commands = NULL;
+					free(FC->buff), FC->buff = NULL;
+					if (isatty(0))
+					{
+						return (1);
+					}
+					else
+					{
+						free_list(FC->lines), FC->lines = NULL;
+						free_words(environ);
+						exit (2);
+					}
 				}
 				else
 				{
@@ -120,12 +135,23 @@ int checkANDOR(free_chars_t *FC)
 					i = 0;
 				}
 			}
-			if (buff[i] == '&' && buff[i + 1] == '&')
+			else if (buff[i] == '&' && buff[i + 1] == '&')
 			{
 				if (i == 0)
 				{
-					_printf("Unexpected token &&");
-					return (1);
+					_printf("Unexpected token &&\n");
+					free_list(FC->commands), FC->commands = NULL;
+					free(FC->buff), FC->buff = NULL;
+					if (isatty(0))
+					{
+						return (1);
+					}
+					else
+					{
+						free_list(FC->lines), FC->lines = NULL;
+						free_words(environ);
+						exit (2);
+					}
 				}
 				else
 				{
@@ -135,6 +161,8 @@ int checkANDOR(free_chars_t *FC)
 					i = 0;
 				}
 			}
+			else
+				i++;
 		}
 		if (*buff == 0)
 		{

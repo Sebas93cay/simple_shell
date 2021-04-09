@@ -3,16 +3,14 @@
 
 int main(int argc, char **argv, char **env)
 {
+	struct stat st;
 
-	FILE *stream;
+	chdir("/bin/");
+	printf("%d y %d\n", stat("hola", &st), stat("./ls", &st));
 
-	stream = stdin;
+	char *args[] = {"/bin/./ls", NULL};
 
-	printf("el puntero : %p\n", stream->_IO_read_ptr);
-	printf("el puntero : %p\n", stdin->_IO_read_ptr);
-
-
-
+	execve(args[0], args, NULL);
 	
 
 

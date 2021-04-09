@@ -110,7 +110,7 @@ char **words_cpy(char **words);
 /*miscellaneous_5.c*/
 ssize_t _getline(free_chars_t *FC, int *buffsize);
 int check_if_character(char *buff, int n, char c);
-void remove_character(char *buff, char c);
+void remove_last_character(char *buff, char c);
 int check_if_only_spaces(char *buff);
 
 
