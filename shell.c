@@ -7,6 +7,7 @@ int main(__attribute__ ((unused)) int argc,
 	 __attribute__ ((unused)) char **env)
 {
 	free_chars_t FC;
+	alias nodo1, nodo2;
 
 	FC.args = NULL;
 	FC.argv = argv;
@@ -17,10 +18,24 @@ int main(__attribute__ ((unused)) int argc,
 	*(FC.args) = NULL;
 	FC.buff = malloc(sizeof(char));
 	FC.ANDORS = NULL;
+	FC.aliases = NULL;
 	FC.last_command_result = 0;
+	
+
+
+	FC.aliases = &nodo1;
+
+	nodo1.name = _strdup("alias1");
+	nodo1.value = _strdup("valor1");
+	nodo1.next = &nodo2;
+	
+	nodo2.name = _strdup("alias2");
+	nodo2.value = _strdup("valor2");
+	nodo2.next = NULL;
+
 
 	infinite_loop(&FC);
-
+	
 	return (0);
 }
 
@@ -85,8 +100,6 @@ int check_inputs(free_chars_t *FC, int *buffSize)
 	if (isatty(0))
 		_printf("#cisfun$ "); /*print only in terminal*/
 
-
-
 	if (_getline(FC, buffSize) == EOF)
 	{
 		free_words(FC->args);
@@ -139,6 +152,20 @@ int check_built_in(free_chars_t *FC)
 			return (1);
 		}
 	}
+	if (_strcmp(FC->args[0], "alias") == 0)
+	{
+		if (FC->args[1] == NULL)
+		{
+			built_print_aliases(FC->aliases);
+			return (1);
+		}
+		else
+		{
+			_printf("el argumento 2 es: %s\n", FC->args[1]);
+			_printf("el argumento 3 es: %s\n", FC->args[2]);
+		}
+	}
+	
 	return (0);
 }
 

@@ -32,6 +32,13 @@ typedef struct list_s
 	struct list_s *next;
 } list_t;
 
+typedef struct alias
+{
+	char *name;
+	char *value;
+	struct alias *next;
+}alias;
+
 typedef struct ANDOR_t
 {
 	char *str;
@@ -48,6 +55,7 @@ typedef struct free_chars_t
 	list_t *commands;
 	ANDOR_t *ANDORS;
 	int last_command_result;
+	alias *aliases;
 } free_chars_t;
 
 /*shell*/
@@ -83,6 +91,7 @@ int built_exit(free_chars_t *FC);
 int built_cd(free_chars_t *FC);
 void change_WD(char *newpwd, char *pwd);
 int built_env(free_chars_t *FC, int mode);
+int built_print_aliases(alias *head);
 
 /* miscellaneous functions */
 /*miscellaneous_1.c string function*/

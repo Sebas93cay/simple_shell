@@ -130,7 +130,7 @@ int checkANDOR(free_chars_t *FC)
 		}
 		if (check_if_only_spaces(buff))
 		{
-			_printf("Debemos seguir leyendo\n");
+			_printf("> ");
 		}
 		else
 		{

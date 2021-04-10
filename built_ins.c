@@ -101,3 +101,10 @@ int built_env(free_chars_t *FC, int mode)
 	return (1);
 }
 
+int built_print_aliases(alias *head)
+{
+	if (head == NULL)
+		return (1);
+	_printf("alias %s='%s'\n", head->name, head->value);
+	return (built_print_aliases(head->next));
+}
