@@ -87,6 +87,7 @@ char *putPath(char *command, char *path);
 int check_errors(free_chars_t *FC);
 int check_no_commands_inbetween(free_chars_t *FC);
 int check_if_need_more_read(free_chars_t *FC);
+list_t *join_lines(list_t **lines);
 
 /*built_ins.c*/
 int built_exit(free_chars_t *FC);
@@ -128,7 +129,7 @@ ssize_t _getline(free_chars_t *FC, int *buffsize);
 int check_if_character(char *buff, int n, char c);
 void remove_last_character(char *buff, char c);
 int check_if_not_commands(char *buff);
-
+int check_if_line(char *buff, int n);
 
 /*str_singly_list_1.c*/
 size_t print_list(const list_t *h);
@@ -142,6 +143,7 @@ list_t *add_node_end(list_t **head, const char *str);
 list_t *add_node_n_end(list_t **head, const char *str, size_t n);
 list_t *singly_split_words(char *str, list_t **head, char delimiter);
 char *pop_list(list_t **head);
+int delete_node_at_index(list_t **head, unsigned int index);
 
 /*ANDOR_list_functions.c*/
 ANDOR_t *add_node_n_end_andor(ANDOR_t **head, char *str, int n, int tipo);

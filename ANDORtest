@@ -1,5 +1,12 @@
+pwd && pwd   
+pwd
+
+cd / ; cd - ; echo "hola"
+
+pwd ; ls ; cd - ||
+pwd && pwd   
+pwd
+
 ls ; pwd && ls ; pwd &&
 
 ls ; pwd && pwd && ls
-pwd ; ls
-pwd

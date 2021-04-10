@@ -52,9 +52,10 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 
 
 /**
- * _strcat - concatenate two strings
+ * _strncat - concatenate varios strings in dest, including 
+ * what is in dest already
+ * @n: strings to concatenate after dest;
  * @dest: string destiny
- * @src: string source
  * Return: Returns a pointer to the destiny string
  */
 char *_strncat(int n, char *dest, ...)

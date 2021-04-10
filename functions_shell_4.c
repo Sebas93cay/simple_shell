@@ -88,7 +88,24 @@ int check_if_need_more_read(free_chars_t *FC)
 			_printf("> ");
 		add_node(&FC->lines, FC->buff);
 		FC->need_to_readnextline = 1;
+		if (!isatty(0))
+			join_lines(&FC->lines);
 		return (1);
 	}
 	return (0);
+}
+
+list_t *join_lines(list_t **lines)
+{
+
+	if(lines == NULL || *lines == NULL)
+		return (NULL);
+	if((*lines)->next == NULL)
+		return (*lines);
+
+	(*lines)->str = _strncat(1, (*lines)->str, (*lines)->next->str);
+	(*lines)->len = _strlen((*lines)->str);
+
+	delete_node_at_index(lines, 1);
+	return (*lines);
 }

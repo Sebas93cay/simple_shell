@@ -23,8 +23,7 @@ ssize_t _getline(free_chars_t *FC, int *buffsize)
 		read_size = (i != 0) ? (int) *buffsize - 1 - i : read_size;
 		bytes = read(STDIN_FILENO, FC->buff + i, read_size);
 		keepreading = 0;
-		if (bytes == read_size && check_if_character(FC->buff + i, bytes, '\n') == 0
-		    && *(FC->buff + i + bytes - 1) != '\n')
+		if (bytes == read_size && check_if_line(FC->buff, i) == 0)		    
 		{
 
 			FC->buff = _realloc(FC->buff, *buffsize, *buffsize + extra_read);
@@ -101,4 +100,25 @@ int check_if_not_commands(char *buff)
 		buff++;
 	}
 	return (1);
+}
+
+int check_if_line(char *buff, int n)
+{
+	int full_line = 0, i = 0;
+	if (buff == NULL || *buff == 0)
+		return (0);
+	while((buff[i] == '\n' || buff[i] == ' ') && i < n)
+		i++;
+	if (i == n)
+		return (0);
+	while(i < n)
+	{
+		if (buff[i] == '\n')
+		{
+			full_line = 1;
+			break;
+		}
+		i++;
+	}
+	return (full_line);
 }
