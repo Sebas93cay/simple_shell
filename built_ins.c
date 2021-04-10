@@ -40,6 +40,7 @@ int built_cd(free_chars_t *FC)
 		{
 			change_WD(oldpwd, pwd);
 			_printf("%s\n", oldpwd);
+			FC->last_command_result = 0;
 		}
 		else if (FC->args[1][0] == '/')
 		{
@@ -51,9 +52,13 @@ int built_cd(free_chars_t *FC)
 					FC->args[1][dirlen - 1] = 0;
 				change_WD(FC->args[1], pwd);
 				closedir(dir);
+				FC->last_command_result = 0;
 			}
 			else if (errno == ENOENT)
+			{
 				_printf("%s: 1: can't cd to %s\n", FC->argv[0], FC->args[1]);
+				FC->last_command_result = 1;
+			}
 		}
 	}
 	else
@@ -62,6 +67,7 @@ int built_cd(free_chars_t *FC)
 		chdir(home);
 		_setenv("PWD", home, 1);
 		_setenv("OLDPWD", pwd, 1);
+		FC->last_command_result = 0;
 	}
 	free(oldpwd);
 	free(pwd);
@@ -91,6 +97,7 @@ int built_env(free_chars_t *FC, int mode)
 		_unsetenv(FC->args[1]);
 		break;
 	}
+	FC->last_command_result = 0;
 	return (1);
 }
 

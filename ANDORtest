@@ -1,3 +1,5 @@
-ls ; pwd
+ls ; pwd && ls ; pwd
+
+ls ; pwd && pwd && && ls
 pwd && && ; ls
 pwd

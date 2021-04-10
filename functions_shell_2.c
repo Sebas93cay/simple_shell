@@ -30,21 +30,7 @@ int check_semicolons(free_chars_t *FC)
 	{
 		if (check_if_character(FC->buff, 0, ';') == 1)
 		{
-			if (split_semicolons(FC) == 1)
-			{
-				free_list(FC->commands), FC->commands = NULL;
-				free(FC->buff), FC->buff = NULL;
-				free_list(FC->lines), FC->lines = NULL;
-				if (isatty(0))
-				{
-					return (1);
-				}
-				else
-				{
-					free_words(environ);
-					exit (2);
-				}
-			}
+			split_semicolons(FC);
 		}
 		else
 			return (0);

@@ -47,6 +47,7 @@ typedef struct free_chars_t
 	list_t *lines;
 	list_t *commands;
 	ANDOR_t *ANDORS;
+	int last_command_result;
 } free_chars_t;
 
 /*shell*/
@@ -72,6 +73,10 @@ void ignore_signal(int sig);
 int check_semicolons(free_chars_t *FC);
 int split_semicolons(free_chars_t *FC);
 char *putPath(char *command, char *path);
+
+/*functions_shell_4.c*/
+int check_errors(free_chars_t *FC);
+int check_no_commands_inbetween(free_chars_t *FC);
 
 /*built_ins.c*/
 int built_exit(free_chars_t *FC);

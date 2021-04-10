@@ -106,71 +106,29 @@ int checkANDOR(free_chars_t *FC)
 	char *buff = NULL;
 
 	buff = FC->buff;
-
 	if (list_len_andor(FC->ANDORS) == 0)
 	{
 		while (buff[i])
 		{
-			if (buff[i] == ' ' && i <= 1)
-				buff++;
-			else if (buff[i] == '|' && buff[i + 1] == '|')
+			if (buff[i] == '|' && buff[i + 1] == '|')
 			{
-				if (i == 0)
-				{
-					_printf("Unexpected token ||\n");
-					free_list(FC->commands), FC->commands = NULL;
-					free(FC->buff), FC->buff = NULL;
-					free_ANDOR(&FC->ANDORS);
-					if (isatty(0))
-					{
-						return (1);
-					}
-					else
-					{
-						free_list(FC->lines), FC->lines = NULL;
-						free_words(environ);
-						exit (2);
-					}
-				}
-				else
-				{
-					add_node_n_end_andor(&FC->ANDORS, buff, i, tipo);
-					tipo = 1;
-					buff = buff + i + 2;
-					i = 0;
-				}
+				add_node_n_end_andor(&FC->ANDORS, buff, i, tipo);
+				tipo = 1;
+				buff += i + 2;
+				i = 0;
+				continue;
 			}
-			else if (buff[i] == '&' && buff[i + 1] == '&')
+			if (buff[i] == '&' && buff[i + 1] == '&')
 			{
-				if (i == 0)
-				{
-					_printf("Unexpected token &&\n");
-					free_list(FC->commands), FC->commands = NULL;
-					free_ANDOR(&FC->ANDORS);
-					free(FC->buff), FC->buff = NULL;
-					if (isatty(0))
-					{
-						return (1);
-					}
-					else
-					{
-						free_list(FC->lines), FC->lines = NULL;
-						free_words(environ);
-						exit (2);
-					}
-				}
-				else
-				{
-					add_node_n_end_andor(&FC->ANDORS, buff, i, tipo);
-					tipo = 2;
-					buff = buff + i + 2;
-					i = 0;
-				}
+				add_node_n_end_andor(&FC->ANDORS, buff, i, tipo);
+				tipo = 2;
+				buff += i + 2;
+				i = 0;
+				continue;
 			}
-			else
-				i++;
+			i++;
 		}
-		if (*buff == 0)
+		if (check_if_only_spaces(buff))
 		{
 			_printf("Debemos seguir leyendo\n");
 		}
@@ -178,7 +136,7 @@ int checkANDOR(free_chars_t *FC)
 		{
 			add_node_n_end_andor(&FC->ANDORS, buff, i, tipo);
 		}
-	}
+	}	
 	free(FC->buff), FC->buff = NULL;
 	FC->buff = pop_andor(&FC->ANDORS);
 

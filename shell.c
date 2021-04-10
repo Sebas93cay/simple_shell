@@ -17,6 +17,7 @@ int main(__attribute__ ((unused)) int argc,
 	*(FC.args) = NULL;
 	FC.buff = malloc(sizeof(char));
 	FC.ANDORS = NULL;
+	FC.last_command_result = 0;
 
 	infinite_loop(&FC);
 
@@ -33,6 +34,8 @@ void infinite_loop(free_chars_t *FC)
 
 	while (1)
 	{
+		_printf("Comando anterior salio con estatus de = %d\n",
+			FC->last_command_result);
 		ndrlen = list_len_andor(FC->ANDORS);
 		cmndlen = list_len(FC->commands);
 		if (ndrlen == 0 && cmndlen == 0)
@@ -41,6 +44,8 @@ void infinite_loop(free_chars_t *FC)
 				continue;
 			/* _printf("Linea = %s\n", FC->buff); */
 		}
+		if (check_errors(FC))
+			continue;
 		if (ndrlen == 0)
 		{
 			if (check_semicolons(FC) == 1)
@@ -62,8 +67,12 @@ void infinite_loop(free_chars_t *FC)
 		else
 		{
 			wait(&status);
-			/* _printf("WIFEXITED = %d\n", WIFEXITED(status)); */
-			/* _printf("WEXISTATUS = %d\n", WEXITSTATUS(status)); */
+			_printf("WIFEXITED = %d\n", WIFEXITED(status));
+			_printf("WEXISTATUS = %d\n", WEXITSTATUS(status));
+			if (WIFEXITED(status))
+				FC->last_command_result = WEXITSTATUS(status);
+			else
+				FC->last_command_result = 1;
 		}
 	}
 
@@ -113,9 +122,26 @@ int check_built_in(free_chars_t *FC)
 	if (_strcmp(FC->args[0], "env") == 0)
 		return (built_env(FC, 0));
 	if (_strcmp(FC->args[0], "setenv") == 0)
-		return (built_env(FC, 1));
+	{
+		if (FC->args[1] != NULL && FC->args[2] != NULL)
+			return (built_env(FC, 1));
+		else
+		{
+			FC->last_command_result = 1;
+			return (1);
+		}
+	}
 	if (_strcmp(FC->args[0], "unsetenv") == 0)
-		return (built_env(FC, 2));
+	{
+		if (FC->args[1] != NULL)
+			return (built_env(FC, 2));
+		else
+		{
+			FC->last_command_result = 1;
+			return (1);
+		}
+	}
+	
 	return (0);
 }
 
@@ -140,10 +166,12 @@ void exec_command(free_chars_t *FC)
 	else
 	{
 			_printf("No se pudo encontrar paila\n");
+			FC->last_command_result = 1;
 			free_words(FC->args);
 			free(FC->buff);
 			free_list(FC->lines);
 			free_list(FC->commands);
 			free_words(environ);
+			exit (1);
 	}
 }
