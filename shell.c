@@ -34,8 +34,8 @@ void infinite_loop(free_chars_t *FC)
 
 	while (1)
 	{
-		_printf("Comando anterior salio con estatus de = %d\n",
-			FC->last_command_result);
+		/* _printf("Comando anterior salio con estatus de = %d\n", */
+		/* 	FC->last_command_result); */
 		ndrlen = list_len_andor(FC->ANDORS);
 		cmndlen = list_len(FC->commands);
 		if (ndrlen == 0 && cmndlen == 0)
@@ -67,8 +67,6 @@ void infinite_loop(free_chars_t *FC)
 		else
 		{
 			wait(&status);
-			_printf("WIFEXITED = %d\n", WIFEXITED(status));
-			_printf("WEXISTATUS = %d\n", WEXITSTATUS(status));
 			if (WIFEXITED(status))
 				FC->last_command_result = WEXITSTATUS(status);
 			else
@@ -95,7 +93,7 @@ int check_inputs(free_chars_t *FC, int *buffSize)
 		free_words(environ);
 		exit(0);
 	}
-	_printf("la linea es = %s\n", FC->buff);
+	/* _printf("la linea es = %s\n", FC->buff); */
 
 	if (FC->buff == NULL || *(FC->buff) == 0)
 		return (1);
@@ -141,7 +139,6 @@ int check_built_in(free_chars_t *FC)
 			return (1);
 		}
 	}
-	
 	return (0);
 }
 

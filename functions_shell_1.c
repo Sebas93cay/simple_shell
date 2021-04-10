@@ -138,7 +138,13 @@ int checkANDOR(free_chars_t *FC)
 		}
 	}	
 	free(FC->buff), FC->buff = NULL;
+	tipo = FC->ANDORS->tipo;
+	if ((tipo == 1 && FC->last_command_result == 0) ||
+	    (tipo == 2 && FC->last_command_result == 1))
+	{
+		free_ANDOR(&FC->ANDORS);
+		return (1);
+	}
 	FC->buff = pop_andor(&FC->ANDORS);
-
 	return (0);
 }
