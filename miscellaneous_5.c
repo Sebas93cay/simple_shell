@@ -84,8 +84,16 @@ void remove_last_character(char *buff, char c)
 
 }
 
-int check_if_only_spaces(char *buff)
+/**
+ * check_if_not_commands - check if buff has anything different than just
+ * blank spaces
+ * @buff: buffer
+ * Return: return 0 if has a command, 1 if there is no command
+ */ 
+int check_if_not_commands(char *buff)
 {
+	if (buff == NULL || *buff == 0)
+		return (1);
 	while (*buff)
 	{
 		if (*buff != ' ')

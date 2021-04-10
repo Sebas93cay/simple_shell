@@ -128,9 +128,11 @@ int checkANDOR(free_chars_t *FC)
 			}
 			i++;
 		}
-		if (check_if_only_spaces(buff))
+		if (check_if_not_commands(buff))
 		{
 			_printf("> ");
+			FC->need_to_readnextline = 1;
+			return (1);
 		}
 		else
 		{

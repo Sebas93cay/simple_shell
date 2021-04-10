@@ -7,6 +7,8 @@ int check_errors(free_chars_t *FC)
 {
 	if (check_no_commands_inbetween(FC) == 1)
 		return (1);
+	if (check_if_need_more_read(FC) == 1)
+		return (1);
 	return (0);
 }
 
@@ -61,6 +63,32 @@ int check_no_commands_inbetween(free_chars_t *FC)
 			}
 
 		}
+	}
+	return (0);
+}
+
+int check_if_need_more_read(free_chars_t *FC)
+{
+	char *buff = FC->buff;
+	int i = 0;
+
+	while (buff[i])
+	{
+		if ((buff[i] == '&' && buff[i + 1] == '&') ||
+		    (buff[i] == '|' && buff[i + 1] == '|'))
+		{
+			buff += i + 2;
+			i = 0;
+		}
+		i++;
+	}
+	if (check_if_not_commands(buff))
+	{
+		if (isatty(0))
+			_printf("> ");
+		add_node(&FC->lines, FC->buff);
+		FC->need_to_readnextline = 1;
+		return (1);
 	}
 	return (0);
 }

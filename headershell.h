@@ -55,6 +55,7 @@ typedef struct free_chars_t
 	list_t *commands;
 	ANDOR_t *ANDORS;
 	int last_command_result;
+	int need_to_readnextline;
 	alias *aliases;
 } free_chars_t;
 
@@ -85,6 +86,7 @@ char *putPath(char *command, char *path);
 /*functions_shell_4.c*/
 int check_errors(free_chars_t *FC);
 int check_no_commands_inbetween(free_chars_t *FC);
+int check_if_need_more_read(free_chars_t *FC);
 
 /*built_ins.c*/
 int built_exit(free_chars_t *FC);
@@ -125,7 +127,7 @@ char **words_cpy(char **words);
 ssize_t _getline(free_chars_t *FC, int *buffsize);
 int check_if_character(char *buff, int n, char c);
 void remove_last_character(char *buff, char c);
-int check_if_only_spaces(char *buff);
+int check_if_not_commands(char *buff);
 
 
 /*str_singly_list_1.c*/
