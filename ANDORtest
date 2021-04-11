@@ -1,5 +1,10 @@
-ls ; pwd && ls ; pwd
+pwd ||
+
+echo hole
+
+echo "holax" && pwd   
+pwd
+
+ls ; pwd && ls ; pwd &&
 
 ls ; pwd && pwd && ls
-pwd ; ls
-pwd

@@ -41,7 +41,12 @@ exit hola
 
 exit 4t5
 
-exit 45
 
-^C
-^C
+
+ a  ; test   || echo hola && pwd   ;
+
+increibe ||
+pwd ; cd / && ls || ls && ls -a ;
+cd - ;
+
+exit 45

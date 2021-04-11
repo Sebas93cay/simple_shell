@@ -93,58 +93,15 @@ void create_child(pid_t *child_pid)
 	}
 }
 
-/**
- *  checkANDOR - split buffer in commands separated for tokens
- * && and ||. It assings a type tipo to each command being
- * tipo = 0 for the first command
- * tipo = 1 for commands after a || token
- * tipo = 2 for commands after a && token
- */
-int checkANDOR(free_chars_t *FC)
-{
-	int i = 0, tipo = 0;
-	char *buff = NULL;
 
-	buff = FC->buff;
-	if (list_len_andor(FC->ANDORS) == 0)
-	{
-		while (buff[i])
-		{
-			if (buff[i] == '|' && buff[i + 1] == '|')
-			{
-				add_node_n_end_andor(&FC->ANDORS, buff, i, tipo);
-				tipo = 1;
-				buff += i + 2;
-				i = 0;
-				continue;
-			}
-			if (buff[i] == '&' && buff[i + 1] == '&')
-			{
-				add_node_n_end_andor(&FC->ANDORS, buff, i, tipo);
-				tipo = 2;
-				buff += i + 2;
-				i = 0;
-				continue;
-			}
-			i++;
-		}
-		if (check_if_only_spaces(buff))
-		{
-			_printf("> ");
-		}
-		else
-		{
-			add_node_n_end_andor(&FC->ANDORS, buff, i, tipo);
-		}
-	}	
-	free(FC->buff), FC->buff = NULL;
-	tipo = FC->ANDORS->tipo;
-	if ((tipo == 1 && FC->last_command_result == 0) ||
-	    (tipo == 2 && FC->last_command_result == 1))
-	{
-		free_ANDOR(&FC->ANDORS);
+/**
+ * check_errors
+ */
+int check_errors(free_chars_t *FC)
+{
+	if (check_no_commands_inbetween(FC) == 1)
 		return (1);
-	}
-	FC->buff = pop_andor(&FC->ANDORS);
+	if (check_if_need_more_read(FC) == 1)
+		return (1);
 	return (0);
 }

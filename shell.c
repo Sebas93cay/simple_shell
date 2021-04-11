@@ -20,6 +20,7 @@ int main(__attribute__ ((unused)) int argc,
 	FC.ANDORS = NULL;
 	FC.aliases = NULL;
 	FC.last_command_result = 0;
+	FC.need_to_readnextline = 0;
 	
 
 
@@ -53,7 +54,7 @@ void infinite_loop(free_chars_t *FC)
 		/* 	FC->last_command_result); */
 		ndrlen = list_len_andor(FC->ANDORS);
 		cmndlen = list_len(FC->commands);
-		if (ndrlen == 0 && cmndlen == 0)
+		if ((ndrlen == 0 && cmndlen == 0))
 		{
 			if (check_inputs(FC, &buffSize))
 				continue;
@@ -61,6 +62,7 @@ void infinite_loop(free_chars_t *FC)
 		}
 		if (check_errors(FC))
 			continue;
+		/* _printf("paso la prueba de errores\n"); */
 		if (ndrlen == 0)
 		{
 			if (check_semicolons(FC) == 1)
@@ -97,9 +99,10 @@ void infinite_loop(free_chars_t *FC)
  */
 int check_inputs(free_chars_t *FC, int *buffSize)
 {
-	if (isatty(0))
+	if (isatty(0) && FC->need_to_readnextline == 0)
 		_printf("#cisfun$ "); /*print only in terminal*/
 
+	FC->need_to_readnextline = 0;
 	if (_getline(FC, buffSize) == EOF)
 	{
 		free_words(FC->args);
@@ -111,7 +114,7 @@ int check_inputs(free_chars_t *FC, int *buffSize)
 	if (FC->buff == NULL || *(FC->buff) == 0)
 		return (1);
 
-	if (check_if_only_spaces(FC->buff) == 1)
+	if (check_if_not_commands(FC->buff) == 1)
 		return (1);
 
 	/* _printf("recibimos linea: -> %s\n", FC->buff); */
