@@ -1,10 +1,8 @@
-pwd && pwd   
-pwd
+pwd ||
 
-cd / ; cd - ; echo "hola"
+echo hole
 
-pwd ; ls ; cd - ||
-pwd && pwd   
+echo "holax" && pwd   
 pwd
 
 ls ; pwd && ls ; pwd &&

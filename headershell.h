@@ -74,7 +74,7 @@ void check_full_path(char **args);
 void execve_not_working(free_chars_t *FC);
 void create_child(pid_t *child_pid);
 void TheExit(int status, free_chars_t *FC);
-int checkANDOR(free_chars_t *FC);
+int check_errors(free_chars_t *FC);
 
 /*functions_shell_2.c*/
 void __attribute__ ((constructor)) premain();
@@ -84,7 +84,8 @@ int split_semicolons(free_chars_t *FC);
 char *putPath(char *command, char *path);
 
 /*functions_shell_4.c*/
-int check_errors(free_chars_t *FC);
+int checkANDOR(free_chars_t *FC);
+int check_andor_logic(free_chars_t *FC);
 int check_no_commands_inbetween(free_chars_t *FC);
 int check_if_need_more_read(free_chars_t *FC);
 list_t *join_lines(list_t **lines);
