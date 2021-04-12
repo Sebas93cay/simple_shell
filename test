@@ -24,18 +24,11 @@ pwd
 
 ls      -a     /home
 
-   env
 
-unsetenv hola
+pwd && pwd ; ls || hola &&        ;
 
-pwd
-setenv PWD /
-pwd
-setenv mivar elvalordemivar
-env
-setenv mivar2 elvalordemivar2
-env
-unsetenv mivar
+ls ;  echo hola; pwd && /bin/ls -la && cd - || pwd && pwd ;
+
 
 exit hola
 

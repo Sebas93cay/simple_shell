@@ -7,7 +7,6 @@ int main(__attribute__ ((unused)) int argc,
 	 __attribute__ ((unused)) char **env)
 {
 	free_chars_t FC;
-	alias nodo1, nodo2;
 
 	FC.args = NULL;
 	FC.argv = argv;
@@ -22,17 +21,6 @@ int main(__attribute__ ((unused)) int argc,
 	FC.last_command_result = 0;
 	FC.need_to_readnextline = 0;
 	
-
-
-	FC.aliases = &nodo1;
-
-	nodo1.name = _strdup("alias1");
-	nodo1.value = _strdup("valor1");
-	nodo1.next = &nodo2;
-	
-	nodo2.name = _strdup("alias2");
-	nodo2.value = _strdup("valor2");
-	nodo2.next = NULL;
 
 
 	infinite_loop(&FC);
