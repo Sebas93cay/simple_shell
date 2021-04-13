@@ -23,6 +23,7 @@ ssize_t _getline(free_chars_t *FC, int *buffsize)
 		read_size = (i != 0) ? (int) *buffsize - 1 - i : read_size;
 		bytes = read(STDIN_FILENO, FC->buff + i, read_size);
 		keepreading = 0;
+		i += bytes;
 		if (bytes == read_size && check_if_line(FC->buff, i) == 0)		    
 		{
 
@@ -30,7 +31,7 @@ ssize_t _getline(free_chars_t *FC, int *buffsize)
 			*buffsize += extra_read;
 			keepreading = 1;
 		}
-		i += bytes;
+
 	} while (keepreading);
 	FC->buff[i] = 0;
 	singly_split_words(FC->buff, &FC->lines, '\n');

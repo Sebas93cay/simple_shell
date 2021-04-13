@@ -48,6 +48,7 @@ typedef struct ANDOR_t
 
 typedef struct free_chars_t
 {
+	list_t *args_l;
 	char **args;
 	char **argv;
 	char *buff;
@@ -83,11 +84,15 @@ int check_semicolons(free_chars_t *FC);
 int split_semicolons(free_chars_t *FC);
 char *putPath(char *command, char *path);
 
+/*functions_shell_3.c*/
+int check_no_commands_inbetween(free_chars_t *FC);
+int check_if_need_more_read_logic(free_chars_t *FC);
+int check_if_need_more_read_quotes(free_chars_t *FC);
+
 /*functions_shell_4.c*/
 int checkANDOR(free_chars_t *FC);
 int check_andor_logic(free_chars_t *FC);
-int check_no_commands_inbetween(free_chars_t *FC);
-int check_if_need_more_read(free_chars_t *FC);
+
 list_t *join_lines(list_t **lines);
 
 /*built_ins.c*/
@@ -113,17 +118,19 @@ char *_strdup(char *s);
 char *_strndup(char *s, int n);
 
 /*miscellaneous_3.c*/
+list_t *splitargs_list(free_chars_t *FC);
+void save_arg(free_chars_t *FC, char **buff, list_t **last_node, int *letters, int *saving, int *saved_lett);
+char **pointto_words_list(free_chars_t *FC);
 char **splitwords(char *buff, char token);
 void free_words(char **args);
 void print_words(char **words);
-int check_if_num(char *num);
 
 /*miscellaneous_4.c enviroment functions*/
 char *_getenv(const char *);
 void _printenv(void);
 int _setenv(char *name, char *value, int overwrite);
 int _unsetenv(char *name);
-char **words_cpy(char **words);
+char **words_cpy(char **words); /*used to copy environ*/
 
 /*miscellaneous_5.c*/
 ssize_t _getline(free_chars_t *FC, int *buffsize);
@@ -132,12 +139,16 @@ void remove_last_character(char *buff, char c);
 int check_if_not_commands(char *buff);
 int check_if_line(char *buff, int n);
 
+/*miscellaneous_6.c*/
+int check_if_num(char *num);
+char *_strcatn(char *dest, char* src, int n);
+
 /*str_singly_list_1.c*/
 size_t print_list(const list_t *h);
 size_t list_len(const list_t *h);
 list_t *add_node(list_t **head, const char *str);
 list_t *add_node_n(list_t **head, const char *str, size_t n);
-void free_list(list_t *head);
+void free_list(list_t **head);
 
 /*str_singly_list_2.c*/
 list_t *add_node_end(list_t **head, const char *str);

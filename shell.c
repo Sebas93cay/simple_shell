@@ -13,15 +13,13 @@ int main(__attribute__ ((unused)) int argc,
 	FC.buff = NULL;
 	FC.lines = NULL;
 	FC.commands = NULL;
-	FC.args = malloc(sizeof(char *));
-	*(FC.args) = NULL;
+	/* FC.args = malloc(sizeof(char *)); */
 	FC.buff = malloc(sizeof(char));
 	FC.ANDORS = NULL;
 	FC.aliases = NULL;
 	FC.last_command_result = 0;
 	FC.need_to_readnextline = 0;
-	
-
+	FC.args_l = NULL;
 
 	infinite_loop(&FC);
 	
@@ -58,9 +56,11 @@ void infinite_loop(free_chars_t *FC)
 		}
 		if (checkANDOR(FC) == 1)
 			continue;
-
-		free_words(FC->args);
-		FC->args = splitwords(FC->buff, ' ');
+		
+		/* free_words(FC->args); */
+		/* FC->args = splitwords(FC->buff, ' '); */
+		splitargs_list(FC);
+		pointto_words_list(FC);
 		if (check_built_in(FC))
 			continue;
 		create_child(&child_pid);
@@ -93,7 +93,7 @@ int check_inputs(free_chars_t *FC, int *buffSize)
 	FC->need_to_readnextline = 0;
 	if (_getline(FC, buffSize) == EOF)
 	{
-		free_words(FC->args);
+		free_list(&FC->args_l);
 		free_words(environ);
 		exit(0);
 	}
@@ -181,11 +181,14 @@ void exec_command(free_chars_t *FC)
 	else
 	{
 			_printf("No se pudo encontrar paila\n");
+
 			FC->last_command_result = 1;
-			free_words(FC->args);
+			free(FC->args);
+			free_list(&FC->args_l);
 			free(FC->buff);
-			free_list(FC->lines);
-			free_list(FC->commands);
+			free_list(&FC->lines);
+			/* _printf("commands\n"); */
+			free_list(&FC->commands);
 			free_words(environ);
 			exit (1);
 	}

@@ -46,7 +46,7 @@ void check_full_path(char **args)
 			args[0] = _strncat(2, args[0], "/", dir->str);
 		}
 	}
-	free_list(dirs);
+	free_list(&dirs);
 }
 
 
@@ -73,9 +73,11 @@ void TheExit(int status, free_chars_t *FC)
 	if (isatty(0) && _strcmp(FC->buff, "exit") != 0)
 		write(1, "\n", 1); /*print only in terminal*/
 	free(FC->buff);
-	free_words(FC->args);
+	free(FC->args);
+	free_list(&FC->args_l);
 	free_words(environ);
-	free_list(FC->lines);
+	free_list(&FC->lines);
+	free_list(&FC->commands);
 	exit(status);
 }
 
@@ -101,7 +103,7 @@ int check_errors(free_chars_t *FC)
 {
 	if (check_no_commands_inbetween(FC) == 1)
 		return (1);
-	if (check_if_need_more_read(FC) == 1)
+	if (check_if_need_more_read_logic(FC) == 1)
 		return (1);
 	return (0);
 }
