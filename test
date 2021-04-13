@@ -25,14 +25,11 @@ pwd
 ls      -a     /home
 
 
-pwd && pwd ; ls || hola &&        ;
+pwd && pwd ; ls || hola &&        
 
 ls ;  echo hola; pwd && /bin/ls -la && cd - || pwd && pwd ;
 
 
-exit hola
-
-exit 4t5
 
 
 
@@ -41,5 +38,16 @@ exit 4t5
 increibe ||
 pwd ; cd / && ls || ls && ls -a ;
 cd - ;
+
+  cat A
+cat A B C
+
+cat 'A' "B""C" "C" "te"s't' 
+
+exit 4
+
+exit hola
+
+exit 4t5
 
 exit 45

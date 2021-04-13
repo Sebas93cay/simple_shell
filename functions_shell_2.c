@@ -49,10 +49,10 @@ int split_semicolons(free_chars_t *FC)
 	char *buff = FC->buff;
 	int i = 0;
 
-	while(*buff)
+	while (*buff)
 	{
 		hascommand = 0;
-		while(buff[i] != ';' && buff[i] != '\0')
+		while (buff[i] != ';' && buff[i] != '\0')
 		{
 			if (buff[i] != ' ')
 				hascommand = 1;
@@ -61,7 +61,7 @@ int split_semicolons(free_chars_t *FC)
 		if (hascommand || buff[i] == '\0')
 		{
 			add_node_n_end(&FC->commands, buff, i);
-			buff += (buff[i] == ';')? i + 1 : i;
+			buff += (buff[i] == ';') ? i + 1 : i;
 			i = 0;
 		}
 		else
@@ -69,7 +69,6 @@ int split_semicolons(free_chars_t *FC)
 			_printf("Error ';' not expected\n");
 			return (1);
 		}
-				
 	}
 	return (0);
 }

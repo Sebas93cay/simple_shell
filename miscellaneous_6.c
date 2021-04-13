@@ -15,10 +15,10 @@ int check_if_num(char *num)
 /**
  * _strcatn - concatenate first n bytes from src after dest
  */
-char *_strcatn(char *dest, char* src, int n)
+char *_strcatn(char *dest, char *src, int n)
 {
 	int dest_len;
-	
+
 	if (dest == NULL)
 		return (NULL);
 
@@ -33,3 +33,19 @@ char *_strcatn(char *dest, char* src, int n)
 	return (dest);
 }
 
+
+void print_words(char **words)
+{
+	while (*words)
+	{
+		_printf("-> %s\n", *words);
+		words++;
+	}
+}
+
+void change_WD(char *newpwd, char *pwd)
+{
+	chdir(newpwd);
+	_setenv("PWD", newpwd, 1);
+	_setenv("OLDPWD", pwd, 1);
+}

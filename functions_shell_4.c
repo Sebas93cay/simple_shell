@@ -46,7 +46,7 @@ int checkANDOR(free_chars_t *FC)
 		{
 			add_node_n_end_andor(&FC->ANDORS, buff, i, tipo);
 		}
-	}	
+	}
 	free(FC->buff), FC->buff = NULL;
 
 	return (check_andor_logic(FC));
@@ -77,9 +77,9 @@ int check_andor_logic(free_chars_t *FC)
 list_t *join_lines(list_t **lines)
 {
 
-	if(lines == NULL || *lines == NULL)
+	if (lines == NULL || *lines == NULL)
 		return (NULL);
-	if((*lines)->next == NULL)
+	if ((*lines)->next == NULL)
 		return (*lines);
 
 	(*lines)->str = _strncat(1, (*lines)->str, (*lines)->next->str);

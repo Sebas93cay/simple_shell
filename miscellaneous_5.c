@@ -24,7 +24,7 @@ ssize_t _getline(free_chars_t *FC, int *buffsize)
 		bytes = read(STDIN_FILENO, FC->buff + i, read_size);
 		keepreading = 0;
 		i += bytes;
-		if (bytes == read_size && check_if_line(FC->buff, i) == 0)		    
+		if (bytes == read_size && check_if_line(FC->buff, i) == 0)
 		{
 
 			FC->buff = _realloc(FC->buff, *buffsize, *buffsize + extra_read);
@@ -89,7 +89,7 @@ void remove_last_character(char *buff, char c)
  * blank spaces
  * @buff: buffer
  * Return: return 0 if has a command, 1 if there is no command
- */ 
+ */
 int check_if_not_commands(char *buff)
 {
 	if (buff == NULL || *buff == 0)
@@ -106,13 +106,14 @@ int check_if_not_commands(char *buff)
 int check_if_line(char *buff, int n)
 {
 	int full_line = 0, i = 0;
+
 	if (buff == NULL || *buff == 0)
 		return (0);
-	while((buff[i] == '\n' || buff[i] == ' ') && i < n)
+	while ((buff[i] == '\n' || buff[i] == ' ') && i < n)
 		i++;
 	if (i == n)
 		return (0);
-	while(i < n)
+	while (i < n)
 	{
 		if (buff[i] == '\n')
 		{

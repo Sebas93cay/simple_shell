@@ -122,7 +122,7 @@ int place_d(va_list args, char *buff, int *b_cnt,
  * Return: return number of new buffers needed to print string
  */
 int place_b(va_list args, char *buff, int *b_cnt,
-	    __attribute__ ((unused)) flag * flags)
+	    __attribute__ ((unused)) flag *flags)
 {
 	int num = va_arg(args, int);
 	int new_buffs = 0, len;

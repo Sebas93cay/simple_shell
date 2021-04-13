@@ -13,7 +13,6 @@ int main(__attribute__ ((unused)) int argc,
 	FC.buff = NULL;
 	FC.lines = NULL;
 	FC.commands = NULL;
-	/* FC.args = malloc(sizeof(char *)); */
 	FC.buff = malloc(sizeof(char));
 	FC.ANDORS = NULL;
 	FC.aliases = NULL;
@@ -22,7 +21,6 @@ int main(__attribute__ ((unused)) int argc,
 	FC.args_l = NULL;
 
 	infinite_loop(&FC);
-	
 	return (0);
 }
 
@@ -36,31 +34,24 @@ void infinite_loop(free_chars_t *FC)
 
 	while (1)
 	{
-		/* _printf("Comando anterior salio con estatus de = %d\n", */
-		/* 	FC->last_command_result); */
 		ndrlen = list_len_andor(FC->ANDORS);
 		cmndlen = list_len(FC->commands);
 		if ((ndrlen == 0 && cmndlen == 0))
 		{
 			if (check_inputs(FC, &buffSize))
 				continue;
-			/* _printf("Linea = %s\n", FC->buff); */
 		}
 		if (check_errors(FC))
 			continue;
-		/* _printf("paso la prueba de errores\n"); */
 		if (ndrlen == 0)
-		{
 			if (check_semicolons(FC) == 1)
 				continue;
-		}
 		if (checkANDOR(FC) == 1)
 			continue;
-		
-		/* free_words(FC->args); */
-		/* FC->args = splitwords(FC->buff, ' '); */
 		splitargs_list(FC);
+		/* print_list(FC->args_l); */
 		pointto_words_list(FC);
+		/* print_words(FC->args); */
 		if (check_built_in(FC))
 			continue;
 		create_child(&child_pid);
@@ -78,7 +69,6 @@ void infinite_loop(free_chars_t *FC)
 				FC->last_command_result = 1;
 		}
 	}
-
 }
 
 
@@ -127,21 +117,17 @@ int check_built_in(free_chars_t *FC)
 	{
 		if (FC->args[1] != NULL && FC->args[2] != NULL)
 			return (built_env(FC, 1));
-		else
-		{
-			FC->last_command_result = 1;
-			return (1);
-		}
+		FC->last_command_result = 1;
+		return (1);
+
 	}
 	if (_strcmp(FC->args[0], "unsetenv") == 0)
 	{
 		if (FC->args[1] != NULL)
 			return (built_env(FC, 2));
-		else
-		{
-			FC->last_command_result = 1;
-			return (1);
-		}
+		FC->last_command_result = 1;
+		return (1);
+
 	}
 	if (_strcmp(FC->args[0], "alias") == 0)
 	{
@@ -156,7 +142,6 @@ int check_built_in(free_chars_t *FC)
 			_printf("el argumento 3 es: %s\n", FC->args[2]);
 		}
 	}
-	
 	return (0);
 }
 
@@ -190,6 +175,6 @@ void exec_command(free_chars_t *FC)
 			/* _printf("commands\n"); */
 			free_list(&FC->commands);
 			free_words(environ);
-			exit (1);
+			exit(1);
 	}
 }

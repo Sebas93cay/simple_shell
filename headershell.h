@@ -86,6 +86,7 @@ char *putPath(char *command, char *path);
 
 /*functions_shell_3.c*/
 int check_no_commands_inbetween(free_chars_t *FC);
+void check_for_command(char *buff, int *i, int *hascommand);
 int check_if_need_more_read_logic(free_chars_t *FC);
 int check_if_need_more_read_quotes(free_chars_t *FC);
 
@@ -98,7 +99,7 @@ list_t *join_lines(list_t **lines);
 /*built_ins.c*/
 int built_exit(free_chars_t *FC);
 int built_cd(free_chars_t *FC);
-void change_WD(char *newpwd, char *pwd);
+void cd_to(free_chars_t *FC, char *oldpwd, char *pwd, int *dirlen);
 int built_env(free_chars_t *FC, int mode);
 int built_print_aliases(alias *head);
 
@@ -119,11 +120,12 @@ char *_strndup(char *s, int n);
 
 /*miscellaneous_3.c*/
 list_t *splitargs_list(free_chars_t *FC);
-void save_arg(free_chars_t *FC, char **buff, list_t **last_node, int *letters, int *saving, int *saved_lett);
+void save_arg(free_chars_t *FC, char **buff, list_t **last_node,
+	      int *letters, int *saving, int *saved_lett, int force);
 char **pointto_words_list(free_chars_t *FC);
 char **splitwords(char *buff, char token);
 void free_words(char **args);
-void print_words(char **words);
+
 
 /*miscellaneous_4.c enviroment functions*/
 char *_getenv(const char *);
@@ -141,7 +143,9 @@ int check_if_line(char *buff, int n);
 
 /*miscellaneous_6.c*/
 int check_if_num(char *num);
-char *_strcatn(char *dest, char* src, int n);
+char *_strcatn(char *dest, char *src, int n);
+void print_words(char **words);
+void change_WD(char *newpwd, char *pwd);
 
 /*str_singly_list_1.c*/
 size_t print_list(const list_t *h);

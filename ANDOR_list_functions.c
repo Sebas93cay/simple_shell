@@ -43,7 +43,6 @@ ANDOR_t *add_node_n_end_andor(ANDOR_t **head, char *str, int n, int tipo)
 
 size_t list_len_andor(const ANDOR_t *h)
 {
-	
 	if (h == NULL)
 		return (0);
 	if (h->next == NULL)

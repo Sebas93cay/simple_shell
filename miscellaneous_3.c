@@ -1,50 +1,5 @@
 #include "headershell.h"
 
-#if 0 
-list_t *splitargs_list(free_chars_t *FC)
-{
-	int letters = 0;
-	char *buff = FC->buff;
-
-	free_list(&FC->args_l);
-
-	while (*buff)
-	{
-		while (*buff == ' ')
-			buff++;
-		letters = 0;
-		if (*buff == '\'')
-		{
-			buff++;
-			while (buff[letters] != '\'')
-				letters++;
-			if (letters > 0)
-				add_node_n_end(&FC->args_l, buff, letters);
-			buff += letters + 1;
-		}
-		else if (*buff == '\"')
-		{
-			buff++;
-			while (buff[letters] != '\"')
-				letters++;
-			if (letters > 0)
-				add_node_n_end(&FC->args_l, buff, letters);
-			buff += letters + 1;
-		}
-		else
-		{
-			while (buff[letters] != 0 && buff[letters] != ' ' &&
-			       buff[letters] != '\'' && buff[letters] != '\"')
-				letters++;
-			add_node_n_end(&FC->args_l, buff, letters);
-			buff += letters;
-		}
-	}
-	return (FC->args_l);
-}
-#endif
-
-/*Make reallocs into the same list_t, is not necesary to use a new one*/
 list_t *splitargs_list(free_chars_t *FC)
 {
 	int letters = 0, saved_lett = 0;
@@ -66,12 +21,11 @@ list_t *splitargs_list(free_chars_t *FC)
 			if (buff[letters] == '\'' || buff[letters] == '\"')
 			{
 				quote = buff[letters];
-				save_arg(FC, &buff, &last_node, &letters, &saving, &saved_lett);
+				save_arg(FC, &buff, &last_node, &letters, &saving, &saved_lett, 0);
 				buff++;
 				while (buff[letters] != quote)
 					letters++;
-				if (letters > 0)
-					save_arg(FC, &buff, &last_node, &letters, &saving, &saved_lett);
+				save_arg(FC, &buff, &last_node, &letters, &saving, &saved_lett, 1);
 				buff++;
 				if (*buff == ' ')
 					saving = 0;
@@ -79,31 +33,31 @@ list_t *splitargs_list(free_chars_t *FC)
 					break;
 				continue;
 			}
-			letters++;			
+			letters++;
 		}
 		if (*buff == 0)
 			break;
-		save_arg(FC, &buff, &last_node, &letters, &saving, &saved_lett);
+		save_arg(FC, &buff, &last_node, &letters, &saving, &saved_lett, 0);
 		if (*buff == ' ')
 			saving = 0;
 	}
-	
 	return (FC->args_l);
 }
 
 
-void save_arg(free_chars_t *FC, char **buff, list_t **last_node, int *letters, int *saving, int *saved_lett)
+void save_arg(free_chars_t *FC, char **buff, list_t **last_node,
+	      int *letters, int *saving, int *saved_lett, int force)
 {
-	if (*letters > 0 && *saving == 0)
+	if ((*letters > 0 && *saving == 0) || (force && *saving == 0))
 	{
 		*last_node = add_node_n_end(&FC->args_l, *buff, *letters);
 		*saving = 1;
 		*saved_lett += *letters;
 	}
-	else if (*letters > 0 && *saving == 1)
+	else if ((*letters > 0 && *saving == 1) || (force && *saving == 1))
 	{
 		(*last_node)->str = _strcatn((*last_node)->str, *buff, *letters);
-		*saved_lett += *letters;					
+		*saved_lett += *letters;
 		(*last_node)->len += *letters;
 	}
 	*buff += *letters;
@@ -185,13 +139,5 @@ void free_words(char **args)
 	free(args);
 }
 
-void print_words(char **words)
-{
-	while (*words)
-	{
-		_printf("-> %s\n", *words);
-		words++;
-	}
-}
 
 

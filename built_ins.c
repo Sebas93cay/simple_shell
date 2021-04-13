@@ -29,7 +29,6 @@ int built_exit(free_chars_t *FC)
 int built_cd(free_chars_t *FC)
 {
 	char *pwd = NULL, *oldpwd = NULL, *home;
-	DIR *dir = NULL;
 	int dirlen = 0;
 
 	pwd = _strdup(_getenv("PWD"));
@@ -38,30 +37,7 @@ int built_cd(free_chars_t *FC)
 		oldpwd = _strdup(oldpwd);
 	if (FC->args[1])
 	{
-		if (_strcmp(FC->args[1], "-") == 0)
-		{
-			change_WD(oldpwd, pwd);
-			_printf("%s\n", oldpwd);
-			FC->last_command_result = 0;
-		}
-		else if (FC->args[1][0] == '/')
-		{
-			dir = opendir(FC->args[1]);
-			if (dir)
-			{
-				dirlen = _strlen(FC->args[1]);
-				if (FC->args[1][dirlen - 1] == '/' && dirlen > 1)
-					FC->args[1][dirlen - 1] = 0;
-				change_WD(FC->args[1], pwd);
-				closedir(dir);
-				FC->last_command_result = 0;
-			}
-			else if (errno == ENOENT)
-			{
-				_printf("%s: 1: can't cd to %s\n", FC->argv[0], FC->args[1]);
-				FC->last_command_result = 1;
-			}
-		}
+		cd_to(FC, oldpwd, pwd, &dirlen);
 	}
 	else
 	{
@@ -76,13 +52,36 @@ int built_cd(free_chars_t *FC)
 	return (1);
 }
 
-
-void change_WD(char *newpwd, char *pwd)
+void cd_to(free_chars_t *FC, char *oldpwd, char *pwd, int *dirlen)
 {
-	chdir(newpwd);
-	_setenv("PWD", newpwd, 1);
-	_setenv("OLDPWD", pwd, 1);
+	DIR *dir = NULL;
+
+	if (_strcmp(FC->args[1], "-") == 0)
+	{
+		change_WD(oldpwd, pwd);
+		_printf("%s\n", oldpwd);
+		FC->last_command_result = 0;
+	}
+	else if (FC->args[1][0] == '/')
+	{
+		dir = opendir(FC->args[1]);
+		if (dir)
+		{
+			*dirlen = _strlen(FC->args[1]);
+			if (FC->args[1][*dirlen - 1] == '/' && *dirlen > 1)
+				FC->args[1][*dirlen - 1] = 0;
+			change_WD(FC->args[1], pwd);
+			closedir(dir);
+			FC->last_command_result = 0;
+		}
+		else if (errno == ENOENT)
+		{
+			_printf("%s: 1: can't cd to %s\n", FC->argv[0], FC->args[1]);
+			FC->last_command_result = 1;
+		}
+	}
 }
+
 
 
 int built_env(free_chars_t *FC, int mode)
