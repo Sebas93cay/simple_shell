@@ -14,7 +14,7 @@
 
 /*Enviroment variables*/
 extern char **environ;
-#define BUFFSIZE 10
+#define BUFFSIZE 4096
 
 /**
  * struct list_s - singly linked list
@@ -71,6 +71,7 @@ typedef struct ANDOR_t
  * for shell during execution
  * @args_l: argument list
  * @args: argument array
+ * @full_command: command with full path
  * @argv: argument vectors given to main
  * @buff: buffer
  * @lines: lines list
@@ -86,6 +87,7 @@ typedef struct free_chars_t
 {
 	list_t *args_l;
 	char **args;
+	char *full_command;
 	char **argv;
 	char *buff;
 	list_t *lines;
@@ -106,7 +108,7 @@ void exec_command(free_chars_t *FC);
 
 
 /*fuctions_shell_1.c*/
-void check_full_path(char **args);
+void check_full_path(char **args, free_chars_t *FC);
 void execve_not_working(free_chars_t *FC);
 void create_child(pid_t *child_pid);
 void TheExit(int status, free_chars_t *FC);

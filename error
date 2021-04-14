@@ -1,0 +1,24 @@
+./a.out: 5: hola: not found
+./a.out: 7: 1: not found
+./a.out: 8: 12: not found
+./a.out: 9: 123: not found
+./a.out: 10: 1234: not found
+./a.out: 11: 12345: not found
+./a.out: 22: hola: not found
+./a.out: 26: p: not found
+./a.out: 34: /bin/ls/: not found
+./a.out: 35: /bin: Permission denied
+./a.out: 36: /bin/locolandia: not found
+./a.out: 38: a: not found
+./a.out: 41: increibe: not found
+./a.out: 44: hola?: not found
+cat: A: No such file or directory
+cat: A: No such file or directory
+cat: B: No such file or directory
+cat: C: No such file or directory
+cat: A: No such file or directory
+cat: BC: No such file or directory
+cat: C: No such file or directory
+cat: test: No such file or directory
+cat: caramb: No such file or directory
+cat: oltotascosasinteresantes: No such file or directory

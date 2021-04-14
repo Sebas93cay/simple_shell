@@ -13,6 +13,7 @@ int main(__attribute__ ((unused)) int argc,
 {
 	free_chars_t FC;
 
+	FC.full_command = NULL;
 	FC.args = NULL;
 	FC.argv = argv;
 	FC.buff = NULL;
@@ -176,29 +177,42 @@ int check_built_in(free_chars_t *FC)
  */
 void exec_command(free_chars_t *FC)
 {
-	int result;
+	int result, exist = 1, itsfile = 1;
+	struct stat st;
 
-	check_full_path(FC->args);
-
-
-
-	if (**(FC->args) == '/')
+	if (FC->args[0][0] == '/')
 	{
-		result = execve(FC->args[0], FC->args, environ);
-		if (result == -1)
-			execve_not_working(FC);
+		if (stat(FC->args[0], &st) != 0)
+			exist = 0;
+		else
+			if (!S_ISREG(st.st_mode))
+				itsfile = 0;
+		FC->full_command = _strdup(FC->args[0]);
 	}
 	else
+		check_full_path(FC->args, FC);
+	if (itsfile)
 	{
-		_printf(2, "%s: %d: %s: not found\n", FC->argv[0],
-			FC->line_count, FC->args[0]);
-		FC->last_command_result = 1;
-		free(FC->args);
-		free_list(&FC->args_l);
-		free(FC->buff);
-		free_list(&FC->lines);
-		free_list(&FC->commands);
-		free_words(environ);
-		exit(1);
+		if (FC->full_command != NULL && exist)
+		{
+			result = execve(FC->full_command, FC->args, environ);
+			if (result == -1)
+				execve_not_working(FC);
+		}
+		else
+			_printf(2, "%s: %d: %s: not found\n", FC->argv[0],
+				FC->line_count, FC->args[0]);
 	}
+	else
+		_printf(2, "%s: %d: %s: Permission denied\n", FC->argv[0],
+			FC->line_count, FC->args[0]);
+	FC->last_command_result = 1;
+	free(FC->args);
+	free_list(&FC->args_l);
+	free(FC->buff);
+	free_list(&FC->lines);
+	free_list(&FC->commands);
+	free_words(environ);
+	free(FC->full_command);
+	exit(1);
 }

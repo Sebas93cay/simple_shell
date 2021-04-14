@@ -18,7 +18,7 @@ int built_exit(free_chars_t *FC)
 		}
 		else
 		{
-			_printf(1, "%s: %d: exit: Illegal number: %s\n",
+			_printf(2, "%s: %d: exit: Illegal number: %s\n",
 				*FC->argv, FC->line_count, FC->args[1]);
 			if (!isatty(0))
 				TheExit(2, FC);

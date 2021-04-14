@@ -30,8 +30,10 @@ pwd && pwd ; ls || hola &&
 ls ;  echo hola; pwd && /bin/ls -la && cd - || pwd && pwd ;
 
 
-
-
+/bin/ls
+/bin/ls/
+/bin
+/bin/locolandia
 
  a  ; test   || echo hola && pwd   ;
 

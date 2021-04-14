@@ -7,12 +7,11 @@
  * @args: array of string containing the arguments given by the user
  * Return: nothing
  */
-void check_full_path(char **args)
+void check_full_path(char **args, free_chars_t *FC)
 {
-	char *path = _getenv("PATH"), *command = NULL;
+	char *path = _getenv("PATH"), *command = NULL, *cwd = NULL;
 	/* char **dirs = NULL; */
 	list_t *dirs = NULL, *dir = NULL;
-	char *cwd = NULL, *tmp_ptr = NULL;
 	struct stat st;
 
 	cwd = _getenv("PWD");
@@ -33,8 +32,7 @@ void check_full_path(char **args)
 		dir = dirs;
 		while (dir)
 		{
-			remove_last_character(dir->str, ':');
-			chdir(dir->str);
+			remove_last_character(dir->str, ':'), chdir(dir->str);
 			if (stat(*args, &st) == 0)
 			{
 				chdir(cwd);
@@ -44,8 +42,8 @@ void check_full_path(char **args)
 		}
 		if (dir != NULL)
 		{
-			tmp_ptr = dir->str, dir->str = args[0], args[0] = tmp_ptr;
-			args[0] = _strncat(2, args[0], "/", dir->str);
+			FC->full_command = _strdup(dir->str);
+			FC->full_command = _strncat(2, FC->full_command, "/", args[0]);
 		}
 	}
 	free_list(&dirs);

@@ -1,4 +1,8 @@
-ls
+
+/bin/ls
+/bin/ls/
+/bin
+
 
 hola
 exit 45t

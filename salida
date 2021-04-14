@@ -6,6 +6,7 @@ a.out
 B
 built_ins.c
 C
+error
 functions_shell_1.c
 functions_shell_2.c
 functions_shell_3.c
@@ -15,10 +16,8 @@ headershell.h
 holatest
 lib_printf.a
 ls
-mierror
 minitest
 minitest2
-misalida
 miscellaneous_1.c
 miscellaneous_2.c
 miscellaneous_3.c
@@ -35,12 +34,11 @@ printfmisc2.c
 pruebas
 pruebax
 README.md
+salida
 Seb_at_Work
 semicolontest
 sh
 shell.c
-sherror
-shsalida
 str_singly_list_1.c
 str_singly_list_2.c
 test
@@ -54,6 +52,7 @@ a.out
 B
 built_ins.c
 C
+error
 functions_shell_1.c
 functions_shell_2.c
 functions_shell_3.c
@@ -63,10 +62,8 @@ headershell.h
 holatest
 lib_printf.a
 ls
-mierror
 minitest
 minitest2
-misalida
 miscellaneous_1.c
 miscellaneous_2.c
 miscellaneous_3.c
@@ -83,12 +80,11 @@ printfmisc2.c
 pruebas
 pruebax
 README.md
+salida
 Seb_at_Work
 semicolontest
 sh
 shell.c
-sherror
-shsalida
 str_singly_list_1.c
 str_singly_list_2.c
 test
@@ -296,7 +292,7 @@ tests
 hola
 /home/vagrant
 total 172
-drwxr-xr-x 16 vagrant vagrant  4096 Apr 14 14:47 .
+drwxr-xr-x 16 vagrant vagrant  4096 Apr 14 16:40 .
 drwxr-xr-x  6 root    root     4096 Jan 28 17:38 ..
 -rw-rw-r--  1 vagrant vagrant  2411 Feb  4 16:28 .backupparaemac-s
 -rw-------  1 vagrant vagrant 25557 Apr 14 05:54 .bash_history
@@ -315,12 +311,12 @@ drwx------  2 vagrant vagrant  4096 Jan 26 01:18 .cache
 -rw-rw-r--  1 vagrant vagrant  1058 Feb  3 16:14 .emacs-backup
 -rw-rw-r--  1 vagrant vagrant  1268 Feb  9 16:43 emacs_commands
 drwx------  4 vagrant vagrant  4096 Feb  3 15:49 .emacs.d
--rw-rw-r--  1 vagrant vagrant  5675 Apr 14 14:47 .emacs-places
+-rw-rw-r--  1 vagrant vagrant  5695 Apr 14 16:40 .emacs-places
 -rw-rw-r--  1 vagrant vagrant   240 Mar 13 04:59 .gitconfig
 drwx------  2 vagrant vagrant  4096 Jan 28 17:42 .git-credential-cache
--rw-------  1 vagrant vagrant    41 Apr 14 05:27 .git-credentials
+-rw-------  1 vagrant vagrant    41 Apr 14 15:18 .git-credentials
 drwx------  2 vagrant vagrant  4096 Feb  4 16:27 .gnupg
-drwxrwxr-x 12 vagrant vagrant  4096 Apr 14 05:37 Holberton_projects
+drwxrwxr-x 13 vagrant vagrant  4096 Apr 14 15:26 Holberton_projects
 drwxrwxr-x  6 vagrant vagrant  4096 Mar 29 17:27 learning-c
 -rw-------  1 vagrant vagrant    35 Apr 14 05:15 .lesshst
 drwxrwxr-x  2 vagrant vagrant  4096 Mar  1 15:13 mockinterview
@@ -332,6 +328,33 @@ drwxrwxr-x  4 vagrant vagrant  4096 Feb 15 22:25 tests
 -rw-------  1 vagrant vagrant  6354 Feb 23 03:35 .viminfo
 /
 /
+bin
+boot
+dev
+etc
+home
+initrd.img
+initrd.img.old
+lib
+lib32
+lib64
+libx32
+lost+found
+media
+mnt
+opt
+proc
+root
+run
+sbin
+srv
+sys
+tmp
+usr
+vagrant
+var
+vmlinuz
+vmlinuz.old
 hola
 /
 /
