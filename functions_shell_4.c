@@ -40,7 +40,7 @@ int checkANDOR(free_chars_t *FC)
 		}
 		if (check_if_not_commands(buff))
 		{
-			_printf("> ");
+			_printf(1, "> ");
 			FC->need_to_readnextline = 1;
 			return (1);
 		}

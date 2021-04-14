@@ -2,10 +2,11 @@
 
 /**
  * _printf - prints buffer
+ * @output: stdoup or sterr
  * @format: format to print buffer
  * Return: return number of bytes printed
  */
-int _printf(const char *format, ...)
+int _printf(int out, const char *format, ...)
 {
 	int printed_bytes;
 	va_list args;
@@ -27,7 +28,7 @@ int _printf(const char *format, ...)
 	if (format == NULL)
 		return (-1);
 	va_start(args, format);
-	printed_bytes = trav_format(args, ph, format);
+	printed_bytes = trav_format(args, ph, format, out);
 	va_end(args);
 
 	return (printed_bytes);
@@ -42,7 +43,7 @@ int _printf(const char *format, ...)
  * @format: format to print buffer
  * Return: return number of bytes printed
  */
-int trav_format(va_list args, placeholders *ph, const char *format)
+int trav_format(va_list args, placeholders *ph, const char *format, int out)
 {
 	int b_cnt = 0, used_buff = 0;
 	char buff[BUFF_SIZE];
@@ -54,7 +55,7 @@ int trav_format(va_list args, placeholders *ph, const char *format)
 		{
 			if (b_cnt == BUFF_SIZE)
 			{
-				write(1, buff, BUFF_SIZE);
+				write(out, buff, BUFF_SIZE);
 				used_buff++;
 				b_cnt = 0;
 			}
@@ -63,10 +64,10 @@ int trav_format(va_list args, placeholders *ph, const char *format)
 		else
 		{
 			trav_holders(ph, &trav, &used_buff,
-				     args, buff, &b_cnt);
+				     args, buff, &b_cnt, out);
 		}
 	}
-	write(1, buff, b_cnt);
+	write(out, buff, b_cnt);
 	if (used_buff == -1)
 	{
 		return (-1);
@@ -87,7 +88,7 @@ int trav_format(va_list args, placeholders *ph, const char *format)
  * Return: nothing
  */
 void trav_holders(placeholders *ph, const char **trav, int *used_buff,
-		    va_list args, char *buff, int *b_cnt)
+		  va_list args, char *buff, int *b_cnt, int out)
 {
 	int i, new_buffs;
 	flag flags[] = {{'+', 0}, {' ', 0}, {'#', 0},
@@ -102,14 +103,14 @@ void trav_holders(placeholders *ph, const char **trav, int *used_buff,
 		}
 	if (*(*trav + 1) == '%')
 	{
-		*used_buff += putInBuffer(buff, b_cnt, "%", 1);
+		*used_buff += putInBuffer(buff, b_cnt, "%", 1, out);
 		return;
 	}
 	for (i = 0; ph[i].c; i++)
 		if (*(*trav + 1) == ph[i].c)
 		{
 			new_buffs = ph[i].place_function
-				(args, buff, b_cnt, flags);
+				(args, buff, b_cnt, flags, out);
 			*used_buff = (new_buffs == -1) ? -1 :
 				*used_buff + new_buffs;
 			(*trav)++;
@@ -120,6 +121,6 @@ void trav_holders(placeholders *ph, const char **trav, int *used_buff,
 		*used_buff = -1;
 		return;
 	}
-	*used_buff += putInBuffer(buff, b_cnt, "%", 1);
-	checkFlags(buff, b_cnt, flags, used_buff);
+	*used_buff += putInBuffer(buff, b_cnt, "%", 1, out);
+	checkFlags(buff, b_cnt, flags, used_buff, out);
 }

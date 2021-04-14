@@ -30,11 +30,11 @@ int check_no_commands_inbetween(free_chars_t *FC)
 		else
 		{
 			if (buff[i] == ';')
-				_printf("Error ';' not expected\n");
+				_printf(2, "Error ';' not expected\n");
 			else if (buff[i] == '|' && buff[i + 1] == '|')
-				_printf("Unexpected token ||\n");
+				_printf(2, "Unexpected token ||\n");
 			else if	(buff[i] == '&' && buff[i + 1] == '&')
-				_printf("Unexpected token &&\n");
+				_printf(2, "Unexpected token &&\n");
 			free_list(&FC->commands), FC->commands = NULL;
 			free(FC->buff), FC->buff = NULL;
 			free_list(&FC->lines), FC->lines = NULL;
@@ -96,7 +96,7 @@ int check_if_need_more_read_logic(free_chars_t *FC)
 	if (check_if_not_commands(buff))
 	{
 		if (isatty(0))
-			_printf("> ");
+			_printf(1, "> ");
 		add_node(&FC->lines, FC->buff);
 		FC->need_to_readnextline = 1;
 		if (!isatty(0))
@@ -114,6 +114,6 @@ int check_if_need_more_read_logic(free_chars_t *FC)
  */
 int check_if_need_more_read_quotes(free_chars_t *FC)
 {
-	_printf("%s\n", FC->buff);
+	_printf(1, "%s\n", FC->buff);
 	return (0);
 }

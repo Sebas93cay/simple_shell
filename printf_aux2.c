@@ -10,7 +10,7 @@
  * Return: return number of new buffers needed to print string
  */
 int place_x(va_list args, char *buff, int *b_cnt,
-	    flag *flags)
+	    flag *flags, int out)
 {
 	long int num;
 	int new_buffs = 0, len;
@@ -26,11 +26,11 @@ int place_x(va_list args, char *buff, int *b_cnt,
 	printf("num =\n%lx\n", ULONG_MAX);
 	num_holder[16] = 0;
 	if (flags[2].value == 1 && num != 0)
-		new_buffs += putInBuffer(buff, b_cnt, "0x", 2);
+		new_buffs += putInBuffer(buff, b_cnt, "0x", 2, out);
 	num_s = base_convert(num_holder, 16, num, 16, 87);
 	len = _strlen(num_s);
 
-	new_buffs += putInBuffer(buff, b_cnt, num_s, len);
+	new_buffs += putInBuffer(buff, b_cnt, num_s, len, out);
 	return (new_buffs);
 }
 
@@ -45,7 +45,7 @@ int place_x(va_list args, char *buff, int *b_cnt,
  */
 
 int place_X(va_list args, char *buff, int *b_cnt,
-	    flag *flags)
+	    flag *flags, int out)
 {
 	long int num;
 	int new_buffs = 0, len;
@@ -60,11 +60,11 @@ int place_X(va_list args, char *buff, int *b_cnt,
 
 	num_holder[16] = 0;
 	if (flags[2].value == 1 && num != 0)
-		new_buffs += putInBuffer(buff, b_cnt, "0X", 2);
+		new_buffs += putInBuffer(buff, b_cnt, "0X", 2, out);
 
 	num_s = base_convert(num_holder, 16, num, 16, 55);
 	len = _strlen(num_s);
-	new_buffs += putInBuffer(buff, b_cnt, num_s, len);
+	new_buffs += putInBuffer(buff, b_cnt, num_s, len, out);
 	return (new_buffs);
 }
 
@@ -79,7 +79,7 @@ int place_X(va_list args, char *buff, int *b_cnt,
  */
 
 int place_o(va_list args, char *buff, int *b_cnt,
-	    flag *flags)
+	    flag *flags, int out)
 {
 	long int num;
 	int new_buffs = 0, len;
@@ -93,12 +93,12 @@ int place_o(va_list args, char *buff, int *b_cnt,
 		num = va_arg(args, int);
 
 	if (flags[2].value == 1 && num != 0)
-		new_buffs += putInBuffer(buff, b_cnt, "0", 1);
+		new_buffs += putInBuffer(buff, b_cnt, "0", 1, out);
 	num_holder[26] = 0;
 
 	num_s = base_convert(num_holder, 26, num, 8, 0);
 	len = _strlen(num_s);
-	new_buffs += putInBuffer(buff, b_cnt, num_s, len);
+	new_buffs += putInBuffer(buff, b_cnt, num_s, len, out);
 	return (new_buffs);
 }
 
@@ -112,7 +112,7 @@ int place_o(va_list args, char *buff, int *b_cnt,
  * @flags: structure with flags activated to have into account
  * Return: return number of new buffers needed to print string
  */
-int place_u(va_list args, char *buff, int *b_cnt, flag *flags)
+int place_u(va_list args, char *buff, int *b_cnt, flag *flags, int out)
 {
 	unsigned long int num;
 	int new_buffs = 0, len;
@@ -127,12 +127,12 @@ int place_u(va_list args, char *buff, int *b_cnt, flag *flags)
 
 	num_s = _itoa(25, '+', num, num_holder);
 	len = _strlen(num_s);
-	new_buffs = putInBuffer(buff, b_cnt, num_s, len);
+	new_buffs = putInBuffer(buff, b_cnt, num_s, len, out);
 	return (new_buffs);
 }
 
 int place_p(va_list args, char *buff, int *b_cnt,
-	    __attribute__ ((unused)) flag *flags)
+	    __attribute__ ((unused)) flag *flags, int out)
 {
 	char *s;
 	void *ptr = va_arg(args, void*);
@@ -147,7 +147,7 @@ int place_p(va_list args, char *buff, int *b_cnt,
 
 	len = _strlen(s);
 
-	new_buffs = putInBuffer(buff, b_cnt, s, len);
+	new_buffs = putInBuffer(buff, b_cnt, s, len, out);
 
 	return (new_buffs);
 }

@@ -51,7 +51,7 @@ void print_words(char **words)
 {
 	while (*words)
 	{
-		_printf("-> %s\n", *words);
+		_printf(1, "-> %s\n", *words);
 		words++;
 	}
 }

@@ -11,7 +11,7 @@ char *_getenv(const char *name)
 	int len = _strlen((char *) name);
 	char **env = environ;
 
-	/* _printf("len = %d\n", len); */
+	/* _printf(1, "len = %d\n", len); */
 	while (*env)
 	{
 		/* _printf("*env = %s\n", *env); */
@@ -35,7 +35,7 @@ void _printenv(void)
 
 	while (environ[i])
 	{
-		_printf("%s\n", environ[i]);
+		_printf(1, "%s\n", environ[i]);
 		i++;
 	}
 }

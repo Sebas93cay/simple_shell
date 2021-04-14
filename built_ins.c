@@ -18,7 +18,7 @@ int built_exit(free_chars_t *FC)
 		}
 		else
 		{
-			_printf("%s: 1: exit: Illegal number: %s\n",
+			_printf(1, "%s: 1: exit: Illegal number: %s\n",
 				*FC->argv, FC->args[1]);
 			if (!isatty(0))
 				TheExit(2, FC);
@@ -78,7 +78,7 @@ void cd_to(free_chars_t *FC, char *oldpwd, char *pwd)
 	if (_strcmp(FC->args[1], "-") == 0)
 	{
 		change_WD(oldpwd, pwd);
-		_printf("%s\n", oldpwd);
+		_printf(1, "%s\n", oldpwd);
 		FC->last_command_result = 0;
 	}
 	else if (FC->args[1][0] == '/')
@@ -95,7 +95,7 @@ void cd_to(free_chars_t *FC, char *oldpwd, char *pwd)
 		}
 		else if (errno == ENOENT)
 		{
-			_printf("%s: 1: can't cd to %s\n", FC->argv[0], FC->args[1]);
+			_printf(1, "%s: 1: can't cd to %s\n", FC->argv[0], FC->args[1]);
 			FC->last_command_result = 1;
 		}
 	}
@@ -137,6 +137,6 @@ int built_print_aliases(alias *head)
 {
 	if (head == NULL)
 		return (1);
-	_printf("alias %s='%s'\n", head->name, head->value);
+	_printf(1, "alias %s='%s'\n", head->name, head->value);
 	return (built_print_aliases(head->next));
 }

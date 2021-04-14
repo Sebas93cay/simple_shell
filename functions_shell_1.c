@@ -96,7 +96,7 @@ void create_child(pid_t *child_pid)
 	*child_pid = fork();
 	if (*child_pid == -1)
 	{
-		_printf("Child not created\n");
+		_printf(2, "Child not created\n");
 		exit(1);
 	}
 }

@@ -149,7 +149,6 @@ char **splitwords(char *buff, char token)
 		i++;
 	}
 	words[i] = NULL;
-	/* _printf("Final de splitwords\n"); */
 	return (words);
 }
 

@@ -89,7 +89,7 @@ void infinite_loop(free_chars_t *FC)
 int check_inputs(free_chars_t *FC, int *buffSize)
 {
 	if (isatty(0) && FC->need_to_readnextline == 0)
-		_printf("$ "); /*print only in terminal*/
+		_printf(1, "$ "); /*print only in terminal*/
 
 	FC->need_to_readnextline = 0;
 	if (_getline(FC, buffSize) == EOF)
@@ -100,7 +100,7 @@ int check_inputs(free_chars_t *FC, int *buffSize)
 			exit(127);
 		exit(0);
 	}
-	/* _printf("la linea es = %s\n", FC->buff); */
+	/* _printf(1, "la linea es = %s\n", FC->buff); */
 
 	if (FC->buff == NULL || *(FC->buff) == 0)
 		return (1);
@@ -108,7 +108,7 @@ int check_inputs(free_chars_t *FC, int *buffSize)
 	if (check_if_not_commands(FC->buff) == 1)
 		return (1);
 
-	/* _printf("recibimos linea: -> %s\n", FC->buff); */
+	/* _printf(1, "recibimos linea: -> %s\n", FC->buff); */
 	return (0);
 
 
@@ -153,8 +153,8 @@ int check_built_in(free_chars_t *FC)
 		}
 		else
 		{
-			_printf("el argumento 2 es: %s\n", FC->args[1]);
-			_printf("el argumento 3 es: %s\n", FC->args[2]);
+			_printf(1, "el argumento 2 es: %s\n", FC->args[1]);
+			_printf(1, "el argumento 3 es: %s\n", FC->args[2]);
 		}
 	}
 	return (0);
@@ -182,16 +182,14 @@ void exec_command(free_chars_t *FC)
 	}
 	else
 	{
-			_printf("No se pudo encontrar paila\n");
-
-			FC->last_command_result = 1;
-			free(FC->args);
-			free_list(&FC->args_l);
-			free(FC->buff);
-			free_list(&FC->lines);
-			/* _printf("commands\n"); */
-			free_list(&FC->commands);
-			free_words(environ);
-			exit(1);
+		_printf(2, "No se pudo encontrar paila\n");
+		FC->last_command_result = 1;
+		free(FC->args);
+		free_list(&FC->args_l);
+		free(FC->buff);
+		free_list(&FC->lines);
+		free_list(&FC->commands);
+		free_words(environ);
+		exit(1);
 	}
 }
