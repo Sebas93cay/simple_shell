@@ -2,8 +2,10 @@
 
 /**
  * check_full_path - check if command has the full path, if not looks
- * for the directory in the PATH where commands is and add the full path
- * to args[0]
+ * for the directory in the PATH or same folder, if command is found
+ * add the full path to begining of args[0]
+ * @args: array of string containing the arguments given by the user
+ * Return: nothing
  */
 void check_full_path(char **args)
 {
@@ -52,6 +54,7 @@ void check_full_path(char **args)
 
 /**
  * execve_not_working - frees all strings in FC and shows error message
+ * @FC: string structure.
  */
 void execve_not_working(free_chars_t *FC)
 {
@@ -66,8 +69,9 @@ void execve_not_working(free_chars_t *FC)
 
 /**
  * TheExit - free all strings in FC and exit program with status value
+ * @status: status to exit
+ * @FC: string structure.
  */
-
 void TheExit(int status, free_chars_t *FC)
 {
 	if (isatty(0) && _strcmp(FC->buff, "exit") != 0)
@@ -84,6 +88,8 @@ void TheExit(int status, free_chars_t *FC)
 
 /**
  * create_child - create a child
+ * @child_pid: pointer to child pid
+ * Return: nothing
  */
 void create_child(pid_t *child_pid)
 {
@@ -97,7 +103,9 @@ void create_child(pid_t *child_pid)
 
 
 /**
- * check_errors
+ * check_errors - check errors in line just readed in FC->buff
+ * @FC: string structure.
+ * Return: 0 if not error was detected, 1 if an error was detected
  */
 int check_errors(free_chars_t *FC)
 {

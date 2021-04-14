@@ -1,6 +1,10 @@
 #include "headershell.h"
 
-void __attribute__ ((constructor)) premain()
+/**
+ * premain - function to run before the main is run
+ * Return: nothing
+ */
+void __attribute__ ((constructor)) premain(void)
 {
 	environ = words_cpy(environ);
 	/* signal(SIGINT, ignore_signal); */
@@ -9,6 +13,8 @@ void __attribute__ ((constructor)) premain()
 
 /**
  * ignore_signal - singal handler, ignore the signal
+ * @sig: singal to ingore
+ * Return: nothing
  */
 void ignore_signal(int sig)
 {
@@ -22,7 +28,9 @@ void ignore_signal(int sig)
 
 /**
  * check_semicolumns - check if there is ';' in the line to execute
- *  and separate those commands
+ * and separate those commands
+ * @FC: string structure
+ * Return: always return 0
  */
 int check_semicolons(free_chars_t *FC)
 {
@@ -43,7 +51,13 @@ int check_semicolons(free_chars_t *FC)
 }
 
 
-int split_semicolons(free_chars_t *FC)
+/**
+ * split_semicolons - split FC->buff in commands separated by ';'
+ * character. These commands are storaged in the linked list FC->commands
+ * @FC: string structure
+ * Return: nothing
+ */
+void split_semicolons(free_chars_t *FC)
 {
 	int hascommand = 0;
 	char *buff = FC->buff;
@@ -64,16 +78,17 @@ int split_semicolons(free_chars_t *FC)
 			buff += (buff[i] == ';') ? i + 1 : i;
 			i = 0;
 		}
-		else
-		{
-			_printf("Error ';' not expected\n");
-			return (1);
-		}
 	}
-	return (0);
 }
 
 
+/**
+ * putPath - puth the path before the command concatenated in a 
+ * new allocated memory, command memory is freed
+ * @command: string with command
+ * @path: string with path
+ * Return: pointer to new allocated memory with the full path
+ */
 char *putPath(char *command, char *path)
 {
 	int command_len = _strlen(command);

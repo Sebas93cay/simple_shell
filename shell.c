@@ -1,7 +1,12 @@
 #include "headershell.h"
 
 
-
+/**
+ * main - simple shell
+ * @argc: argument counts
+ * @argv: argument vector
+ * @env: eviroment vector
+ */
 int main(__attribute__ ((unused)) int argc,
 	 __attribute__ ((unused)) char **argv,
 	 __attribute__ ((unused)) char **env)
@@ -26,6 +31,7 @@ int main(__attribute__ ((unused)) int argc,
 
 /**
  * execve_not_working - frees all strings in FC and shows error message
+ * @FC: string structure.
  */
 void infinite_loop(free_chars_t *FC)
 {
@@ -73,7 +79,9 @@ void infinite_loop(free_chars_t *FC)
 
 
 /**
- *check_inputs - Receive inputs from stdin
+ *check_inputs - Read input from stdin
+ * @FC: string structure.
+ * @buffSize: buffer's size
  */
 int check_inputs(free_chars_t *FC, int *buffSize)
 {
@@ -104,6 +112,7 @@ int check_inputs(free_chars_t *FC, int *buffSize)
 
 /**
  *check_built_in - check if input is any of the builtins
+ * @FC: string structure.
  */
 int check_built_in(free_chars_t *FC)
 {
@@ -148,6 +157,7 @@ int check_built_in(free_chars_t *FC)
 
 /**
  * exec_commands - executes comands in args.
+ * @FC: string structure.
  */
 void exec_command(free_chars_t *FC)
 {

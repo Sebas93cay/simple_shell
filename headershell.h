@@ -81,7 +81,7 @@ int check_errors(free_chars_t *FC);
 void __attribute__ ((constructor)) premain();
 void ignore_signal(int sig);
 int check_semicolons(free_chars_t *FC);
-int split_semicolons(free_chars_t *FC);
+void split_semicolons(free_chars_t *FC);
 char *putPath(char *command, char *path);
 
 /*functions_shell_3.c*/
@@ -99,7 +99,7 @@ list_t *join_lines(list_t **lines);
 /*built_ins.c*/
 int built_exit(free_chars_t *FC);
 int built_cd(free_chars_t *FC);
-void cd_to(free_chars_t *FC, char *oldpwd, char *pwd, int *dirlen);
+void cd_to(free_chars_t *FC, char *oldpwd, char *pwd);
 int built_env(free_chars_t *FC, int mode);
 int built_print_aliases(alias *head);
 
