@@ -32,6 +32,14 @@ typedef struct list_s
 	struct list_s *next;
 } list_t;
 
+/**
+ * struct alias - singly linked list of aliases
+ * @name: alias's name
+ * @value: alias's value
+ * @next: points to the next node
+ *
+ * Description: singly linked list node structure for alias in shell
+ */
 typedef struct alias
 {
 	char *name;
@@ -39,12 +47,39 @@ typedef struct alias
 	struct alias *next;
 } alias;
 
+/**
+ * struct ANDOR_t - singly linked list
+ * @str: string - (malloc'ed string)
+ * @tipo: indicates what logic operator preceded the command
+ * tipo 0: no operator logic preceded the command
+ * tipo 1: ||
+ * tipo 2: &&
+ * @next: points to the next node
+ *
+ * Description: singly linked list node stucture for ANDOR command
+ */
 typedef struct ANDOR_t
 {
 	char *str;
 	int tipo;
 	struct ANDOR_t *next;
 } ANDOR_t;
+
+
+/**
+ * struct free_chars_t - struct to storage most importants variables
+ * for shell during execution
+ * @args_l: argument list
+ * @args: argument array
+ * @argv: argument vectors given to main
+ * @buff: buffer
+ * @lines: lines list
+ * @commands: command list (separated by ;)
+ * @ANDORS: andors command list (separated by && or ||)
+ * @last_command_result: last command return value
+ * @need_to_readnextline: flag to read next line
+ * @aliases: alias list
+ */
 
 typedef struct free_chars_t
 {
@@ -61,9 +96,7 @@ typedef struct free_chars_t
 } free_chars_t;
 
 /*shell*/
-int main(__attribute__ ((unused)) int argc,
-	 __attribute__ ((unused)) char **argv,
-	 __attribute__ ((unused)) char **env);
+int main(int argc, char **argv, char **env);
 void infinite_loop(free_chars_t *FC);
 int check_inputs(free_chars_t *FC, int *buffSize);
 int check_built_in(free_chars_t *FC);
@@ -121,7 +154,7 @@ char *_strndup(char *s, int n);
 /*miscellaneous_3.c*/
 list_t *splitargs_list(free_chars_t *FC);
 void save_arg(free_chars_t *FC, char **buff, list_t **last_node,
-	      int *letters, int *saving, int *saved_lett, int force);
+	      int *letters, int *saving, int force);
 char **pointto_words_list(free_chars_t *FC);
 char **splitwords(char *buff, char token);
 void free_words(char **args);
@@ -132,7 +165,7 @@ char *_getenv(const char *);
 void _printenv(void);
 int _setenv(char *name, char *value, int overwrite);
 int _unsetenv(char *name);
-char **words_cpy(char **words); /*used to copy environ*/
+char **words_cpy(char **words);
 
 /*miscellaneous_5.c*/
 ssize_t _getline(free_chars_t *FC, int *buffsize);

@@ -1,5 +1,11 @@
 #include "headershell.h"
 
+/**
+ * _getline - gets line from stdin
+ * @FC: string structure.
+ * @buffsize: buffer's size
+ * Return: return pointer to variable's value
+ */
 ssize_t _getline(free_chars_t *FC, int *buffsize)
 {
 	int bytes, i = 0, keepreading = 0;
@@ -46,6 +52,10 @@ ssize_t _getline(free_chars_t *FC, int *buffsize)
 /**
  * check_if_character - check if buff has character c in the first n bytes
  * if n is cero, checks the buffer until a null character is found
+ * @buff: buffer
+ * @n: n
+ * @c: character
+ * Return: retunt 1 if character c appears, 0 otherwise
  */
 int check_if_character(char *buff, int n, char c)
 {
@@ -70,7 +80,12 @@ int check_if_character(char *buff, int n, char c)
 	return (0);
 }
 
-
+/**
+ * remove_last_character - remove last character on buff
+ * if the last character is c
+ * @buff: buffer
+ * @c: character
+ */
 void remove_last_character(char *buff, char c)
 {
 	int len;
@@ -103,6 +118,13 @@ int check_if_not_commands(char *buff)
 	return (1);
 }
 
+/**
+ * check_if_line - check if buff has a whole line with a '\n'
+ * character at the end in the first n characters.
+ * @buff: buffer
+ * @n: n
+ * Return: return 1 if there is a whole line, 0 otherwise
+ */
 int check_if_line(char *buff, int n)
 {
 	int full_line = 0, i = 0;

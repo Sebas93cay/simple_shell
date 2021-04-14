@@ -122,6 +122,12 @@ int _atoi(char *s)
 }
 
 
+/**
+ * _strdup - make a copy of s, this copy is allocated and can be
+ * freed with free
+ * @s: string to copy
+ * Return: string copied
+ */
 
 char *_strdup(char *s)
 {
@@ -141,6 +147,13 @@ char *_strdup(char *s)
 	return (ret);
 }
 
+/**
+ * _strndup - make a copy of the first n bytes of s, this
+ * copy is allocated and can be freed with free
+ * @s: string to copy
+ * @n: n
+ * Return: string copied
+ */
 char *_strndup(char *s, int n)
 {
 	char *ret = NULL;

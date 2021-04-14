@@ -1,5 +1,11 @@
 #include "headershell.h"
 
+/**
+ * _getenv - gets enviroment variable name
+ * @name: enviroment variable
+ * Return: return pointer to variable's value
+ * or NULL of failure
+ */
 char *_getenv(const char *name)
 {
 	int len = _strlen((char *) name);
@@ -19,6 +25,10 @@ char *_getenv(const char *name)
 	return (NULL);
 }
 
+/**
+ * _printenv - print enviroment
+ * Return: nothing
+ */
 void _printenv(void)
 {
 	int i = 0;
@@ -31,6 +41,13 @@ void _printenv(void)
 }
 
 
+/**
+ * _setenv - sets enviroment variable name with value value
+ * @name: enviroment variable
+ * @value: value
+ * @overwrite: overwrite variable is this argument is set
+ * Return: return pointer to variable's value
+ */
 int _setenv(char *name, char *value, int overwrite)
 {
 	int len = _strlen((char *) name), size = 0;
@@ -75,6 +92,11 @@ int _setenv(char *name, char *value, int overwrite)
 	return (0);
 }
 
+/**
+ * _unsetenv - unset enviroment variable name
+ * @name: enviroment variable
+ * Return: return always 0
+ */
 int _unsetenv(char *name)
 {
 	int len = _strlen((char *) name);
@@ -103,6 +125,13 @@ int _unsetenv(char *name)
 	return (0);
 }
 
+
+/**
+ * words_cpy - copy an array of strings into an allocated
+ * space of memory
+ * @words: array of strings to copy
+ * Return: pointer to allocated space with array copied
+ */
 char **words_cpy(char **words)
 {
 	int word_count, letter_count, i;

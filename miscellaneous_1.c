@@ -38,7 +38,7 @@ char *_strncpy(char *dest, char *src, int n)
 }
 
 /**
- * _strncpy - copy the first n bytes of src into dest
+ * _strcpy - copy the first n bytes of src into dest
  * @dest: destination buffer
  * @src: source
  * Return: return pointer to dest
@@ -75,7 +75,7 @@ int _strcmp(char *s1, char *s2)
 
 
 /**
- * _strcmp - compare first n bytes in two strings
+ * _strncmp - compare first n bytes in two strings
  * @s1: string 1
  * @s2: string 2
  * @n: bytes to compare

@@ -29,6 +29,7 @@ int fillnewbuff(char *buff, char *src, int to_write, int buff_size, int *b_cnt)
 
 /**
  * _itoa - convert a integer into a string
+ * @buffsize: buffsize
  * @num: number
  * @nums: buffer of minimun 12 bytes to storage the number as a string
  * @sign: sing char

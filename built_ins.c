@@ -3,6 +3,7 @@
 /**
  * built_exit - exit built-in. It exits the shell
  * @FC: string structure.
+ * Return: return 1 if exit was unsucesfull
  */
 int built_exit(free_chars_t *FC)
 {
@@ -33,6 +34,7 @@ int built_exit(free_chars_t *FC)
 /**
  * built_cd - change directory built-in.
  * @FC: string structure.
+ * Return: return 1
  */
 
 int built_cd(free_chars_t *FC)
@@ -66,6 +68,7 @@ int built_cd(free_chars_t *FC)
  * @FC: string structure.
  * @oldpwd: enviroment variable OLDPWD value
  * @pwd: enviroment variable PWD value
+ * Rerturn: nothing
  */
 void cd_to(free_chars_t *FC, char *oldpwd, char *pwd)
 {
@@ -100,11 +103,12 @@ void cd_to(free_chars_t *FC, char *oldpwd, char *pwd)
 
 
 /**
- * built_cd - change directory built-in.
+ * built_env - enviroment built in
  * @FC: string structure.
  * @mode: defines if the built is goint to print the enviroment (mode = 0),
  * set a new enviroment variable (mode = 1) or delete anviroment varaible
  * (mode = 2)
+ * Return: return 1
  */
 int built_env(free_chars_t *FC, int mode)
 {
@@ -127,6 +131,7 @@ int built_env(free_chars_t *FC, int mode)
 /**
  * built_print_aliases - print all the alias saved in a linked list
  * @head: pointer to first node of the list
+ * Return: return 1
  */
 int built_print_aliases(alias *head)
 {

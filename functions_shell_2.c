@@ -27,7 +27,7 @@ void ignore_signal(int sig)
 
 
 /**
- * check_semicolumns - check if there is ';' in the line to execute
+ * check_semicolons - check if there is ';' in the line to execute
  * and separate those commands
  * @FC: string structure
  * Return: always return 0
@@ -83,7 +83,7 @@ void split_semicolons(free_chars_t *FC)
 
 
 /**
- * putPath - puth the path before the command concatenated in a 
+ * putPath - puth the path before the command concatenated in a
  * new allocated memory, command memory is freed
  * @command: string with command
  * @path: string with path

@@ -82,7 +82,15 @@ list_t *add_node_n_end(list_t **head, const char *str, size_t n)
 	return (new);
 }
 
-
+/**
+ * singly_split_words - split string str with character delimiter and
+ * store the pieces in the linked list head
+ * @str: string
+ * @head: linked list pointer
+ * @delimiter: character
+ * delimiter: character to split str
+ * Return: return pointer to linked list with the splited strings
+ */
 list_t *singly_split_words(char *str, list_t **head, char delimiter)
 {
 	int letters = 0;
@@ -104,6 +112,11 @@ list_t *singly_split_words(char *str, list_t **head, char delimiter)
 	return (*head);
 }
 
+/**
+ * pop_list - remove fisrt node in linked list head
+ * @head: linked list
+ * Return: pointer to string of the first element of the list
+*/
 char *pop_list(list_t **head)
 {
 	list_t *tmp;

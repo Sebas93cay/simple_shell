@@ -1,8 +1,14 @@
 #include "headershell.h"
 
+/**
+ * splitargs_list - split FC->buff arguments and store them in
+ * the linked list FC->args_l.
+ * @FC: string structure.
+ * Return: pointer to FC->args_l
+ */
 list_t *splitargs_list(free_chars_t *FC)
 {
-	int letters = 0, saved_lett = 0;
+	int letters = 0;
 	char *buff = FC->buff;
 	int saving = 0;
 	list_t *last_node = NULL;
@@ -21,11 +27,11 @@ list_t *splitargs_list(free_chars_t *FC)
 			if (buff[letters] == '\'' || buff[letters] == '\"')
 			{
 				quote = buff[letters];
-				save_arg(FC, &buff, &last_node, &letters, &saving, &saved_lett, 0);
+				save_arg(FC, &buff, &last_node, &letters, &saving,  0);
 				buff++;
 				while (buff[letters] != quote)
 					letters++;
-				save_arg(FC, &buff, &last_node, &letters, &saving, &saved_lett, 1);
+				save_arg(FC, &buff, &last_node, &letters, &saving, 1);
 				buff++;
 				if (*buff == ' ')
 					saving = 0;
@@ -37,7 +43,7 @@ list_t *splitargs_list(free_chars_t *FC)
 		}
 		if (*buff == 0)
 			break;
-		save_arg(FC, &buff, &last_node, &letters, &saving, &saved_lett, 0);
+		save_arg(FC, &buff, &last_node, &letters, &saving, 0);
 		if (*buff == ' ')
 			saving = 0;
 	}
@@ -45,19 +51,28 @@ list_t *splitargs_list(free_chars_t *FC)
 }
 
 
+/**
+ * save_arg - saves part of an argument
+ * @FC: string structure.
+ * @buff: buff
+ * @last_node: pointer to last node in linked_list
+ * @letters: letters readed in piece to add to argument
+ * @saving: flag, if it's 1 it means that we are saving in an
+ * already created node.
+ * @force: force to save argument even if it does not have anything
+ * Return: array of pointers pointing to strings in FC->args_l
+ */
 void save_arg(free_chars_t *FC, char **buff, list_t **last_node,
-	      int *letters, int *saving, int *saved_lett, int force)
+	      int *letters, int *saving, int force)
 {
 	if ((*letters > 0 && *saving == 0) || (force && *saving == 0))
 	{
 		*last_node = add_node_n_end(&FC->args_l, *buff, *letters);
 		*saving = 1;
-		*saved_lett += *letters;
 	}
 	else if ((*letters > 0 && *saving == 1) || (force && *saving == 1))
 	{
 		(*last_node)->str = _strcatn((*last_node)->str, *buff, *letters);
-		*saved_lett += *letters;
 		(*last_node)->len += *letters;
 	}
 	*buff += *letters;
@@ -65,6 +80,12 @@ void save_arg(free_chars_t *FC, char **buff, list_t **last_node,
 }
 
 
+/**
+ * pointto_words_list - make a null terminated array of strings pointing
+ * to the strings in the linked list FC->args_l
+ * @FC: string structure.
+ * Return: array of pointers pointing to strings in FC->args_l
+ */
 char **pointto_words_list(free_chars_t *FC)
 {
 	int args_n = list_len(FC->args_l);
@@ -88,6 +109,13 @@ char **pointto_words_list(free_chars_t *FC)
 	return (FC->args);
 }
 
+/**
+ * splitwords - split buff in an array of strings, the split is done with
+ * the strings between the character token
+ * @buff: string to split
+ * @token: character to split buff
+ * Return: array of strings
+ */
 char **splitwords(char *buff, char token)
 {
 	int i, wordcount = 0, letters = 0;
@@ -126,7 +154,11 @@ char **splitwords(char *buff, char token)
 }
 
 
-
+/**
+ * free_words - free array of strings
+ * @args: array of string to free
+ * Return: nothing
+ */
 void free_words(char **args)
 {
 	int i = 0;

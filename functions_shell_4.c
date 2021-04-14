@@ -7,6 +7,8 @@
  * tipo = 0 for the first command
  * tipo = 1 for commands after a || token
  * tipo = 2 for commands after a && token
+ * @FC: string structure
+ * Return: 1 if no command is going to be executed, 0 otherwise
  */
 int checkANDOR(free_chars_t *FC)
 {
@@ -52,6 +54,16 @@ int checkANDOR(free_chars_t *FC)
 	return (check_andor_logic(FC));
 }
 
+/**
+ * check_andor_logic - check if next command should be executed
+ * according if the previous command was succesfull or not.
+ * If commands is tipo 1, it should be executed if previous command
+ * was unsuccesfull, if it is tipo 2, it should be the oposite.
+ * The command that should be executed is pointed by FC->buff
+ * @FC: string structure
+ * Return: if a command that should be executed is found, a 0 is
+ * returned, otherwise, a 1 is returned
+ */
 int check_andor_logic(free_chars_t *FC)
 {
 	int tipo;
@@ -73,7 +85,12 @@ int check_andor_logic(free_chars_t *FC)
 }
 
 
-
+/**
+ * join_lines - joing the first two nodes in the linked list lines
+ * in the first node and removes the second node.
+ * @lines: linked list
+ * Return: pointer to linked list;
+*/
 list_t *join_lines(list_t **lines)
 {
 

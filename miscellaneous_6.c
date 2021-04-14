@@ -1,5 +1,10 @@
 #include "headershell.h"
 
+/**
+ * check_if_num - check if buffer num, only contains numbers
+ * @num: buffer
+ * Return: return 0 if only number appears, -1 otherwise
+ */
 int check_if_num(char *num)
 {
 	while (*num)
@@ -14,6 +19,10 @@ int check_if_num(char *num)
 
 /**
  * _strcatn - concatenate first n bytes from src after dest
+ * @dest: destination
+ * @src: string to copy
+ * @n: n
+ * Return: string with both strings concatenated
  */
 char *_strcatn(char *dest, char *src, int n)
 {
@@ -33,7 +42,11 @@ char *_strcatn(char *dest, char *src, int n)
 	return (dest);
 }
 
-
+/**
+ * print_words - print array of strings
+ * @words: array of strings
+ * Return: nothing
+ */
 void print_words(char **words)
 {
 	while (*words)
@@ -43,6 +56,12 @@ void print_words(char **words)
 	}
 }
 
+/**
+ * change_WD - change working directory
+ * @newpwd: new working directory to setenv
+ * @pwd: working directory at the time.
+ * Return: nothing
+ */
 void change_WD(char *newpwd, char *pwd)
 {
 	chdir(newpwd);

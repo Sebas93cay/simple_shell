@@ -1,5 +1,11 @@
 #include "headershell.h"
 
+/**
+ * check_no_commands_inbetween - check if there are unexpected tokens ';' ,
+ * "&&" or "||" in FC->buff
+ * @FC: string structure.
+ * Return: return 0 in success, 1 if unexpected token was found
+ */
 
 int check_no_commands_inbetween(free_chars_t *FC)
 {
@@ -41,6 +47,16 @@ int check_no_commands_inbetween(free_chars_t *FC)
 	return (0);
 }
 
+/**
+ * check_for_command - check if there is a command in buff before
+ * one of the next tokens appears: ';' "&&" "||", it keeps the counter
+ * i runing while going throught buff
+ * @buff: buffer
+ * @i: counter
+ * @hascommand: flag to set if a command is found
+ * @ hascommand: flag to set if command is fount
+ * Return: nothing
+ */
 void check_for_command(char *buff, int *i, int *hascommand)
 {
 	*hascommand = 0;
@@ -55,6 +71,13 @@ void check_for_command(char *buff, int *i, int *hascommand)
 	}
 }
 
+/**
+ * check_if_need_more_read_logic - check if last characters in
+ * FC->buff are "&&" or "||" logic operators
+ * @FC: string structure.
+ * Return: returns 1 if last characters are logic operators,
+ * 0 otherwise
+ */
 int check_if_need_more_read_logic(free_chars_t *FC)
 {
 	char *buff = FC->buff;
@@ -83,6 +106,12 @@ int check_if_need_more_read_logic(free_chars_t *FC)
 	return (0);
 }
 
+/**
+ * check_if_need_more_read_quotes - check if there are unclosed
+ * quotes in FC->buff
+ * @FC: string structure.
+ * Return: returns 1 if there are unclosed quotes 0 otherwise
+ */
 int check_if_need_more_read_quotes(free_chars_t *FC)
 {
 	_printf("%s\n", FC->buff);

@@ -6,6 +6,7 @@
  * @argc: argument counts
  * @argv: argument vector
  * @env: eviroment vector
+ * Return: always return 0
  */
 int main(__attribute__ ((unused)) int argc,
 	 __attribute__ ((unused)) char **argv,
@@ -30,8 +31,9 @@ int main(__attribute__ ((unused)) int argc,
 }
 
 /**
- * execve_not_working - frees all strings in FC and shows error message
+ * infinite_loop - frees all strings in FC and shows error message
  * @FC: string structure.
+ * Return: nothing
  */
 void infinite_loop(free_chars_t *FC)
 {
@@ -79,9 +81,10 @@ void infinite_loop(free_chars_t *FC)
 
 
 /**
- *check_inputs - Read input from stdin
+ * check_inputs - Read input from stdin
  * @FC: string structure.
  * @buffSize: buffer's size
+ * Return: 0 in success, 1 otherwise
  */
 int check_inputs(free_chars_t *FC, int *buffSize)
 {
@@ -115,6 +118,7 @@ int check_inputs(free_chars_t *FC, int *buffSize)
 /**
  *check_built_in - check if input is any of the builtins
  * @FC: string structure.
+ * Return: 0 in success, 1 otherwise
  */
 int check_built_in(free_chars_t *FC)
 {
@@ -158,8 +162,9 @@ int check_built_in(free_chars_t *FC)
 
 
 /**
- * exec_commands - executes comands in args.
+ * exec_command - executes comands in args.
  * @FC: string structure.
+ * Return: nothing
  */
 void exec_command(free_chars_t *FC)
 {
