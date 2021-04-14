@@ -89,7 +89,7 @@ void infinite_loop(free_chars_t *FC)
 int check_inputs(free_chars_t *FC, int *buffSize)
 {
 	if (isatty(0) && FC->need_to_readnextline == 0)
-		_printf("#cisfun$ "); /*print only in terminal*/
+		_printf("$ "); /*print only in terminal*/
 
 	FC->need_to_readnextline = 0;
 	if (_getline(FC, buffSize) == EOF)
