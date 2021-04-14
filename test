@@ -1,8 +1,14 @@
 ls
+./ls
+./pwd
 /bin/ls
-ls -la /bin
+ls -la /home/
 
 hola
+
+   /bin/pwd/
+
+/bin/pwd      a
 
 1
 12

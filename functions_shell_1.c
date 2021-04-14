@@ -20,9 +20,8 @@ void check_full_path(char **args, free_chars_t *FC)
 		if (stat(*args + 2, &st) == 0)
 		{
 			command = _strdup(*args + 2);
-			free(args[0]);
-			args[0] = _strdup(cwd);
-			args[0] = _strncat(2, args[0], "/", command);
+			FC->full_command = _strdup(cwd);
+			FC->full_command = _strncat(2, FC->full_command, "/", command);
 			free(command);
 		}
 	}

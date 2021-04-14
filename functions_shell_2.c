@@ -7,7 +7,7 @@
 void __attribute__ ((constructor)) premain(void)
 {
 	environ = words_cpy(environ);
-	/* signal(SIGINT, ignore_signal); */
+	signal(SIGINT, ignore_signal);
 }
 
 
