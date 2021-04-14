@@ -71,6 +71,7 @@ char *getAddress_p(void *p, char *buf, int size_b)
  * @b_cnt: bytes used in current buffer
  * @s: string to copy
  * @len: lenght in bytes of s
+ * @out: output stream to print
  * Return: pointer to first byte of number as a string
  */
 int putInBuffer(char *buff, int *b_cnt, char *s, int len, int out)
@@ -102,6 +103,7 @@ int putInBuffer(char *buff, int *b_cnt, char *s, int len, int out)
  * @b_cnt: bytes used in current buffer
  * @flags: array of structs with activated flags
  * @new_buffs: buffers quantity to use
+ * @out: output stream to print
  * Return: nothing
  */
 void checkFlags(char *buff, int *b_cnt, flag *flags, int *new_buffs, int out)

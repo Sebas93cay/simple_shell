@@ -1,1 +1,19 @@
-sh: 2: hola: not found
+sh: 5: hola: not found
+sh: 7: 1: not found
+sh: 8: 12: not found
+sh: 9: 123: not found
+sh: 10: 1234: not found
+sh: 11: 12345: not found
+sh: 22: hola: not found
+sh: 26: p: not found
+sh: 36: a: not found
+sh: 38: increibe: not found
+sh: 42: hola?: not found
+cat: A: No such file or directory
+cat: A: No such file or directory
+cat: B: No such file or directory
+cat: C: No such file or directory
+cat: A: No such file or directory
+cat: BC: No such file or directory
+cat: C: No such file or directory
+cat: test: No such file or directory

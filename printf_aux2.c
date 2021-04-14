@@ -7,6 +7,7 @@
  * @buff: buffer
  * @b_cnt: bytes printed counter
  * @flags: structure with flags activated to have into account
+ * @out: output stream to print
  * Return: return number of new buffers needed to print string
  */
 int place_x(va_list args, char *buff, int *b_cnt,
@@ -41,6 +42,7 @@ int place_x(va_list args, char *buff, int *b_cnt,
  * @buff: buffer
  * @b_cnt: bytes printed counter
  * @flags: structure with flags activated to have into account
+ * @out: output stream to print
  * Return: return number of new buffers needed to print string
  */
 
@@ -75,6 +77,7 @@ int place_X(va_list args, char *buff, int *b_cnt,
  * @buff: buffer
  * @b_cnt: bytes printed counter
  * @flags: structure with flags activated to have into account
+ * @out: output stream to print
  * Return: return number of new buffers needed to print string
  */
 
@@ -110,6 +113,7 @@ int place_o(va_list args, char *buff, int *b_cnt,
  * @buff: buffer
  * @b_cnt: bytes printed counter
  * @flags: structure with flags activated to have into account
+ * @out: output stream to print
  * Return: return number of new buffers needed to print string
  */
 int place_u(va_list args, char *buff, int *b_cnt, flag *flags, int out)
@@ -131,6 +135,16 @@ int place_u(va_list args, char *buff, int *b_cnt, flag *flags, int out)
 	return (new_buffs);
 }
 
+/**
+ * place_p - write the first number in the argument list
+ * in pointer format
+ * @args: argument list
+ * @buff: buffer
+ * @b_cnt: bytes printed counter
+ * @flags: structure with flags activated to have into account
+ * @out: output stream to print
+ * Return: return number of new buffers needed to print string
+ */
 int place_p(va_list args, char *buff, int *b_cnt,
 	    __attribute__ ((unused)) flag *flags, int out)
 {

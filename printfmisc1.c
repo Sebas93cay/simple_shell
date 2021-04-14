@@ -8,6 +8,7 @@
  * @to_write: bytes to write in buffer
  * @buff_size: buffer size
  * @b_cnt: pointer to bytes used in buffer, it's value is updated in function
+ * @out: output stream to print
  * Return: return number of buffers initialized during execution
  */
 int fillnewbuff(char *buff, char *src, int to_write, int buff_size,

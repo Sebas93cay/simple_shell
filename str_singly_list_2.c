@@ -98,8 +98,6 @@ list_t *singly_split_words(char *str, list_t **head, char delimiter)
 
 	while (*str)
 	{
-		while (*str == delimiter)
-			str++;
 		while (str[letters] != 0 && str[letters] != delimiter)
 			letters++;
 		bytes_to_add = (str[letters] == 0) ? letters : letters + 1;

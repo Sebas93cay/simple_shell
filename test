@@ -23,7 +23,7 @@ pwd
     pwd
 
 ls      -a     /home
-
+p
 
 pwd && pwd ; ls || hola &&        
 
@@ -39,10 +39,14 @@ increibe ||
 pwd ; cd / && ls || ls && ls -a ;
 cd - ;
 
+hola?
+
   cat A
 cat A B C
 
-cat 'A' "B""C" "C" "te"s't' 
+cat 'A' "B""C" "C" "te"s't'
+
+cat "caramb"  oltotas"cosas"'interesantes'
 
 exit 4
 

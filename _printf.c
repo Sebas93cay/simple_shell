@@ -2,8 +2,8 @@
 
 /**
  * _printf - prints buffer
- * @output: stdoup or sterr
- * @format: format to print buffer
+ * @out: output stream to print
+ * @format: format to print.
  * Return: return number of bytes printed
  */
 int _printf(int out, const char *format, ...)
@@ -41,6 +41,7 @@ int _printf(int out, const char *format, ...)
  * @ph: struct with the placeholders and the functions to print the
  * arguments found in args.
  * @format: format to print buffer
+ * @out: output stream to print
  * Return: return number of bytes printed
  */
 int trav_format(va_list args, placeholders *ph, const char *format, int out)
@@ -85,6 +86,7 @@ int trav_format(va_list args, placeholders *ph, const char *format, int out)
  * @args: list of arguments to print
  * @buff: buffer to copy the argument with the according format
  * @b_cnt: counter of bytes used in current buffer
+ * @out: output stream to print
  * Return: nothing
  */
 void trav_holders(placeholders *ph, const char **trav, int *used_buff,

@@ -24,6 +24,7 @@ int main(__attribute__ ((unused)) int argc,
 	FC.last_command_result = 0;
 	FC.need_to_readnextline = 0;
 	FC.args_l = NULL;
+	FC.line_count = 0;
 
 	infinite_loop(&FC);
 	return (0);
@@ -91,6 +92,7 @@ int check_inputs(free_chars_t *FC, int *buffSize)
 		_printf(1, "$ "); /*print only in terminal*/
 
 	FC->need_to_readnextline = 0;
+	FC->line_count++;
 	if (_getline(FC, buffSize) == EOF)
 	{
 		free(FC->args);
@@ -103,6 +105,9 @@ int check_inputs(free_chars_t *FC, int *buffSize)
 			exit(127);
 		exit(0);
 	}
+
+
+
 	/* _printf(1, "la linea es = %s\n", FC->buff); */
 
 	if (FC->buff == NULL || *(FC->buff) == 0)
@@ -185,7 +190,8 @@ void exec_command(free_chars_t *FC)
 	}
 	else
 	{
-		_printf(2, "No se pudo encontrar paila\n");
+		_printf(2, "%s: %d: %s: not found\n", FC->argv[0],
+			FC->line_count, FC->args[0]);
 		FC->last_command_result = 1;
 		free(FC->args);
 		free_list(&FC->args_l);

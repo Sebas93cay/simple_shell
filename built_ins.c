@@ -18,8 +18,8 @@ int built_exit(free_chars_t *FC)
 		}
 		else
 		{
-			_printf(1, "%s: 1: exit: Illegal number: %s\n",
-				*FC->argv, FC->args[1]);
+			_printf(1, "%s: %d: exit: Illegal number: %s\n",
+				*FC->argv, FC->line_count, FC->args[1]);
 			if (!isatty(0))
 				TheExit(2, FC);
 			return (1);
@@ -95,7 +95,8 @@ void cd_to(free_chars_t *FC, char *oldpwd, char *pwd)
 		}
 		else if (errno == ENOENT)
 		{
-			_printf(1, "%s: 1: can't cd to %s\n", FC->argv[0], FC->args[1]);
+			_printf(1, "%s: %d: can't cd to %s\n", FC->argv[0],
+				FC->line_count, FC->args[1]);
 			FC->last_command_result = 1;
 		}
 	}

@@ -79,6 +79,7 @@ typedef struct ANDOR_t
  * @last_command_result: last command return value
  * @need_to_readnextline: flag to read next line
  * @aliases: alias list
+ * @line_count: line readed counter
  */
 
 typedef struct free_chars_t
@@ -93,6 +94,7 @@ typedef struct free_chars_t
 	int last_command_result;
 	int need_to_readnextline;
 	alias *aliases;
+	int line_count;
 } free_chars_t;
 
 /*shell*/
