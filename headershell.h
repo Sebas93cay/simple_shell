@@ -37,7 +37,7 @@ typedef struct alias
 	char *name;
 	char *value;
 	struct alias *next;
-}alias;
+} alias;
 
 typedef struct ANDOR_t
 {

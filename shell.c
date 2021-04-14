@@ -85,6 +85,8 @@ int check_inputs(free_chars_t *FC, int *buffSize)
 	{
 		free_list(&FC->args_l);
 		free_words(environ);
+		if (FC->last_command_result == 1)
+			exit(127);
 		exit(0);
 	}
 	/* _printf("la linea es = %s\n", FC->buff); */
