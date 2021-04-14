@@ -1,6 +1,5 @@
 #include "headershell.h"
 
-
 /**
  * main - simple shell
  * @argc: argument counts
@@ -94,7 +93,11 @@ int check_inputs(free_chars_t *FC, int *buffSize)
 	FC->need_to_readnextline = 0;
 	if (_getline(FC, buffSize) == EOF)
 	{
+		free(FC->args);
 		free_list(&FC->args_l);
+		free(FC->buff);
+		free_list(&FC->lines);
+		free_list(&FC->commands);
 		free_words(environ);
 		if (FC->last_command_result == 1)
 			exit(127);

@@ -61,7 +61,7 @@ list_t *add_node_n_end(list_t **head, const char *str, size_t n)
 		return (NULL);
 	if (str != NULL)
 	{
-		new->str = strndup(str, n);
+		new->str = _strndup((char *)str, n);
 	}
 	else
 		new->str = NULL;
