@@ -1,0 +1,22 @@
+#!/bin/bash
+
+sh < test_files/minitest 1>test_files/salida 2>test_files/error
+echo "********************************************************************"
+echo "********************************************************************"
+echo "The sh"
+echo "sh salida:"
+cat test_files/salida
+echo "sh error:"
+cat test_files/error
+
+
+
+./a.out < test_files/minitest 1>test_files/salida 2>test_files/error
+echo "********************************************************************"
+echo "********************************************************************"
+echo "My sh"
+echo "a.out salida:"
+cat test_files/salida
+echo "a.out error:"
+cat test_files/error
+

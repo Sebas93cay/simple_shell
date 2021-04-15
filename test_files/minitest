@@ -1,3 +1,6 @@
+pwd ; cd  &&
+pwd && cd -
+pwd && &&
 
 /bin/ls
 /bin/ls/

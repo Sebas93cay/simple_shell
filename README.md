@@ -18,12 +18,12 @@ To compile the project, just run 'gcc *.c -o shell'
 
 ## How to use
 
-# Interactive mode
+### Interactive mode
 
 Run './shell', then write the commands to execute and press enter
 To exit the shell enter 'exit' command.
 
-# Non-interactive mode
+### Non-interactive mode
 
 Redirect stdin to shell using pipelines '|', or also redirect from a file using '<' symbol
 

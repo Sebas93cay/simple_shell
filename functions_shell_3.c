@@ -30,11 +30,14 @@ int check_no_commands_inbetween(free_chars_t *FC)
 		else
 		{
 			if (buff[i] == ';')
-				_printf(2, "Error ';' not expected\n");
+				_printf(2, "%s: %d: Syntax error: \";\" unexpected\n",
+					FC->argv[0], FC->line_count);
 			else if (buff[i] == '|' && buff[i + 1] == '|')
-				_printf(2, "Unexpected token ||\n");
+				_printf(2, "%s: %d: Syntax error: \"||\" unexpected\n",
+					FC->argv[0], FC->line_count);
 			else if	(buff[i] == '&' && buff[i + 1] == '&')
-				_printf(2, "Unexpected token &&\n");
+				_printf(2, "%s: %d: Syntax error: \"&&\" unexpected\n",
+					FC->argv[0], FC->line_count);
 			free_list(&FC->commands), FC->commands = NULL;
 			free(FC->buff), FC->buff = NULL;
 			free_list(&FC->lines), FC->lines = NULL;
