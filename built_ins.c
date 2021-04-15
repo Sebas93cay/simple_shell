@@ -95,7 +95,7 @@ void cd_to(free_chars_t *FC, char *oldpwd, char *pwd)
 		}
 		else if (errno == ENOENT)
 		{
-			_printf(2, "%s: %d: can't cd to %s\n", FC->argv[0],
+			_printf(2, "%s: %d: cd: can't cd to %s\n", FC->argv[0],
 				FC->line_count, FC->args[1]);
 			FC->last_command_result = 1;
 		}

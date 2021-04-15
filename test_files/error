@@ -1,1 +1,3 @@
-./a.out: 3: Syntax error: "&&" unexpected
+./a.out: 1: can't cd to /carambas
+./a.out: 3: /ls: not found
+./a.out: 7: Syntax error: "&&" unexpected

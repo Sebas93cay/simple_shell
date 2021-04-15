@@ -1,3 +1,7 @@
+cd /carambas
+
+/ls
+
 pwd ; cd  &&
 pwd && cd -
 pwd && &&
