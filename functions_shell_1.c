@@ -14,6 +14,8 @@ void check_full_path(char **args, free_chars_t *FC)
 	list_t *dirs = NULL, *dir = NULL;
 	struct stat st;
 
+	if (path == NULL)
+		return;
 	cwd = _getenv("PWD");
 	if (args[0][0] == '.' && args[0][1] == '/')
 	{

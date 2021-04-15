@@ -81,7 +81,6 @@ int _setenv(char *name, char *value, int overwrite)
 	}
 	else if (overwrite)
 	{
-		/* _printf("Si habia esa variable (%s)\n", name); */
 		environ[size] = _realloc(environ[size], len + 1,
 					 sizeof(char) * (len + val_len + 2));
 		tmpstr = _strncpy(environ[size], name, len);

@@ -139,7 +139,7 @@ int check_built_in(free_chars_t *FC)
 		return (built_env(FC, 0));
 	if (_strcmp(FC->args[0], "setenv") == 0)
 	{
-		if (FC->args[1] != NULL && FC->args[2] != NULL)
+		if (FC->args[1] != NULL)
 			return (built_env(FC, 1));
 		FC->last_command_result = 1;
 		return (1);
