@@ -1,5 +1,11 @@
 #include "headershell.h"
 
+/**
+ * _getline - gets line from stdin
+ * @FC: string structure.
+ * @buffsize: buffer's size
+ * Return: return pointer to variable's value
+ */
 ssize_t _getline(free_chars_t *FC, int *buffsize)
 {
 	int bytes, i = 0, keepreading = 0;
@@ -23,14 +29,15 @@ ssize_t _getline(free_chars_t *FC, int *buffsize)
 		read_size = (i != 0) ? (int) *buffsize - 1 - i : read_size;
 		bytes = read(STDIN_FILENO, FC->buff + i, read_size);
 		keepreading = 0;
-		if (bytes == read_size && check_if_line(FC->buff, i) == 0)		    
+		i += bytes;
+		if (bytes == read_size && check_if_line(FC->buff, i) == 0)
 		{
 
 			FC->buff = _realloc(FC->buff, *buffsize, *buffsize + extra_read);
 			*buffsize += extra_read;
 			keepreading = 1;
 		}
-		i += bytes;
+
 	} while (keepreading);
 	FC->buff[i] = 0;
 	singly_split_words(FC->buff, &FC->lines, '\n');
@@ -45,6 +52,10 @@ ssize_t _getline(free_chars_t *FC, int *buffsize)
 /**
  * check_if_character - check if buff has character c in the first n bytes
  * if n is cero, checks the buffer until a null character is found
+ * @buff: buffer
+ * @n: n
+ * @c: character
+ * Return: retunt 1 if character c appears, 0 otherwise
  */
 int check_if_character(char *buff, int n, char c)
 {
@@ -69,7 +80,12 @@ int check_if_character(char *buff, int n, char c)
 	return (0);
 }
 
-
+/**
+ * remove_last_character - remove last character on buff
+ * if the last character is c
+ * @buff: buffer
+ * @c: character
+ */
 void remove_last_character(char *buff, char c)
 {
 	int len;
@@ -88,7 +104,7 @@ void remove_last_character(char *buff, char c)
  * blank spaces
  * @buff: buffer
  * Return: return 0 if has a command, 1 if there is no command
- */ 
+ */
 int check_if_not_commands(char *buff)
 {
 	if (buff == NULL || *buff == 0)
@@ -102,16 +118,24 @@ int check_if_not_commands(char *buff)
 	return (1);
 }
 
+/**
+ * check_if_line - check if buff has a whole line with a '\n'
+ * character at the end in the first n characters.
+ * @buff: buffer
+ * @n: n
+ * Return: return 1 if there is a whole line, 0 otherwise
+ */
 int check_if_line(char *buff, int n)
 {
 	int full_line = 0, i = 0;
+
 	if (buff == NULL || *buff == 0)
 		return (0);
-	while((buff[i] == '\n' || buff[i] == ' ') && i < n)
+	while ((buff[i] == '\n' || buff[i] == ' ') && i < n)
 		i++;
 	if (i == n)
 		return (0);
-	while(i < n)
+	while (i < n)
 	{
 		if (buff[i] == '\n')
 		{

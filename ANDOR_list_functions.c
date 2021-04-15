@@ -1,5 +1,14 @@
 #include "headershell.h"
 
+/**
+ * add_node_n_end_andor - add a node at the end of the linked list head
+ * the new node contains the first n bytes of strcatn
+ * @head: linked list
+ * @str: string
+ * @n: n
+ * @tipo: tipo to add to the linked list
+ * Return: pointer to linked list.
+ */
 ANDOR_t *add_node_n_end_andor(ANDOR_t **head, char *str, int n, int tipo)
 {
 	ANDOR_t *new, *l_point;
@@ -40,10 +49,8 @@ ANDOR_t *add_node_n_end_andor(ANDOR_t **head, char *str, int n, int tipo)
  * @h: pointer to the list_t
  * Return: number of nodes
  */
-
 size_t list_len_andor(const ANDOR_t *h)
 {
-	
 	if (h == NULL)
 		return (0);
 	if (h->next == NULL)
@@ -53,7 +60,11 @@ size_t list_len_andor(const ANDOR_t *h)
 }
 
 
-
+/**
+ * pop_andor - remove fisrt node in linked list head
+ * @head: linked list
+ * Return: pointer to string of the first element of the list
+*/
 char *pop_andor(ANDOR_t **head)
 {
 	ANDOR_t *tmp;

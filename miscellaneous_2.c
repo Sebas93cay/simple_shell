@@ -52,7 +52,7 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 
 
 /**
- * _strncat - concatenate varios strings in dest, including 
+ * _strncat - concatenate varios strings in dest, including
  * what is in dest already
  * @n: strings to concatenate after dest;
  * @dest: string destiny
@@ -122,6 +122,12 @@ int _atoi(char *s)
 }
 
 
+/**
+ * _strdup - make a copy of s, this copy is allocated and can be
+ * freed with free
+ * @s: string to copy
+ * Return: string copied
+ */
 
 char *_strdup(char *s)
 {
@@ -141,6 +147,13 @@ char *_strdup(char *s)
 	return (ret);
 }
 
+/**
+ * _strndup - make a copy of the first n bytes of s, this
+ * copy is allocated and can be freed with free
+ * @s: string to copy
+ * @n: n
+ * Return: string copied
+ */
 char *_strndup(char *s, int n)
 {
 	char *ret = NULL;

@@ -1,47 +1,40 @@
 #include "headershell.h"
 
-
-
+/**
+ * main - simple shell
+ * @argc: argument counts
+ * @argv: argument vector
+ * @env: eviroment vector
+ * Return: always return 0
+ */
 int main(__attribute__ ((unused)) int argc,
 	 __attribute__ ((unused)) char **argv,
 	 __attribute__ ((unused)) char **env)
 {
 	free_chars_t FC;
-	alias nodo1, nodo2;
 
+	FC.full_command = NULL;
 	FC.args = NULL;
 	FC.argv = argv;
 	FC.buff = NULL;
 	FC.lines = NULL;
 	FC.commands = NULL;
-	FC.args = malloc(sizeof(char *));
-	*(FC.args) = NULL;
 	FC.buff = malloc(sizeof(char));
 	FC.ANDORS = NULL;
 	FC.aliases = NULL;
 	FC.last_command_result = 0;
 	FC.need_to_readnextline = 0;
-	
-
-
-	FC.aliases = &nodo1;
-
-	nodo1.name = _strdup("alias1");
-	nodo1.value = _strdup("valor1");
-	nodo1.next = &nodo2;
-	
-	nodo2.name = _strdup("alias2");
-	nodo2.value = _strdup("valor2");
-	nodo2.next = NULL;
-
+	FC.args_l = NULL;
+	FC.line_count = 0;
 
 	infinite_loop(&FC);
-	
 	return (0);
 }
 
 /**
- * execve_not_working - frees all strings in FC and shows error message
+ * infinite_loop - frees all strings in FC and shows error message
+ * @FC: string structure.
+ * Return: nothing
  */
 void infinite_loop(free_chars_t *FC)
 {
@@ -50,29 +43,24 @@ void infinite_loop(free_chars_t *FC)
 
 	while (1)
 	{
-		/* _printf("Comando anterior salio con estatus de = %d\n", */
-		/* 	FC->last_command_result); */
 		ndrlen = list_len_andor(FC->ANDORS);
 		cmndlen = list_len(FC->commands);
 		if ((ndrlen == 0 && cmndlen == 0))
 		{
 			if (check_inputs(FC, &buffSize))
 				continue;
-			/* _printf("Linea = %s\n", FC->buff); */
 		}
 		if (check_errors(FC))
 			continue;
-		/* _printf("paso la prueba de errores\n"); */
 		if (ndrlen == 0)
-		{
 			if (check_semicolons(FC) == 1)
 				continue;
-		}
 		if (checkANDOR(FC) == 1)
 			continue;
-
-		free_words(FC->args);
-		FC->args = splitwords(FC->buff, ' ');
+		splitargs_list(FC);
+		/* print_list(FC->args_l); */
+		pointto_words_list(FC);
+		/* print_words(FC->args); */
 		if (check_built_in(FC))
 			continue;
 		create_child(&child_pid);
@@ -90,26 +78,38 @@ void infinite_loop(free_chars_t *FC)
 				FC->last_command_result = 1;
 		}
 	}
-
 }
 
 
 /**
- *check_inputs - Receive inputs from stdin
+ * check_inputs - Read input from stdin
+ * @FC: string structure.
+ * @buffSize: buffer's size
+ * Return: 0 in success, 1 otherwise
  */
 int check_inputs(free_chars_t *FC, int *buffSize)
 {
 	if (isatty(0) && FC->need_to_readnextline == 0)
-		_printf("#cisfun$ "); /*print only in terminal*/
+		_printf(1, "$ "); /*print only in terminal*/
 
 	FC->need_to_readnextline = 0;
+	FC->line_count++;
 	if (_getline(FC, buffSize) == EOF)
 	{
-		free_words(FC->args);
+		free(FC->args);
+		free_list(&FC->args_l);
+		free(FC->buff);
+		free_list(&FC->lines);
+		free_list(&FC->commands);
 		free_words(environ);
+		if (FC->last_command_result == 1)
+			exit(127);
 		exit(0);
 	}
-	/* _printf("la linea es = %s\n", FC->buff); */
+
+
+
+	/* _printf(1, "la linea es = %s\n", FC->buff); */
 
 	if (FC->buff == NULL || *(FC->buff) == 0)
 		return (1);
@@ -117,7 +117,7 @@ int check_inputs(free_chars_t *FC, int *buffSize)
 	if (check_if_not_commands(FC->buff) == 1)
 		return (1);
 
-	/* _printf("recibimos linea: -> %s\n", FC->buff); */
+	/* _printf(1, "recibimos linea: -> %s\n", FC->buff); */
 	return (0);
 
 
@@ -126,6 +126,8 @@ int check_inputs(free_chars_t *FC, int *buffSize)
 
 /**
  *check_built_in - check if input is any of the builtins
+ * @FC: string structure.
+ * Return: 0 in success, 1 otherwise
  */
 int check_built_in(free_chars_t *FC)
 {
@@ -137,23 +139,19 @@ int check_built_in(free_chars_t *FC)
 		return (built_env(FC, 0));
 	if (_strcmp(FC->args[0], "setenv") == 0)
 	{
-		if (FC->args[1] != NULL && FC->args[2] != NULL)
+		if (FC->args[1] != NULL)
 			return (built_env(FC, 1));
-		else
-		{
-			FC->last_command_result = 1;
-			return (1);
-		}
+		FC->last_command_result = 1;
+		return (1);
+
 	}
 	if (_strcmp(FC->args[0], "unsetenv") == 0)
 	{
 		if (FC->args[1] != NULL)
 			return (built_env(FC, 2));
-		else
-		{
-			FC->last_command_result = 1;
-			return (1);
-		}
+		FC->last_command_result = 1;
+		return (1);
+
 	}
 	if (_strcmp(FC->args[0], "alias") == 0)
 	{
@@ -164,41 +162,57 @@ int check_built_in(free_chars_t *FC)
 		}
 		else
 		{
-			_printf("el argumento 2 es: %s\n", FC->args[1]);
-			_printf("el argumento 3 es: %s\n", FC->args[2]);
+			_printf(1, "el argumento 2 es: %s\n", FC->args[1]);
+			_printf(1, "el argumento 3 es: %s\n", FC->args[2]);
 		}
 	}
-	
 	return (0);
 }
 
 
 /**
- * exec_commands - executes comands in args.
+ * exec_command - executes comands in args.
+ * @FC: string structure.
+ * Return: nothing
  */
 void exec_command(free_chars_t *FC)
 {
-	int result;
+	int result, exist = 1, itsfile = 1;
+	struct stat st;
 
-	check_full_path(FC->args);
-
-
-
-	if (**(FC->args) == '/')
+	if (FC->args[0][0] == '/')
 	{
-		result = execve(FC->args[0], FC->args, environ);
-		if (result == -1)
-			execve_not_working(FC);
+		if (stat(FC->args[0], &st) != 0)
+			exist = 0;
+		else
+			if (!S_ISREG(st.st_mode))
+				itsfile = 0;
+		FC->full_command = _strdup(FC->args[0]);
 	}
 	else
+		check_full_path(FC->args, FC);
+	if (itsfile)
 	{
-			_printf("No se pudo encontrar paila\n");
-			FC->last_command_result = 1;
-			free_words(FC->args);
-			free(FC->buff);
-			free_list(FC->lines);
-			free_list(FC->commands);
-			free_words(environ);
-			exit (1);
+		if (FC->full_command != NULL && exist)
+		{
+			result = execve(FC->full_command, FC->args, environ);
+			if (result == -1)
+				execve_not_working(FC);
+		}
+		else
+			_printf(2, "%s: %d: %s: not found\n", FC->argv[0],
+				FC->line_count, FC->args[0]);
 	}
+	else
+		_printf(2, "%s: %d: %s: Permission denied\n", FC->argv[0],
+			FC->line_count, FC->args[0]);
+	FC->last_command_result = 1;
+	free(FC->args);
+	free_list(&FC->args_l);
+	free(FC->buff);
+	free_list(&FC->lines);
+	free_list(&FC->commands);
+	free_words(environ);
+	free(FC->full_command);
+	exit(1);
 }

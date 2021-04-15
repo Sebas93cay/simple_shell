@@ -1,0 +1,17 @@
+cd /carambas
+
+/ls
+
+pwd ; cd  &&
+pwd && cd -
+pwd && &&
+
+/bin/ls
+/bin/ls/
+/bin
+
+
+hola
+exit 45t
+
+ls

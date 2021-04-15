@@ -8,9 +8,11 @@
  * @to_write: bytes to write in buffer
  * @buff_size: buffer size
  * @b_cnt: pointer to bytes used in buffer, it's value is updated in function
+ * @out: output stream to print
  * Return: return number of buffers initialized during execution
  */
-int fillnewbuff(char *buff, char *src, int to_write, int buff_size, int *b_cnt)
+int fillnewbuff(char *buff, char *src, int to_write, int buff_size,
+		int *b_cnt, int out)
 {
 	int used_buff;
 
@@ -21,14 +23,15 @@ int fillnewbuff(char *buff, char *src, int to_write, int buff_size, int *b_cnt)
 		return (1);
 	}
 
-	write(1, src, buff_size);
+	write(out, src, buff_size);
 	used_buff = fillnewbuff(buff, src + buff_size, to_write - buff_size,
-				buff_size, b_cnt);
+				buff_size, b_cnt, out);
 	return (used_buff + 1);
 }
 
 /**
  * _itoa - convert a integer into a string
+ * @buffsize: buffsize
  * @num: number
  * @nums: buffer of minimun 12 bytes to storage the number as a string
  * @sign: sing char

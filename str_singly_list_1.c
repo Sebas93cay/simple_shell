@@ -10,9 +10,9 @@ size_t print_list(const list_t *h)
 	if (!h)
 		return (0);
 	if (h->str == NULL)
-		printf("[%u] %s\n", 0, "(nil)");
+		_printf(1, "[%u] %s\n", 0, "(nil)");
 	else
-		printf("[%u] %s\n", h->len, h->str);
+		_printf(1, "[%u] %s\n", h->len, h->str);
 
 	if (h->next == NULL)
 		return (1);
@@ -70,13 +70,13 @@ list_t *add_node(list_t **head, const char *str)
  * @head: pointer to first element of the list
  * Return: the address of the new element, or NULL if it failed
  */
-void free_list(list_t *head)
+void free_list(list_t **head)
 {
-	if (head == NULL)
+	if (head == NULL || *head == NULL)
 		return;
-	if (head->next != NULL)
-		free_list(head->next);
-	free(head->str);
-	free(head);
-	head = NULL;
+	if ((*head)->next != NULL)
+		free_list(&(*head)->next);
+	free((*head)->str);
+	free(*head);
+	*head = NULL;
 }

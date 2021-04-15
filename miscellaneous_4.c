@@ -1,11 +1,17 @@
 #include "headershell.h"
 
+/**
+ * _getenv - gets enviroment variable name
+ * @name: enviroment variable
+ * Return: return pointer to variable's value
+ * or NULL of failure
+ */
 char *_getenv(const char *name)
 {
 	int len = _strlen((char *) name);
 	char **env = environ;
 
-	/* _printf("len = %d\n", len); */
+	/* _printf(1, "len = %d\n", len); */
 	while (*env)
 	{
 		/* _printf("*env = %s\n", *env); */
@@ -19,18 +25,29 @@ char *_getenv(const char *name)
 	return (NULL);
 }
 
+/**
+ * _printenv - print enviroment
+ * Return: nothing
+ */
 void _printenv(void)
 {
 	int i = 0;
 
 	while (environ[i])
 	{
-		_printf("%s\n", environ[i]);
+		_printf(1, "%s\n", environ[i]);
 		i++;
 	}
 }
 
 
+/**
+ * _setenv - sets enviroment variable name with value value
+ * @name: enviroment variable
+ * @value: value
+ * @overwrite: overwrite variable is this argument is set
+ * Return: return pointer to variable's value
+ */
 int _setenv(char *name, char *value, int overwrite)
 {
 	int len = _strlen((char *) name), size = 0;
@@ -64,7 +81,6 @@ int _setenv(char *name, char *value, int overwrite)
 	}
 	else if (overwrite)
 	{
-		/* _printf("Si habia esa variable (%s)\n", name); */
 		environ[size] = _realloc(environ[size], len + 1,
 					 sizeof(char) * (len + val_len + 2));
 		tmpstr = _strncpy(environ[size], name, len);
@@ -75,6 +91,11 @@ int _setenv(char *name, char *value, int overwrite)
 	return (0);
 }
 
+/**
+ * _unsetenv - unset enviroment variable name
+ * @name: enviroment variable
+ * Return: return always 0
+ */
 int _unsetenv(char *name)
 {
 	int len = _strlen((char *) name);
@@ -103,6 +124,13 @@ int _unsetenv(char *name)
 	return (0);
 }
 
+
+/**
+ * words_cpy - copy an array of strings into an allocated
+ * space of memory
+ * @words: array of strings to copy
+ * Return: pointer to allocated space with array copied
+ */
 char **words_cpy(char **words)
 {
 	int word_count, letter_count, i;

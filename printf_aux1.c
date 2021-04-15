@@ -7,10 +7,11 @@
  * @buff: buffer
  * @b_cnt: bytes printed counter
  * @flags: structure with flags activated to have into account
+ * @out: output stream to print
  * Return: return number of new buffers needed to print string
  */
 int place_s(va_list args, char *buff, int *b_cnt,
-	    __attribute__ ((unused)) flag * flags)
+	    __attribute__ ((unused)) flag * flags, int out)
 {
 	char *s = va_arg(args, char *);
 	int new_buffs = 0, len;
@@ -20,7 +21,7 @@ int place_s(va_list args, char *buff, int *b_cnt,
 		s = snull;
 	len = _strlen(s);
 
-	new_buffs += putInBuffer(buff, b_cnt, s, len);
+	new_buffs += putInBuffer(buff, b_cnt, s, len, out);
 
 	return (new_buffs);
 }
@@ -34,10 +35,11 @@ int place_s(va_list args, char *buff, int *b_cnt,
  * @buff: buffer
  * @b_cnt: bytes printed counter
  * @flags: structure with flags activated to have into account
+ * @out: output stream to print
  * Return: return number of new buffers needed to print string
  */
 int place_S(va_list args, char *buff, int *b_cnt,
-	    __attribute__ ((unused)) flag * flags)
+	    __attribute__ ((unused)) flag * flags, int out)
 {
 	char *s = va_arg(args, char *);
 	int new_buffs = 0, len;
@@ -50,7 +52,7 @@ int place_S(va_list args, char *buff, int *b_cnt,
 		return (-1);
 	len = _strlen(s);
 
-	new_buffs += putInBuffer(buff, b_cnt, s, len);
+	new_buffs += putInBuffer(buff, b_cnt, s, len, out);
 
 	free(s);
 	return (new_buffs);
@@ -64,15 +66,16 @@ int place_S(va_list args, char *buff, int *b_cnt,
  * @buff: buffer
  * @b_cnt: bytes printed counter
  * @flags: structure with flags activated to have into account
+ * @out: output stream to print
  * Return: return number of new buffers needed to print string
  */
 int place_c(va_list args, char *buff, int *b_cnt,
-	    __attribute__ ((unused)) flag * flags)
+	    __attribute__ ((unused)) flag * flags, int out)
 {
 	char c = va_arg(args, int);
 	int new_buff = 0;
 
-	new_buff += putInBuffer(buff, b_cnt, &c, 1);
+	new_buff += putInBuffer(buff, b_cnt, &c, 1, out);
 	return (new_buff);
 }
 
@@ -83,10 +86,11 @@ int place_c(va_list args, char *buff, int *b_cnt,
  * @buff: buffer
  * @b_cnt: bytes printed counter
  * @flags: structure with flags activated to have into account
+ * @out: output stream to print
  * Return: return number of new buffers needed to print string
  */
 int place_d(va_list args, char *buff, int *b_cnt,
-	    flag *flags)
+	    flag *flags, int out)
 {
 	long int num;
 	int new_buffs = 0, len;
@@ -103,12 +107,12 @@ int place_d(va_list args, char *buff, int *b_cnt,
 	else
 		num_s = _itoa(25, '+', num, num_holder);
 	if (flags[0].value == 1 && num >= 0)
-		new_buffs += putInBuffer(buff, b_cnt, "+", 1);
+		new_buffs += putInBuffer(buff, b_cnt, "+", 1, out);
 	else if (flags[1].value == 1 && num >= 0)
-		new_buffs += putInBuffer(buff, b_cnt, " ", 1);
+		new_buffs += putInBuffer(buff, b_cnt, " ", 1, out);
 
 	len = _strlen(num_s);
-	new_buffs += putInBuffer(buff, b_cnt, num_s, len);
+	new_buffs += putInBuffer(buff, b_cnt, num_s, len, out);
 	return (new_buffs);
 }
 
@@ -119,10 +123,11 @@ int place_d(va_list args, char *buff, int *b_cnt,
  * @buff: buffer
  * @b_cnt: bytes printed counter
  * @flags: structure with flags activated to have into account
+ * @out: output stream to print
  * Return: return number of new buffers needed to print string
  */
 int place_b(va_list args, char *buff, int *b_cnt,
-	    __attribute__ ((unused)) flag * flags)
+	    __attribute__ ((unused)) flag *flags, int out)
 {
 	int num = va_arg(args, int);
 	int new_buffs = 0, len;
@@ -130,6 +135,6 @@ int place_b(va_list args, char *buff, int *b_cnt,
 
 	num_s = _itobi(num, num_holder, 31);
 	len = _strlen(num_s);
-	new_buffs += putInBuffer(buff, b_cnt, num_s, len);
+	new_buffs += putInBuffer(buff, b_cnt, num_s, len, out);
 	return (new_buffs);
 }
