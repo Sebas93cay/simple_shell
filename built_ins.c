@@ -27,7 +27,7 @@ int built_exit(free_chars_t *FC)
 	}
 	else
 	{
-		TheExit(0, FC);
+		TheExit(FC->last_command_result, FC);
 	}
 	return (0);
 }
