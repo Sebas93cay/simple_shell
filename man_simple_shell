@@ -14,7 +14,7 @@ If \fBSHELL\fR is invoked with standard input not connected to a terminal, it re
 If \fBSHELL\fR is invoked with standard input connected to a terminal (determined by \fIisatty(3)\fR), an \fIinteractive\fR shell is opened.
 When executing interactively, \fBSHELL\fR displays the prompt \fI$ \fR when it is ready to read a command.
 
-Alternatively, if command line arguments are supplied upon invocation, \fBs\fR treats the first argument as a file from which to read commands.
+Alternatively, if command line arguments are supplied upon invocation, \fBSHELL\fR treats the first argument as a file from which to read commands.
 The supplied file should contain one command per line.
 .B s\fR runs each of the commands contained in the file in order before exiting.
 .in
@@ -27,7 +27,7 @@ This \fBenvironment\fR is an array of \fIname-value\fR strings describing variab
 
 .B Command Execution
 .in +2n
-After receiving a command, \fBs\fR tokenizes it into words using \fB" "\fR as a delimiter.
+After receiving a command, \fBSHELL\fR tokenizes it into words using \fB" "\fR as a delimiter.
 The first word is considered the command and all remaining words are considered arguments to that command.
 .B SHELL\fR then proceeds with the following actions:
 
@@ -64,7 +64,7 @@ All builtins return zero on success and one on incorrect usage (indicated by a c
 
 .B Signals
 .in +2n
-While running in interactive mode, \fBs\fR ignores the keyboard input \fBCtrl+c\fR.
+While running in interactive mode, \fBSHELL\fR ignores the keyboard input \fBCtrl+c\fR.
 Alternatively, an input of end-of-file (\fBCtrl+d\fR) will exit the program.
 .in
 
